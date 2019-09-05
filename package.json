@@ -1,0 +1,30 @@
+{
+  "name": "trash-pandas",
+  "version": "1.0.0",
+  "description": "trash-panda-npm",
+  "main": "server/App.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wes-A-Totes-Distinct-Citizen-of-Wonder/greenfield.git"
+  },
+  "keywords": [
+    "trash-panda",
+    "greenfield",
+    "opspark",
+    "tdcw"
+  ],
+  "author": "{ \"name\" : \"Wesley Schmidt\" }",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Wes-A-Totes-Distinct-Citizen-of-Wonder/greenfield/issues"
+  },
+  "homepage": "https://github.com/Wes-A-Totes-Distinct-Citizen-of-Wonder/greenfield#readme",
+  "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}
