@@ -2,7 +2,7 @@
   "name": "trash-pandas",
   "version": "1.0.0",
   "description": "trash-panda-npm",
-  "main": "server/App.js",
+  "main": "server/server.js",
   "scripts": {
     "test": "npm test"
   },
