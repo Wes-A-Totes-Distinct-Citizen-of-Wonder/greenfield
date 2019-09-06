@@ -14,7 +14,7 @@ class App extends React.Component {
                 <Row>
                     <Col sm="6">
                         <Card>
-                            <CardImg size="10%" src={require("../images/Drawing1.png")} alt="Card image cap" />
+                            <CardImg src={require("../images/Drawing1.png")} alt="Card image cap" />
                             <CardBody>
                                 <CardTitle>Card title</CardTitle>
                                 <CardSubtitle>Card subtitle</CardSubtitle>
