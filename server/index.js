@@ -7,9 +7,11 @@ const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
 
+// app.use(express.static(path.join(__dirname, '../client/images')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
 app.use(bodyParser.json());
-app.listen(8080, () => {
+
+app.listen(PORT, () => {
     console.log('Bitches be crazy on: 8080');
 });
-
-app.use(express.static(path.join(__dirname, '../client/dist')));
