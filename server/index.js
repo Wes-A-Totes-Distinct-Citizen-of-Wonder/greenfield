@@ -15,4 +15,3 @@ app.use(bodyParser.json());
 app.listen(PORT, () => {
     console.log('Bitches be crazy on: 8080');
 });
-
