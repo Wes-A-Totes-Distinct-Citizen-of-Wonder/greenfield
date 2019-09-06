@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PostCard from "./components/PostCard.jsx";
+import UserNav from "./components/UserNav.jsx";
+import { Col, Row } from 'reactstrap';
 // import testlayout from "./components/testLayout";
 
 class App extends React.Component {
@@ -10,7 +12,6 @@ class App extends React.Component {
         super(props);
         this.state = {
             posts: [{
-                // img: "./../../images/Drawing1.png",
                 img: require("./../images/Drawing1.png"),
                 title: "Card Title",
                 subtitle: "Card Subtitle",
@@ -27,6 +28,18 @@ class App extends React.Component {
                 title: "Interstellar Forest",
                 subtitle: "It's fall somewhere at least",
                 description: "Created using acrylics on canvas.",
+            },
+            {
+                img: require('./../images/Space Forrest Painting.jpg'),
+                title: "Interstellar Forest",
+                subtitle: "It's fall somewhere at least",
+                description: "Created using acrylics on canvas.",
+            },
+            {
+                img: require('./../images/Space Forrest Painting.jpg'),
+                title: "Interstellar Forest",
+                subtitle: "It's fall somewhere at least",
+                description: "Created using acrylics on canvas.",
             }
             ]
         }
@@ -36,8 +49,14 @@ class App extends React.Component {
         const { posts } = this.state;
         return (
             <div>
-                <h1>Hello World!</h1>
-                <PostCard posts={posts} />
+                <Row>
+                    <Col lg='2' style={{backgroundColor: "rgb(312, 168, 224)", paddingLeft: '25px', paddingTop: '25px'}}>
+                        <UserNav />
+                    </Col>
+                    <Col lg='10'>
+                        <PostCard posts={posts} />
+                    </Col>
+                </Row>
             </div>
         );
     }
