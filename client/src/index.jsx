@@ -15,7 +15,20 @@ class App extends React.Component {
                 title: "Card Title",
                 subtitle: "Card Subtitle",
                 description: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-            }]
+            },
+            {
+                img: require('./../images/Space Hand Painting.jpg'),
+                title: "Space hand",
+                subtitle: "Simply a hand in space",
+                description: "Created using acrylics on canvas.",
+            },
+            {
+                img: require('./../images/Space Forrest Painting.jpg'),
+                title: "Interstellar Forest",
+                subtitle: "It's fall somewhere at least",
+                description: "Created using acrylics on canvas.",
+            }
+            ]
         }
     }
 
