@@ -14,6 +14,7 @@ CREATE TABLE users (
 
 CREATE TABLE posts (
   postId int NOT NULL AUTO_INCREMENT,
+  -- the text field below might need to be <text> instead of <varchar> depending on how long we want posts to be
   text varchar NOT NULL (255), 
   img1 varchar NOT NULL (255),
   img2 varchar(255),
