@@ -19,7 +19,7 @@ const NavHead = (props) => {
     return (
             <Navbar backgroundColor="#00CC00">
                 <NavbarBrand href="/">Trash Panda</NavbarBrand>
-                <Nav className="ml-auto" navbar>
+                <Nav navbar>
                     <NavItem>
                         <Button>POST</Button>
                     </NavItem>

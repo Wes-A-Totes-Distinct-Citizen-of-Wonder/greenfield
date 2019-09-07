@@ -5,7 +5,7 @@ const UserNav = (props) => {
     return (
         <div>
             <section float="left" width="10%" margin="0 1.5%">
-            <p>Link based</p>
+            <p>USERNAME</p>
             <Nav vertical>
                 <NavLink href="#">Link</NavLink> 
                 <NavLink href="#">Link</NavLink> 
