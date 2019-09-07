@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import axios from 'axios';
 
 import PostCard from "./components/PostCard.jsx";
 import UserNav from "./components/UserNav.jsx";
@@ -50,6 +51,10 @@ class App extends React.Component {
             },
             ]
         }
+    }
+
+    createPost() {
+        axios.post()
     }
 
     render() {

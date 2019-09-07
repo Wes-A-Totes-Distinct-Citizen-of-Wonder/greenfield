@@ -19,9 +19,9 @@ import { Collapse,
 const NavHead = (props) => {
 
     return (
-            <Navbar backgroundColor="#00CC00">
-                <img src={require('./../../images/TrashPandaMascot.png')} width='15%' />
-                <NavbarBrand href="/" style={{color: "white"}}>TRASH PANDA</NavbarBrand>
+            <Navbar backgroundcolor="#00CC00">
+                <img src={require('./../../images/hardHat.jpg')} width='10%' />
+                <NavbarBrand href="/" style={{color: "white"}}>reConstruct</NavbarBrand>
                 <Nav navbar>
                     <NavItem>
                         <Button>POST</Button>
