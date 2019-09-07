@@ -16,9 +16,11 @@ import { Collapse,
     } from 'reactstrap';
 
 const NavHead = (props) => {
+
     return (
             <Navbar backgroundColor="#00CC00">
-                <NavbarBrand href="/">Trash Panda</NavbarBrand>
+                <img src={require('./../../images/TrashPandaMascot.png')} width='15%' />
+                <NavbarBrand href="/" style={{color: "white"}}>TRASH PANDA</NavbarBrand>
                 <Nav navbar>
                     <NavItem>
                         <Button>POST</Button>

@@ -65,7 +65,7 @@ class App extends React.Component {
                     <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px', paddingBottom: '0px'}}>
                         <UserNav />
                     </Col>
-                    <Col sm='10' style={{padding: '25px'}}>
+                    <Col sm='10' style={{padding: '25px', backgroundColor: "rgb(47, 74, 94)"}}>
                         <PostCard posts={posts} />
                     </Col>
                 </Row>
