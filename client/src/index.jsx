@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import PostCard from "./components/PostCard.jsx";
 import UserNav from "./components/UserNav.jsx";
 import { Col, Row } from 'reactstrap';
-// import testlayout from "./components/testLayout";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends React.Component {
     constructor(props) {
@@ -38,13 +37,15 @@ class App extends React.Component {
         const { posts } = this.state;
         return (
             <div>
-                <Row>
+                {/* <Row>
                 </Row>
+            </div>
+            <div> */}
                 <Row>
-                    <Col lg='2' style={{backgroundColor: "rgb(312, 168, 224)", padding: '25px', paddingBottom: '0px'}}>
+                    <Col sm='2' style={{backgroundColor: "rgb(312, 168, 224)", padding: '25px', paddingBottom: '0px'}}>
                         <UserNav />
                     </Col>
-                    <Col lg='10'>
+                    <Col sm='10'>
                         <PostCard posts={posts} />
                     </Col>
                 </Row>

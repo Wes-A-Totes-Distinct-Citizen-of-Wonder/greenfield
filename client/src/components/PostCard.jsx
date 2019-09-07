@@ -5,7 +5,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col
 const PostCard = (props) => {
     const { posts } = props;
     const cards = posts.map(post => (
-        <Col lg="3" className='post-card'>
+        <Col sm="3" className='post-card'>
             <Card>
                 <CardImg src={`${post.img}`} />
                 <CardBody>
@@ -18,11 +18,9 @@ const PostCard = (props) => {
         </Col>
     ));
     return (
-        <aside float="right" margin="50px" width="80%">
-            <Row>
-                {cards}
-            </Row>
-        </aside>
+        <Row>
+            {cards}
+        </Row>
     );
 }
 
