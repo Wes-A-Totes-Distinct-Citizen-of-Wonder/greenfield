@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import PostCard from "./components/PostCard.jsx";
 import UserNav from "./components/UserNav.jsx";
+import NavHead from "./components/NavHead.jsx";
 import { Col, Row } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -37,12 +38,13 @@ class App extends React.Component {
         const { posts } = this.state;
         return (
             <div>
-                {/* <Row>
-                </Row>
-            </div>
-            <div> */}
                 <Row>
-                    <Col sm='2' style={{backgroundColor: "rgb(312, 168, 224)", padding: '25px', paddingBottom: '0px'}}>
+                    <Col sm='12' style={{backgroundColor: "rgb(102, 136, 165)", padding: '25px', paddingBottom: '25px'}}>
+                        <NavHead />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px', paddingBottom: '0px'}}>
                         <UserNav />
                     </Col>
                     <Col sm='10'>
