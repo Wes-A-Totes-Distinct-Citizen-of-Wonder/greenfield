@@ -11,7 +11,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: [{
+            posts: [
+            {
                 img: require("./../images/Drawing1.png"),
                 title: "Card Title",
                 subtitle: "Card Subtitle",
@@ -29,18 +30,6 @@ class App extends React.Component {
                 subtitle: "It's fall somewhere at least",
                 description: "Created using acrylics on canvas.",
             },
-            {
-                img: require('./../images/Space Forrest Painting.jpg'),
-                title: "Interstellar Forest",
-                subtitle: "It's fall somewhere at least",
-                description: "Created using acrylics on canvas.",
-            },
-            {
-                img: require('./../images/Space Forrest Painting.jpg'),
-                title: "Interstellar Forest",
-                subtitle: "It's fall somewhere at least",
-                description: "Created using acrylics on canvas.",
-            }
             ]
         }
     }
@@ -50,7 +39,9 @@ class App extends React.Component {
         return (
             <div>
                 <Row>
-                    <Col lg='2' style={{backgroundColor: "rgb(312, 168, 224)", paddingLeft: '25px', paddingTop: '25px'}}>
+                </Row>
+                <Row>
+                    <Col lg='2' style={{backgroundColor: "rgb(312, 168, 224)", padding: '25px', paddingBottom: '0px'}}>
                         <UserNav />
                     </Col>
                     <Col lg='10'>
