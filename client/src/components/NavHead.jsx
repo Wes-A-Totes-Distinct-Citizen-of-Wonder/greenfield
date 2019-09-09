@@ -10,14 +10,14 @@ import {
     // commit
 
 const NavHead = (props) => {
-
+    const { changeView } = props;
     return (
         <Navbar backgroundcolor="#00CC00">
             <NavbarBrand href="/" style={{color: "white"}}>reConstruct</NavbarBrand>
-            <img href="/" src={require('./../../images/reConstructIcon.png')} width='20%' />
+            <img onClick={() => {changeView('home')}} src={require('./../../images/reConstructIcon.png')} width='20%' />
             <Nav navbar>
                 <NavItem>
-                    <Button>POST</Button>
+                    <Button onClick={() => {changeView('create-post')}}>Post</Button>
                 </NavItem>
             </Nav>
         </Navbar>
