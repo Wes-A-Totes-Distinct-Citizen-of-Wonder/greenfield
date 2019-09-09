@@ -25,7 +25,7 @@ class App extends React.Component {
                 img: require('./../images/Space Hand Painting.jpg'),
                 title: "Space hand",
                 subtitle: "Simply a hand in space",
-                description: "Created using acrylics on canvas.AJKL:FDJKLS:FJDKLSFJDKLSFJL:DAJKLFSKL:JSLFKDJGKL:HGKL:DJKL:JFLKAKLG:DHKLA:JKSDLFAKLGHDKL:FJKLDJFLDKSFJDLK:FEJI:MDKL:VNLNDKL:FDKFJAIEOF:NKL:VNDLKFHe;fJKL:DSFJIODNVLD:NVIO:JVIPX:IPVNB:ONDNFK:DFFJSD:NLKCNVKLS:EIFJdkl;sfjdkls;dfksfjdk;lsfjkdsibnibndibndimek;fmlkdj;lvkcjx;fejios;nvclknxiods",
+                description: "Created using acrylics on canvas.",
             },
             {
                 img: require('./../images/Space Forrest Painting.jpg'),
