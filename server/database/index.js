@@ -47,7 +47,7 @@ const savePost = (post) =>
   });
 
 const increasePostCount = (userId) => new Promise((resolve, reject) => {
-  const increaseInsert = 'UPDATE users SET posts = posts + 1 WHERE userId = ?';
+  const increaseInsert = 'UPDATE users SET numPosts = numPosts + 1 WHERE userId = ?';
 
   databaseConnection.query(increaseInsert, [userId], (err, results) => {
     if (err) {
