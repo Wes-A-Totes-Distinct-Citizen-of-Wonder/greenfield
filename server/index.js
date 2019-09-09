@@ -1,4 +1,5 @@
 const express = require('express');
+
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 // const passport = require('passport');//for User authentication
@@ -13,5 +14,5 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.json());
 
 app.listen(PORT, () => {
-    console.log('Bitches be crazy on: 8080');
+  console.log('Bitches be crazy on: 8080');
 });
