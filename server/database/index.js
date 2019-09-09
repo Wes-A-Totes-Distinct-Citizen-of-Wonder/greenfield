@@ -14,9 +14,9 @@ const saveUser = (user) =>
   // connection.connect();I don't think we need this, but leaving it here for now??
   new Promise((resolve, reject) => {
     // attempt to avoid sql injection. Not sure if this is completely correct though
-    const userInsert = 'INSERT INTO users(userId, posts, username, password, email, business, posts) VALUES (DEFAULT, DEFAULT, ?)';
+    const userInsert = 'INSERT INTO users(userId, numPosts, username, password, email, business) VALUES (DEFAULT, ?)';
     // assuming <user> parameter is an object
-    const insertValues = [user.username, user.password, user.email, user.business];
+    const insertValues = [user.numPosts, user.username, user.password, user.email, user.business];
 
     databaseConnection.query(userInsert, [insertValues], (err, results, fields) => {
       if (err) {
@@ -32,7 +32,7 @@ const savePost = (post) =>
   // connection.connect();I don't think we need this, but leaving it here for now??
   new Promise((resolve, reject) => {
     // attempt to avoid sql injection. Not sure if this is completely correct though
-    const postInsert = 'INSERT INTO posts(postId, text, img1, img2, img3) VALUES (DEFAULT, ?)';
+    const postInsert = 'INSERT INTO posts(postId, postText, img1, img2, img3, userId) VALUES (DEFAULT, ?)';
     // assuming <post> parameter is an object
     const insertValues = [post.text, post.img1, post.img2, post.img3, post.userId];
 
@@ -46,10 +46,24 @@ const savePost = (post) =>
     // connection.end(); I don't think we need this, but leaving it here for now??
   });
 
+const increasePostCount = (userId) => new Promise((resolve, reject) => {
+  const increaseInsert = 'UPDATE users SET numPosts = numPosts + 1 WHERE userId = ?';
+
+  databaseConnection.query(increaseInsert, [userId], (err, results) => {
+    if (err) {
+      console.log(err);
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
+
 module.exports = {
   databaseConnection,
   saveUser,
   savePost,
+  increasePostCount,
 };
 
 
