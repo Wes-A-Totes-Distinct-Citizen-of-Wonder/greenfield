@@ -24,9 +24,8 @@ class CreatePost extends React.Component {
     }
 
     onPostSubmit() {
-        // check if user is logged in, if so do this vvvv
         alert(JSON.stringify(this.state, null, " "))
-        /// else prompt user to login/ sign-up
+        // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
     }
 
     render() {
