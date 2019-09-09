@@ -1,17 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Collapse,
+import { 
     Navbar,
-    NavbarToggler,
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Col,
     Button
     } from 'reactstrap';
     // commit
@@ -20,8 +13,8 @@ const NavHead = (props) => {
 
     return (
         <Navbar backgroundcolor="#00CC00">
-            <img src={require('./../../images/hardHat.jpg')} width='10%' />
             <NavbarBrand href="/" style={{color: "white"}}>reConstruct</NavbarBrand>
+            <img href="/" src={require('./../../images/reConstructIcon.png')} width='20%' />
             <Nav navbar>
                 <NavItem>
                     <Button>POST</Button>
