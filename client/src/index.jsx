@@ -5,7 +5,7 @@ import axios from 'axios';
 import PostCard from "./components/PostCard.jsx";
 import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
-import CreatePost from "./CreatePost.jsx";
+import CreatePost from "./components/CreatePost.jsx";
 import { Col, Row } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -53,20 +53,13 @@ class App extends React.Component {
             },
             ]
         }
-        this.createPost = this.createPost.bind(this);
-    }
-
-    createPost() {
-        const { view } = this.state;
-        // check if user is logged in, if so do this vvvv
-        this.setState({
-            view: 'post'
-        })
-        /// else prompt user to login/ sign-up
+        // this.createPost = this.createPost.bind(this);
+        this.currentPage = this.currentPage.bind(this);
+        this.changeView = this.changeView.bind(this);
+        // this.makePost = this.makePost.bind(this);
     }
 
     changeView(newView) {
-        const { view } = this.state;
         this.setState({
             view: newView
         })
@@ -75,14 +68,14 @@ class App extends React.Component {
     currentPage(page) {
         const { posts } = this.state;
         switch(page) {
-            case 'home':
-            return (
-                <PostCard posts={posts} />
-            );
             case 'create-post':
-            return(
-                <div>Hey</div>
-            );
+                return(
+                    <CreatePost changeView={this.changeView}/>
+                    );
+            default :
+                return (
+            <PostCard posts={posts} changeView={this.changeView} makePost={this.makePost}/>
+        );
         }
     }
 
@@ -92,7 +85,7 @@ class App extends React.Component {
             <div className="main">
                 <Row>
                     <Col sm='12' style={{backgroundColor: "rgb(102, 136, 165)", padding: '25px', paddingBottom: '25px'}}>
-                        <NavHead />
+                        <NavHead changeView={this.changeView}/>
                     </Col>
                 </Row>
                 <Row>
