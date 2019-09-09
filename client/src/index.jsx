@@ -12,6 +12,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            view: 'home',
             posts: [
             {
                 img: require("./../images/Drawing1.png"),
@@ -53,14 +54,14 @@ class App extends React.Component {
         }
     }
 
-    createPost() {
-        axios.post()
+    changeView() {
+        
     }
 
     render() {
         const { posts } = this.state;
         return (
-            <div>
+            <div className="main">
                 <Row>
                     <Col sm='12' style={{backgroundColor: "rgb(102, 136, 165)", padding: '25px', paddingBottom: '25px'}}>
                         <NavHead />
