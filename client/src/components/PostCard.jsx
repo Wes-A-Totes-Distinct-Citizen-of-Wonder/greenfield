@@ -12,7 +12,7 @@ const PostCard = (props) => {
                     <CardTitle>{post.title}</CardTitle>
                     <CardSubtitle>{post.subtitle}</CardSubtitle>
                     <CardText>{post.description}</CardText>
-                    <Button><center>Button</center></Button>
+                    {/* <Button onClick=""><center>Button</center></Button> */}
                 </CardBody>
             </Card>
         // </Col>
