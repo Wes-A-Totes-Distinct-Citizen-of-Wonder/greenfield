@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const path = require('path');
-const { saveUser, savePost } = require('./database/index.js');
+const { saveUser, savePost, increasePostCount } = require('./database/index.js');
 
 // app.use(express.static(path.join(__dirname, '../client/images')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -32,7 +32,14 @@ app.post('/submitPost', (req, res) => {
   savePost(post)
     .then((savedPost) => {
       const { userId } = savedPost; // probably not correct but have to see the data to know what this will be in the body
-      
+      increasePostCount(userId)
+        .then(() => {
+          res.status(201).send('got your post!');
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(404).send('something went wrong with your post');
+        });
     });
 });
 
@@ -40,35 +47,18 @@ app.post('/submitPost', (req, res) => {
 // app.post('/poll', (req, res) => {
 //   let pollId;
 //   let voteId;
-//   // console.log(req.body); an obj, w/props pollTitle, option1, option2, option3,
-//   // and I think bodyParser is parsing it into what I want, but not sure
-//   // save poll to db
 //   savePoll(req.body)
 //     .then((results) => {
-//       console.log(results);
 //       pollId = results.insertId;
-//       // res.status(201).send('got your poll!');
-//     // })
-//     // .catch((error) => {
-//     //   console.log(error);
-//     //   // res.status(404).send('something went wrong');
 //     })
 //     .then(() => {
 //       saveVotes(req.body)
 //         .then((results) => {
-//           console.log(results);
 //           voteId = results.insertId;
-//           // res.status(201).send('got your poll!');
 //         })
-//         // .catch((error) => {
-//         //   console.log(error);
-//         //   // res.status(404).send('something went wrong');
-//         // });
-//       // })
 //         .then(() => {
 //           saveVotesAndPolls(pollId, voteId)
 //             .then(() => {
-//               console.log(pollId, voteId);
 //               res.status(201).send('got your poll!');
 //             })
 //             .catch((error) => {
