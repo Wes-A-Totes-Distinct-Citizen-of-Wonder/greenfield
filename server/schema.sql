@@ -25,7 +25,7 @@ CREATE TABLE posts (
 );
 
 CREATE TABLE postCount (
-  count INT NOT NULL AUTO_INCREMENT,
+  count INT DEFAULT 0,
   userId INT,
   PRIMARY KEY (count),
   FOREIGN KEY (userId)
