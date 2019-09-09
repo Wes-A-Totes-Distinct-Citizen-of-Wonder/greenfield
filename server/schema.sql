@@ -25,12 +25,9 @@ CREATE TABLE posts (
 );
 
 CREATE TABLE postCount (
-  count INT AUTO_INCREMENT,
-  postId INT,
+  count INT NOT NULL AUTO_INCREMENT,
   userId INT,
-  PRIMARY KEY (id),
-  FOREIGN KEY (postId)
-    REFERENCES  posts(postId),
+  PRIMARY KEY (count),
   FOREIGN KEY (userId)
     REFERENCES users(userId)
 )
