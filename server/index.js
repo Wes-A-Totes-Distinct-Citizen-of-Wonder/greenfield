@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
@@ -6,7 +7,6 @@ const bodyParser = require('body-parser');
 // const flash = require('connect-flash');//for User authentication pop up notifications
 
 const app = express();
-const path = require('path');
 const { saveUser, savePost, increasePostCount } = require('./database/index.js');
 
 app.use(bodyParser.json());
