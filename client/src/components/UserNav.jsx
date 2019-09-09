@@ -17,7 +17,7 @@ class UserNav extends React.Component {
     return (
         <div>
             <section float="left" width="10%" margin="0 1.5%">
-            <p>USERNAME</p>
+            <p style={{color: 'white'}}>USERNAME</p>
             <Nav vertical>
                 <NavLink className="Login" href="#">Login</NavLink> 
                 <NavLink className="Sign-up"href="#">Sign-up</NavLink>
