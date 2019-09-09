@@ -9,10 +9,10 @@ const app = express();
 const path = require('path');
 const { saveUser, savePost, increasePostCount } = require('./database/index.js');
 
+app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-app.use(bodyParser.json());
 
 app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
@@ -42,13 +42,14 @@ app.post('/submitPost', (req, res) => {
   // then somehow pull their username out of the req.body, and use that in savePost() call below
 
   // TEMPORARY standin for userId. replace with actual data when it exists
-  const { userId } = verifySession;
+  // const { userId } = verifySession;
+
   const post = {
     text: req.body.text,
     img1: req.body.img1,
     img2: req.body.img2 || null,
     img3: req.body.img3 || null,
-    userId,
+    userId: req.body.userId,
   };
 
   savePost(post)
