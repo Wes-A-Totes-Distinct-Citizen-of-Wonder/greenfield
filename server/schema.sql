@@ -4,7 +4,6 @@ CREATE DATABASE trashPanda;
 
 USE trashPanda;
 
-
 CREATE TABLE users (
   userId INT NOT NULL AUTO_INCREMENT,
   username varchar(50) NOT NULL,
