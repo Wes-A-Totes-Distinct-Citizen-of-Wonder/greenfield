@@ -7,6 +7,7 @@ USE trashPanda;
 
 CREATE TABLE users (
   userId INT NOT NULL AUTO_INCREMENT,
+  posts INT DEFAULT 0,
   username varchar(50) NOT NULL,
   password varchar(25) NOT NULL,
   email varchar(50) NOT NULL,
