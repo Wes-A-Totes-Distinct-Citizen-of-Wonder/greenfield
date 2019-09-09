@@ -14,9 +14,9 @@ const saveUser = (user) =>
   // connection.connect();I don't think we need this, but leaving it here for now??
   new Promise((resolve, reject) => {
     // attempt to avoid sql injection. Not sure if this is completely correct though
-    const userInsert = 'INSERT INTO users(userId, posts, username, password, email, business) VALUES (DEFAULT, DEFAULT, ?)';
+    const userInsert = 'INSERT INTO users(userId, numPosts, username, password, email, business) VALUES (DEFAULT, ?)';
     // assuming <user> parameter is an object
-    const insertValues = [user.username, user.password, user.email, user.business];
+    const insertValues = [user.numPosts, user.username, user.password, user.email, user.business];
 
     databaseConnection.query(userInsert, [insertValues], (err, results, fields) => {
       if (err) {
