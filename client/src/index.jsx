@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import axios from 'axios';
 
 import PostCard from "./components/PostCard.jsx";
 import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
+import CreatePost from "./components/CreatePost.jsx";
 import { Col, Row } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,6 +13,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            view: 'home',
             posts: [
             {
                 img: require("./../images/Drawing1.png"),
@@ -22,7 +25,7 @@ class App extends React.Component {
                 img: require('./../images/Space Hand Painting.jpg'),
                 title: "Space hand",
                 subtitle: "Simply a hand in space",
-                description: "Created using acrylics on canvas.",
+                description: "Created using acrylics on canvas.AJKL:FDJKLS:FJDKLSFJDKLSFJL:DAJKLFSKL:JSLFKDJGKL:HGKL:DJKL:JFLKAKLG:DHKLA:JKSDLFAKLGHDKL:FJKLDJFLDKSFJDLK:FEJI:MDKL:VNLNDKL:FDKFJAIEOF:NKL:VNDLKFHe;fJKL:DSFJIODNVLD:NVIO:JVIPX:IPVNB:ONDNFK:DFFJSD:NLKCNVKLS:EIFJdkl;sfjdkls;dfksfjdk;lsfjkdsibnibndibndimek;fmlkdj;lvkcjx;fejios;nvclknxiods",
             },
             {
                 img: require('./../images/Space Forrest Painting.jpg'),
@@ -50,15 +53,39 @@ class App extends React.Component {
             },
             ]
         }
+        // this.createPost = this.createPost.bind(this);
+        this.currentPage = this.currentPage.bind(this);
+        this.changeView = this.changeView.bind(this);
+        // this.makePost = this.makePost.bind(this);
+    }
+
+    changeView(newView) {
+        this.setState({
+            view: newView
+        })
+    }
+
+    currentPage(page) {
+        const { posts } = this.state;
+        switch(page) {
+            case 'create-post':
+                return(
+                    <CreatePost changeView={this.changeView}/>
+                    );
+            default :
+                return (
+            <PostCard posts={posts} changeView={this.changeView} makePost={this.makePost}/>
+        );
+        }
     }
 
     render() {
-        const { posts } = this.state;
+        const { view } = this.state;
         return (
-            <div>
+            <div className="main">
                 <Row>
                     <Col sm='12' style={{backgroundColor: "rgb(102, 136, 165)", padding: '25px', paddingBottom: '25px'}}>
-                        <NavHead />
+                        <NavHead changeView={this.changeView}/>
                     </Col>
                 </Row>
                 <Row>
@@ -66,7 +93,7 @@ class App extends React.Component {
                         <UserNav />
                     </Col>
                     <Col sm='10' style={{padding: '25px', backgroundColor: "rgb(47, 74, 94)"}}>
-                        <PostCard posts={posts} />
+                        {this.currentPage(view)}
                     </Col>
                 </Row>
             </div>

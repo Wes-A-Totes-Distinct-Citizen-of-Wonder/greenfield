@@ -1,32 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Collapse,
+import { 
     Navbar,
-    NavbarToggler,
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Col,
     Button
     } from 'reactstrap';
+    // commit
 
 const NavHead = (props) => {
-
+    const { changeView } = props;
     return (
-            <Navbar backgroundColor="#00CC00">
-                <img src={require('./../../images/TrashPandaMascot.png')} width='15%' />
-                <NavbarBrand href="/" style={{color: "white"}}>TRASH PANDA</NavbarBrand>
-                <Nav navbar>
-                    <NavItem>
-                        <Button>POST</Button>
-                    </NavItem>
-                </Nav>
-            </Navbar>
+        <Navbar backgroundcolor="#00CC00">
+            <NavbarBrand href="/" style={{color: "white"}}>reConstruct</NavbarBrand>
+            <img onClick={() => {changeView('home')}} src={require('./../../images/reConstructIcon.png')} width='20%' />
+            <Nav navbar>
+                <NavItem>
+                    <Button onClick={() => {changeView('create-post')}}>Post</Button>
+                </NavItem>
+            </Nav>
+        </Navbar>
     );
 }
 
