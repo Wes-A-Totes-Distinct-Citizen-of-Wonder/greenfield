@@ -46,6 +46,19 @@ const savePost = (post) =>
     // connection.end(); I don't think we need this, but leaving it here for now??
   });
 
+const increasePostCount = (userId) => new Promise((resolve, reject) => {
+  const increaseInsert = 'UPDATE users SET posts = posts + 1 WHERE userId = ?';
+
+  databaseConnection.query(increaseInsert, [userId], (err, results) => {
+    if (err) {
+      console.log(err);
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
+
 module.exports = {
   databaseConnection,
   saveUser,
