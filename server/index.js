@@ -14,6 +14,28 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.use(bodyParser.json());
 
+app.post('/signUp', (req, res) => {
+  // need to verify that password matches, required fields submitted, etc
+  // if user already exists, redirect back to sign-in
+  // if username already taken, redirect back to sign-up
+
+  const userInfo = {
+    username: req.body.username,
+    password: req.body.password,
+    email: req.body.email,
+    business: req.body.business,
+  };
+  saveUser(userInfo)
+  // .then () start session with hashed sessionId and userId, etc
+    .then(() => {
+      res.status(201).send('user saved in db');
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(404).send('something went wrong and user was not saved in db');
+    });
+});
+
 app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
   // if not logged in, re-route to sign-up page
