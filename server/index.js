@@ -44,6 +44,7 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
+  const userId = req.body.userId;
 
   const post = {
     text: req.body.text,
@@ -54,8 +55,7 @@ app.post('/submitPost', (req, res) => {
   };
 
   savePost(post)
-    .then((savedPost) => {
-      const { userId } = savedPost; // probably not correct but have to see the data to know what this will be in the body
+    .then(() => {
       increasePostCount(userId)
         .then(() => {
           res.status(201).send('got your post!');
@@ -66,44 +66,6 @@ app.post('/submitPost', (req, res) => {
         });
     });
 });
-
-
-// app.post('/poll', (req, res) => {
-//   let pollId;
-//   let voteId;
-//   savePoll(req.body)
-//     .then((results) => {
-//       pollId = results.insertId;
-//     })
-//     .then(() => {
-//       saveVotes(req.body)
-//         .then((results) => {
-//           voteId = results.insertId;
-//         })
-//         .then(() => {
-//           saveVotesAndPolls(pollId, voteId)
-//             .then(() => {
-//               res.status(201).send('got your poll!');
-//             })
-//             .catch((error) => {
-//               console.log(error);
-//               res.status(404).send('something went wrong');
-//             });
-//         });
-//     });
-// });
-
-// app.get('/seePolls', (req, res) => {
-//   getPolls()
-//     .then((result) => {
-//       console.log(result);
-//       res.send(result);
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// });
-
 
 app.listen(PORT, () => {
   console.log('Bitches be crazy on: 8080');
