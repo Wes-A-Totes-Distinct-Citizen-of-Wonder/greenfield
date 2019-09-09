@@ -20,6 +20,7 @@ app.post('/signUp', (req, res) => {
   // if username already taken, redirect back to sign-up
 
   const userInfo = {
+    numPosts: 0,
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
