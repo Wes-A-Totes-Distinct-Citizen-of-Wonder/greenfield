@@ -62,3 +62,6 @@ typings/
 
 # other
 client/dist/
+
+# api key
+client/src/helpers/config.js
