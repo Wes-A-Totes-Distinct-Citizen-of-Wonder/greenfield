@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { convertToCoordinates } from './GeoLocation.js'
+import { API_KEY } from '../helpers/config.js'
 
 const mapStyles = {
     width: '100%',
@@ -50,5 +51,5 @@ class MapContainer extends Component {
   }
 
   export default GoogleApiWrapper({
-    apiKey: 'AIzaSyAUC9d7O4XqLWX0HSM7Nf-zXs0WYUvY5kc'
+    apiKey: API_KEY
   })(MapContainer);
