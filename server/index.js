@@ -24,7 +24,6 @@ app.post('/signUp', (req, res) => {
   let userId;
 
   const userInfo = {
-    numPosts: 0,
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
