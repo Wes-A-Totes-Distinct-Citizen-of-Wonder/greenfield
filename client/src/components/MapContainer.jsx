@@ -35,16 +35,17 @@ class MapContainer extends Component {
     }
   
     render() {
-      
+      const { latLng } = this.state;
+
       return (
 
           <Map
             google={this.props.google}
-            zoom={8}
+            zoom={15}
             style={mapStyles}
-            initialCenter={this.state.latLng}
+            center={latLng}
           >
-            <Marker position={this.state.latLng} />
+            <Marker position={latLng} />
           </Map>
       );
     }
