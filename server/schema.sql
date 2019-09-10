@@ -4,7 +4,6 @@ CREATE DATABASE trashPanda;
 
 USE trashPanda;
 
-
 CREATE TABLE users (
   userId INT NOT NULL AUTO_INCREMENT,
   username varchar(50) NOT NULL,
@@ -20,6 +19,7 @@ CREATE TABLE posts (
   img1 varchar (255) NOT NULL,
   img2 varchar(255),
   img3 varchar(255),
+  postNum INT DEFAULT 0,
   userId INT,
   PRIMARY KEY (postId),
   FOREIGN KEY (userId) REFERENCES users(userId)
@@ -30,8 +30,8 @@ CREATE TABLE postCount (
   userId INT,
   PRIMARY KEY (count),
   FOREIGN KEY (userId)
-    REFERENCES users(userId)
-);
+  REFERENCES users(userId)
+)
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql
