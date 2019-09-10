@@ -15,7 +15,21 @@ class LoginView extends React.Component {
 
     render() {
         return (
-            <h1>LOGIN HERE!!!</h1>
+            <div>
+                <h1>LOGIN HERE!!!</h1>
+                <Form>
+                    <FormGroup>
+                        <Label>Username</Label>
+                        <Input type='textarea' name='user' id='user-login'></Input>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label>Password</Label>
+                        <Input type='textarea' name='password' id='password'></Input>
+                    </FormGroup>
+                    <Button type="submit" color="primary" block>Submit</Button>
+                </Form>
+            </div>
+            
         );
     }
 };
