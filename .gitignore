@@ -65,4 +65,4 @@ client/dist/
 
 # api keys
 client/src/helpers/config.js
-server/database/config.js
+server/config.js

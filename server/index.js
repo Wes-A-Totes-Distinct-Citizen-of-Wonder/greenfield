@@ -8,12 +8,18 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
-const { saveUser, savePost, increasePostCount } = require('./database/index.js');
+const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
+const config = require('./config.js');
+const { saveUser, savePost, increasePostCount, saveImage } = require('./database/index.js');
+
+cloudinary.config(config);// config object for connecting to cloudinary
 
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
-app.use(fileUpload());
+app.use(fileUpload({
+  useTempFiles: true,
+}));
 
 
 app.post('/signUp', (req, res) => {
@@ -46,7 +52,7 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
-  const userId = req.body.userId;
+  const { userId } = req.body;
 
   const post = {
     text: req.body.text,
@@ -66,6 +72,19 @@ app.post('/submitPost', (req, res) => {
           console.log(error);
           res.status(404).send('something went wrong with your post');
         });
+    });
+});
+
+
+app.post('/test', (req, res) => {
+  const image = req.files.photo;
+
+  // saveImage(image);
+  cloudinary.uploader.upload(image.tempFilePath)
+    .then((result) => {
+      console.log(result);
+      const hostedImageUrl = result.secure_url;
+      res.send({ great: 'job!, you did image stuff!' });
     });
 });
 
