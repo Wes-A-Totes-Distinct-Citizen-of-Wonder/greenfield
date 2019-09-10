@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import axios from 'axios';
 
 import PostCard from "./components/PostCard.jsx";
+import PostView from "./components/PostView.jsx";
 import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
 import CreatePost from "./components/CreatePost.jsx";
@@ -14,7 +15,9 @@ class App extends React.Component {
         super(props);
         this.state = {
             view: 'home',
+            selectedPost: {},
             posts: [
+                // example data:
             {
                 img: require("./../images/Drawing1.png"),
                 title: "Card Title",
@@ -53,29 +56,40 @@ class App extends React.Component {
             },
             ]
         }
-        // this.createPost = this.createPost.bind(this);
         this.currentPage = this.currentPage.bind(this);
         this.changeView = this.changeView.bind(this);
-        // this.makePost = this.makePost.bind(this);
+        this.changePostView = this.changePostView.bind(this);
     }
-
+    // used for changeing the view of the page
     changeView(newView) {
         this.setState({
             view: newView
         })
     }
+    // used when clicking on a post to show more detail
+    changePostView(newPost) {
+        this.setState({
+            selectedPost: newPost,
+            view: 'post-view'
+        })
+    }
 
     currentPage(page) {
         const { posts } = this.state;
+        const { selectedPost } = this.state;
         switch(page) {
             case 'create-post':
                 return(
                     <CreatePost changeView={this.changeView}/>
                     );
+            case 'post-view':
+                return(
+                    <PostView post={selectedPost} />
+                );
             default :
                 return (
-            <PostCard posts={posts} changeView={this.changeView} makePost={this.makePost}/>
-        );
+                    <PostCard posts={posts} changePostView={this.changePostView} changeView={this.changeView} />
+                );
         }
     }
 
