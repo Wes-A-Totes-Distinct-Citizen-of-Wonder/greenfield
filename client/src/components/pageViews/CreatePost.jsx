@@ -9,6 +9,7 @@ class CreatePost extends React.Component {
         super(props);
         this.state = {
             img: '',
+            title: '',
             description: '',
             tags: '',
             address: '',
@@ -24,7 +25,9 @@ class CreatePost extends React.Component {
     }
 
     onPostSubmit() {
-        alert(JSON.stringify(this.state, null, " "))
+        const { img } = this.state;
+        // alert(JSON.stringify(this.state, null, " "));
+        return axios.post('/submitPost', {user: img});
         // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
     }
 
@@ -38,6 +41,9 @@ class CreatePost extends React.Component {
                     <FormText color="muted">
                         Please include an image(s) of the materials you wish to share.
                     </FormText>
+                </FormGroup>
+                <FormGroup>
+                    <Input type="text" name="text" id="post-desc" value={state.title} onChange={e => this.setState({ title: e.target.value })}placeholder="title your post" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="post-desc" style={{ color: 'white' }}>Description</Label>
