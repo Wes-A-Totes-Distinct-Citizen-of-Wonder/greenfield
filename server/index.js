@@ -10,7 +10,7 @@ const app = express();
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
 const config = require('./config.js');
-const { saveUser, savePost, increasePostCount, saveImage } = require('./database/index.js');
+const { saveUser, savePost, increasePostCount, saveImage, saveUsersPostCount } = require('./database/index.js');
 
 cloudinary.config(config);// config object for connecting to cloudinary
 
@@ -27,8 +27,9 @@ app.post('/signUp', (req, res) => {
   // if user already exists, redirect back to sign-in
   // if username already taken, redirect back to sign-up
 
+  let userId;
+
   const userInfo = {
-    numPosts: 0,
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
@@ -36,12 +37,18 @@ app.post('/signUp', (req, res) => {
   };
   saveUser(userInfo)
   // .then () start session with hashed sessionId and userId, etc
-    .then(() => {
-      res.status(201).send('user saved in db');
+    .then((savedUser) => {
+      userId = savedUser.insertId;
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(404).send('something went wrong and user was not saved in db');
+    .then(() => {
+      saveUsersPostCount(userId)
+        .then(() => {
+          res.status(201).send('user saved in db');
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(404).send('something went wrong and user was not saved in db');
+        });
     });
 });
 
