@@ -57,7 +57,7 @@ app.post('/submitPost', (req, res) => {
 
   const post = {
     text: req.body.text,
-    img1: req.body.img,
+    img1: req.body.img1,
     img2: req.body.img2 || null,
     img3: req.body.img3 || null,
     userId: req.body.userId,
