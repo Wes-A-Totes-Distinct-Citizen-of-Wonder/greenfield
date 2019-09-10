@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
-import PostCard from "./components/PostCard.jsx";
-import PostView from "./components/PostView.jsx";
+import PostCard from "./components/pageViews/PostCardView.jsx";
+import PostView from "./components/pageViews/PostView.jsx";
 import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
-import CreatePost from "./components/CreatePost.jsx";
+import CreatePost from "./components/pageViews/CreatePost.jsx";
 import { Col, Row } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -67,6 +67,7 @@ class App extends React.Component {
         })
     }
     // used when clicking on a post to show more detail
+    // may not need this if we're looking for post id in DB
     changePostView(newPost) {
         this.setState({
             selectedPost: newPost,
@@ -84,11 +85,11 @@ class App extends React.Component {
                     );
             case 'post-view':
                 return(
-                    <PostView post={selectedPost} />
+                    <PostView post={selectedPost} changeView={this.changeView}/>
                 );
             default :
                 return (
-                    <PostCard posts={posts} changePostView={this.changePostView} changeView={this.changeView} />
+                    <PostCard posts={posts} changePostView={this.changePostView} />
                 );
         }
     }
