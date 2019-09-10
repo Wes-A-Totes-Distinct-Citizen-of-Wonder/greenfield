@@ -26,7 +26,7 @@ class LoginView extends React.Component {
                         <Label>Password</Label>
                         <Input type='textarea' name='password' id='password'></Input>
                     </FormGroup>
-                    <Button>Submit!</Button>
+                    <Button type="submit" color="primary" block>Submit</Button>
                 </Form>
             </div>
             

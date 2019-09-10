@@ -39,7 +39,7 @@ class SignUpView extends React.Component {
                         <Label>Enter Place of Business(Optional)</Label>
                         <Input type='textarea' name='business' id='business-registration'></Input>
                     </FormGroup>
-                    <Button>Finish Registration</Button>
+                    <Button type="submit" color="primary" block>Submit</Button>
                 </Form>
             </div>
         );
