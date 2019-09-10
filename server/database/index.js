@@ -1,5 +1,7 @@
 const mysql = require('mysql2');
 // did some research and mysql2 seems better than mysql so using it here instead
+const cloudinary = require('cloudinary').v2;
+
 
 const databaseConnection = mysql.createConnection({
   // leaving this as localhost now, but I think it has to be changed for the deployed version
@@ -58,6 +60,9 @@ const increasePostCount = (userId) => new Promise((resolve, reject) => {
   });
 });
 
+const saveImages = images => {
+
+};
 
 module.exports = {
   databaseConnection,

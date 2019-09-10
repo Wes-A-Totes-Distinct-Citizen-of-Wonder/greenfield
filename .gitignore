@@ -63,5 +63,6 @@ typings/
 # other
 client/dist/
 
-# api key
+# api keys
 client/src/helpers/config.js
+server/database/config.js

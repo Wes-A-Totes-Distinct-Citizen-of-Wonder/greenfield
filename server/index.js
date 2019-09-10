@@ -7,11 +7,13 @@ const bodyParser = require('body-parser');
 // const flash = require('connect-flash');//for User authentication pop up notifications
 
 const app = express();
+const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const { saveUser, savePost, increasePostCount } = require('./database/index.js');
 
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(fileUpload());
 
 
 app.post('/signUp', (req, res) => {
