@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import SignUpView from "./components/pageViews/Sign-upView.jsx"
 import LoginView from "./components/pageViews/LoginView.jsx";
+import UserProfileView from "./components/pageViews/UserProfileView.jsx";
 import PostCard from "./components/pageViews/PostCardView.jsx";
 import PostView from "./components/pageViews/PostView.jsx";
 import CreatePost from "./components/pageViews/CreatePost.jsx";
@@ -18,6 +19,15 @@ class App extends React.Component {
         this.state = {
             view: 'home',
             selectedPost: {},
+            user: {
+                username: "Wes",
+                email: "wtschmidt94@gmail.com",
+                loggedIn: false,
+                geolocation: {
+                    lat: 'here',
+                    lng: 'now'
+                },
+            },
             posts: [
                 // example data:
             {
@@ -58,9 +68,10 @@ class App extends React.Component {
             },
             ]
         }
+        this.changePostView = this.changePostView.bind(this);
         this.currentPage = this.currentPage.bind(this);
         this.changeView = this.changeView.bind(this);
-        this.changePostView = this.changePostView.bind(this);
+        this.changeUser = this.changeUser.bind(this);
     }
     // used for changeing the view of the page
     changeView(newView) {
@@ -77,25 +88,36 @@ class App extends React.Component {
         })
     }
 
+    changeUser(newUser) {
+        this.setState({
+            user: newUser
+        })
+    }
+
     currentPage(page) {
         const { posts } = this.state;
         const { selectedPost } = this.state;
+        const { user } = this.state;
         switch(page) {
             case 'sign-up':
                 return(
-                    <SignUpView />
+                    <SignUpView changeUser={this.changeUser} />
+                )
+            case 'login':
+                return(
+                    <LoginView changeUser={this.changeUser} />
                 )
             case 'create-post':
                 return(
-                    <CreatePost changeView={this.changeView}/>
+                    <CreatePost changeView={this.changeView} />
                     );
             case 'post-view':
                 return(
-                    <PostView post={selectedPost} changeView={this.changeView}/>
+                    <PostView post={selectedPost} changeView={this.changeView} />
                 );
-            case 'login':
+            case 'user-profile':
                 return(
-                    <LoginView />
+                    <UserProfileView user={user} />
                 )
             default :
                 return (
@@ -106,6 +128,7 @@ class App extends React.Component {
 
     render() {
         const { view } = this.state;
+        const { user } = this.state;
         return (
             <div className="main">
                 <Row>
@@ -115,7 +138,7 @@ class App extends React.Component {
                 </Row>
                 <Row>
                     <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px', paddingBottom: '0px'}}>
-                        <UserNav changeView={this.changeView}/>
+                        <UserNav changeView={this.changeView} user={user}/>
                     </Col>
                     <Col sm='10' style={{padding: '25px', backgroundColor: "rgb(47, 74, 94)"}}>
                         {this.currentPage(view)}
