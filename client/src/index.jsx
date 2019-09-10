@@ -2,11 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
+import SignUpView from "./components/pageViews/Sign-upView.jsx"
+import LoginView from "./components/pageViews/LoginView.jsx";
 import PostCard from "./components/pageViews/PostCardView.jsx";
 import PostView from "./components/pageViews/PostView.jsx";
+import CreatePost from "./components/pageViews/CreatePost.jsx";
 import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
-import CreatePost from "./components/pageViews/CreatePost.jsx";
 import { Col, Row } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -79,6 +81,10 @@ class App extends React.Component {
         const { posts } = this.state;
         const { selectedPost } = this.state;
         switch(page) {
+            case 'sign-up':
+                return(
+                    <SignUpView />
+                )
             case 'create-post':
                 return(
                     <CreatePost changeView={this.changeView}/>
@@ -87,6 +93,10 @@ class App extends React.Component {
                 return(
                     <PostView post={selectedPost} changeView={this.changeView}/>
                 );
+            case 'login':
+                return(
+                    <LoginView />
+                )
             default :
                 return (
                     <PostCard posts={posts} changePostView={this.changePostView} />
@@ -105,7 +115,7 @@ class App extends React.Component {
                 </Row>
                 <Row>
                     <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px', paddingBottom: '0px'}}>
-                        <UserNav />
+                        <UserNav changeView={this.changeView}/>
                     </Col>
                     <Col sm='10' style={{padding: '25px', backgroundColor: "rgb(47, 74, 94)"}}>
                         {this.currentPage(view)}
