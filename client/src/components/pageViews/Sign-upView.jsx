@@ -10,38 +10,52 @@ class SignUpView extends React.Component {
         this.state = {
             username: '',
             password: '',
+            varifyPass: '',
+            email: '',
+            business: '',
         };
+        this.onSignUpSubmit = this.onSignUpSubmit.bind(this);
+    }
+
+    onSignUpSubmit() {
+        const user = this.state;
+        if (user.password === user.varifyPass) {
+            return axios.post('/signUp', user)
+        } else {
+            alert("Your passwords don't match!")
+        }
     }
 
     render() {
+        const state = this.state;
         return (
-            <div>
-                <h1>Sign-up HERE!!!</h1>
-                <Form>
-                    <FormGroup>
-                        <Label>Create User Name</Label>
-                        <Input type='textarea' name='username' id='user-registration'></Input>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Create Password</Label>
-                        <Input type='textarea' name='password' id='password-registration'></Input>
-                        <p>password must be between 6 and 16 characters only using numbers and alphabetical characters</p>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Re-Enter Password</Label>
-                        <Input type='textarea' name='password-verify' id='password-registration-verify'></Input>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Enter Email</Label>
-                        <Input type='textarea' name='email' id='email-registration'></Input>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Enter Place of Business(Optional)</Label>
-                        <Input type='textarea' name='business' id='business-registration'></Input>
-                    </FormGroup>
-                    <Button type="submit" color="primary" block>Submit</Button>
-                </Form>
-            </div>
+            // <div>
+            <Form onSubmit={this.onSignUpSubmit}>
+                <FormGroup>
+                    <h1 style={{ color: 'white' }} >Sign-up HERE!!!</h1>
+                    <Label style={{ color: 'white' }} >Create User Name</Label>
+                    <Input type='text' name='username' id='user-registration' value={state.username} onChange={e => this.setState({ username: e.target.value })}></Input>
+                </FormGroup>
+                <FormGroup>
+                    <Label style={{ color: 'white' }} >Create Password</Label>
+                    <Input type='password' name='password' id='password-registration' value={state.password} onChange={e => this.setState({ password: e.target.value })}></Input>
+                    <FormText color="muted">password must be between 6 and 16 characters only using numbers and alphabetical characters</FormText>
+                </FormGroup>
+                <FormGroup>
+                    <Label style={{ color: 'white' }} >Re-Enter Password</Label>
+                    <Input type='password' name='password-verify' id='password-registration-verify' value={state.varifyPass} onChange={e => this.setState({ varifyPass: e.target.value })}></Input>
+                </FormGroup>
+                <FormGroup>
+                    <Label style={{ color: 'white' }} >Enter Email</Label>
+                    <Input type='text' name='email' id='email-registration' value={state.email} onChange={e => this.setState({ email: e.target.value })}></Input>
+                </FormGroup>
+                <FormGroup>
+                    <Label style={{ color: 'white' }} >Enter Place of Business(Optional)</Label>
+                    <Input type='text' name='business' id='business-registration' value={state.business} onChange={e => this.setState({ business: e.target.value })}></Input>
+                </FormGroup>
+                <Button type="submit" color="primary" block>Submit</Button>
+            </Form>
+            // </div>
         );
     }
 };
