@@ -72,7 +72,7 @@ const increasePostCount = (userId) => new Promise((resolve, reject) => {
 });
 
 const displayPosts = () => new Promise((resolve, reject) => {
-  const fetchedPosts = 'SELECT *, users.username FROM posts INNER JOIN users ON posts.userId = users.userId ORDER BY posts.postId DESC';
+  const fetchedPosts = 'SELECT *, users.username, users.email, users.business FROM posts INNER JOIN users ON posts.userId = users.userId ORDER BY posts.postId DESC';
 
   databaseConnection.query(fetchedPosts, (err, results) => {
     if (err) {
