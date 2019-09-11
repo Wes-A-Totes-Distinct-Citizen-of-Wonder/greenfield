@@ -7,13 +7,19 @@ const bodyParser = require('body-parser');
 // const flash = require('connect-flash');//for User authentication pop up notifications
 
 const app = express();
-const {
-  saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
-} = require('./database/index.js');
+const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
+const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
+const config = require('./config.js');
+const { saveUser, savePost, increasePostCount, saveImage, saveUsersPostCount } = require('./database/index.js');
+
+cloudinary.config(config);// config object for connecting to cloudinary
 
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(fileUpload({
+  useTempFiles: true,
+}));
 
 app.get('/posts', (req, res) => {
   displayPosts()
@@ -91,6 +97,19 @@ app.post('/submitPost', (req, res) => {
           console.log(error);
           res.status(404).send('something went wrong with your post');
         });
+    });
+});
+
+
+app.post('/test', (req, res) => {
+  const image = req.files.photo;
+
+  // saveImage(image);
+  cloudinary.uploader.upload(image.tempFilePath)
+    .then((result) => {
+      console.log(result);
+      const hostedImageUrl = result.secure_url;
+      res.send({ great: 'job!, you did image stuff!' });
     });
 });
 
