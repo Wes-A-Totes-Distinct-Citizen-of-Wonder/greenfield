@@ -8,12 +8,23 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const {
-  saveUser, savePost, increasePostCount, saveUsersPostCount,
+  saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
 } = require('./database/index.js');
 
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.get('/posts', (req, res) => {
+  displayPosts()
+    .then((posts) => {
+      res.status(201).send(posts);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send('something went wrong and we cannot show you the posts right now');
+    });
+});
 
 
 app.post('/signUp', (req, res) => {
@@ -53,7 +64,7 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
-  //const { userId } = req.body;
+  // const { userId } = req.body;
 
   const post = {
     img1: req.body.img1,
