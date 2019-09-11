@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-app.get('/mainPage', (req, res) => {
+app.get('/posts', (req, res) => {
   displayPosts()
     .then((posts) => {
       res.status(201).send(posts);
