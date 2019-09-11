@@ -19,6 +19,10 @@ app.get('/posts', (req, res) => {
   displayPosts()
     .then((posts) => {
       res.status(201).send(posts);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send('something went wrong and we cannot show you the posts right now');
     });
 });
 
