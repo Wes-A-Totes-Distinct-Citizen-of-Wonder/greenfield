@@ -5,7 +5,7 @@ CREATE DATABASE trashPanda;
 USE trashPanda;
 
 CREATE TABLE users (
-  userId INT NOT NULL AUTO_INCREMENT,
+  userId INT AUTO_INCREMENT,
   username varchar(50) NOT NULL,
   password varchar(25) NOT NULL,
   email varchar(50) NOT NULL,
@@ -14,11 +14,17 @@ CREATE TABLE users (
 );
 
 CREATE TABLE posts (
-  postId INT NOT NULL AUTO_INCREMENT,
-  postText varchar (255), 
+  postId INT AUTO_INCREMENT,
   img1 varchar (255) NOT NULL,
-  img2 varchar(255),
-  img3 varchar(255),
+  title varchar (25),
+  text varchar (255),
+  tags varchar (100),
+  address varchar (255),
+  city varchar (100),
+  state varchar (25),
+  zip int,
+  geolcationLat varchar(100),
+  geolcationLng varchar (100),
   postNum INT DEFAULT 0,
   userId INT,
   PRIMARY KEY (postId),
