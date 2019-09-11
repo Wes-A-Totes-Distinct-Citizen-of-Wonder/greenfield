@@ -56,11 +56,17 @@ app.post('/submitPost', (req, res) => {
   const { userId } = req.body;
 
   const post = {
-    text: req.body.text,
     img1: req.body.img1,
-    img2: req.body.img2 || null,
-    img3: req.body.img3 || null,
-    userId: req.body.userId,
+    text: req.body.text,
+    title: req.body.title,
+    tags: req.body.tags,
+    address: req.body.address,
+    city: req.body.city,
+    state: req.body.state,
+    zip: req.body.zip,
+    geolocationLat: req.body.geolocation.lat,
+    geolocationLng: req.body.geolocation.lng,
+    // userId: req.body.userId,
   };
 
   savePost(post)
