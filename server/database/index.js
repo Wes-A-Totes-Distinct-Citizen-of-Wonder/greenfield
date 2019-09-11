@@ -42,9 +42,9 @@ const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
 });
 
 const savePost = (post) => new Promise((resolve, reject) => {
-  const postInsert = 'INSERT INTO posts(postId, img1, title, text, tags, address, city, state, zip, geolocationLat, geolocationLngb) VALUES (DEFAULT, ?)';
+  const postInsert = 'INSERT INTO posts(postId, img1, title, text, tags, address, city, state, zip) VALUES (DEFAULT, ?)';
 
-  const insertValues = [post.img1, post.title, post.test, post.tags, post.address, post.city, post.state, post.zip, post.geolcationLat, post.geolcationLng];
+  const insertValues = [post.img1, post.title, post.text, post.tags, post.address, post.city, post.state, post.zip];
 
   databaseConnection.query(postInsert, [insertValues], (err, results) => {
     if (err) {
