@@ -51,7 +51,7 @@ const savePost = (post) => new Promise((resolve, reject) => {
       console.log(err);
       return reject(err);
     }
-    return resolve(results; // need this?
+    return resolve(results); // need this?
   });
 });
 
