@@ -15,6 +15,13 @@ app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
+app.get('/mainPage', (req, res) => {
+  displayPosts()
+    .then((posts) => {
+      res.status(201).send(posts);
+    });
+});
+
 
 app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
