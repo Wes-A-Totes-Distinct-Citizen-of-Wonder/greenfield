@@ -30,8 +30,8 @@ CREATE TABLE postCount (
   userId INT,
   PRIMARY KEY (count),
   FOREIGN KEY (userId)
-    REFERENCES users(userId)
-)
+  REFERENCES users(userId)
+);
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql

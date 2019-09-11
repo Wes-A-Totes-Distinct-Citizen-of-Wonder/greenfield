@@ -101,7 +101,7 @@ class App extends React.Component {
         switch(page) {
             case 'sign-up':
                 return(
-                    <SignUpView changeUser={this.changeUser} />
+                    <SignUpView />
                 )
             case 'login':
                 return(
