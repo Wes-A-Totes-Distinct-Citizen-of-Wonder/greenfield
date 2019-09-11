@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const {
-  saveUser, savePost, increasePostCount, saveUsersPostCount,
+  saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
 } = require('./database/index.js');
 
 app.use(bodyParser.json());
