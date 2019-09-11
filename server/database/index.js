@@ -1,11 +1,11 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 // did some research and mysql2 seems better than mysql so using it here instead
 
 const databaseConnection = mysql.createConnection({
   // leaving this as localhost now, but I think it has to be changed for the deployed version
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'curdle',
   database: 'trashPanda',
 });
 
