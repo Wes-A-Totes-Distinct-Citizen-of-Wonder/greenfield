@@ -53,7 +53,7 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
-  const { userId } = req.body;
+  //const { userId } = req.body;
 
   const post = {
     img1: req.body.img1,
@@ -64,13 +64,14 @@ app.post('/submitPost', (req, res) => {
     city: req.body.city,
     state: req.body.state,
     zip: req.body.zip,
-    geolocationLat: req.body.geolocation.lat,
-    geolocationLng: req.body.geolocation.lng,
+    // geolocationLat: null,
+    // geolocationLng: null,
     // userId: req.body.userId,
   };
 
   savePost(post)
     .then(() => {
+      const userId = 1;
       increasePostCount(userId)
         .then(() => {
           res.status(201).send('got your post!');
