@@ -71,6 +71,17 @@ const increasePostCount = (userId) => new Promise((resolve, reject) => {
   });
 });
 
+const displayPosts = () => new Promise((resolve, reject) => {
+  const fetchedPosts = 'SELECT *, users.username FROM posts INNER JOIN users ON posts.userId = users.userId ORDER BY posts.postId DESC';
+
+  databaseConnection.query(fetchedPosts, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
 
 module.exports = {
   databaseConnection,
@@ -78,6 +89,7 @@ module.exports = {
   savePost,
   increasePostCount,
   saveUsersPostCount,
+  displayPosts,
 };
 
 
