@@ -41,23 +41,19 @@ const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
   });
 });
 
-const savePost = (post) =>
-  // connection.connect();I don't think we need this, but leaving it here for now??
-  new Promise((resolve, reject) => {
-    // attempt to avoid sql injection. Not sure if this is completely correct though
-    const postInsert = 'INSERT INTO posts(postId, postText, img1, img2, img3, userId) VALUES (DEFAULT, ?)';
-    // assuming <post> parameter is an object
-    const insertValues = [post.text, post.img1, post.img2, post.img3, post.userId];
+const savePost = (post) => new Promise((resolve, reject) => {
+  const postInsert = 'INSERT INTO posts(postId, img1, title, text, tags, address, city, state, zip, geolocationLat, geolocationLngb) VALUES (DEFAULT, ?)';
 
-    databaseConnection.query(postInsert, [insertValues], (err, results, fields) => {
-      if (err) {
-        console.log(err);
-        return reject(err);
-      }
-      return resolve(results, fields); // need this?
-    });
-    // connection.end(); I don't think we need this, but leaving it here for now??
+  const insertValues = [post.img1, post.title, post.test, post.tags, post.address, post.city, post.state, post.zip, post.geolcationLat, post.geolcationLng];
+
+  databaseConnection.query(postInsert, [insertValues], (err, results) => {
+    if (err) {
+      console.log(err);
+      return reject(err);
+    }
+    return resolve(results; // need this?
   });
+});
 
 const increasePostCount = (userId) => new Promise((resolve, reject) => {
   const increaseInsert = 'UPDATE postCount SET count = count + 1 WHERE userId = ?';
