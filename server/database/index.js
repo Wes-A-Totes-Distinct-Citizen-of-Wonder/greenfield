@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 // did some research and mysql2 seems better than mysql so using it here instead
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
 const config = require('../config.js');
@@ -9,6 +9,7 @@ const databaseConnection = mysql.createConnection({
   user: 'root',
   password: '',
   database: 'trashPanda',
+  insecureAuth: true,
 });
 
 
