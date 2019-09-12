@@ -73,6 +73,18 @@ const increasePostCount = (userId) => new Promise((resolve, reject) => {
   });
 });
 
+const displayPosts = () => new Promise((resolve, reject) => {
+  const fetchedPosts = 'select posts.*, users.* from posts inner join users order by posts.postId desc';
+
+  databaseConnection.query(fetchedPosts, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
+
 cloudinary.config(config);// config object for connecting to cloudinary
 
 const saveImage = (image) => cloudinary.uploader.upload(image.tempFilePath);
@@ -85,6 +97,7 @@ module.exports = {
   increasePostCount,
   saveImage,
   saveUsersPostCount,
+  displayPosts,
 };
 
 
