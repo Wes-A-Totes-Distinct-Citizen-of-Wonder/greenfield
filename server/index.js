@@ -11,10 +11,19 @@ const app = express();
 
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
+<<<<<<< HEAD
 const config = require('./config.js');
 const { findUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts } = require('./database/index.js');
+=======
+const cloudinaryConfig = require('./config.js');
+const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
-cloudinary.config(config);// config object for connecting to cloudinary
+const {
+  findUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
+} = require('./database/index.js');
+>>>>>>> fe24e24f657b124443e2bfbcf8445a2d7191c292
+
+cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
 
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
@@ -77,16 +86,44 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
+<<<<<<< HEAD
   // const { userId } = req.body;
 
+=======
+  const image = req.files.photo;
+  const userId = 1;
+>>>>>>> fe24e24f657b124443e2bfbcf8445a2d7191c292
   const post = {
     title: req.body.title,
     text: req.body.text,
+<<<<<<< HEAD
     img1: req.body.img1,
     // userId: req.body.userId,
+=======
+    img1: null,
+    title: req.body.title,
+    location: null,
+    tags: req.body.tags,
+>>>>>>> fe24e24f657b124443e2bfbcf8445a2d7191c292
   };
 
-  savePost(post)
+  cloudinary.uploader.upload(image.tempFilePath)
+    .then((result) => {
+      post.img1 = result.secure_url;
+      const {
+        address, city, state, zip,
+      } = req.body;
+      const fullAddress = {
+        address, city, state, zip,
+      };
+
+      return convertToCoordinates(fullAddress);
+    })
+    .then((geoLocation) => {
+      const { location } = geoLocation.data.results[0].geometry;
+      post.location = `${location.lat}, ${location.lng}`;
+      savePost(post);
+    })
     .then(() => {
       const userId = 1;
       increasePostCount(userId)
