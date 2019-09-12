@@ -11,17 +11,12 @@ const app = express();
 
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
-<<<<<<< HEAD
-const config = require('./config.js');
-const { findUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts } = require('./database/index.js');
-=======
 const cloudinaryConfig = require('./config.js');
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
   findUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
 } = require('./database/index.js');
->>>>>>> fe24e24f657b124443e2bfbcf8445a2d7191c292
 
 cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
 
