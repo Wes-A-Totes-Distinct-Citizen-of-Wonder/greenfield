@@ -70,18 +70,18 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
-  const { userId } = req.body;
+  // const { userId } = req.body;
 
   const post = {
+    title: req.body.title,
     text: req.body.text,
     img1: req.body.img1,
-    img2: req.body.img2 || null,
-    img3: req.body.img3 || null,
-    userId: req.body.userId,
+    // userId: req.body.userId,
   };
 
   savePost(post)
     .then(() => {
+      const userId = 1;
       increasePostCount(userId)
         .then(() => {
           res.status(201).send('got your post!');
@@ -93,6 +93,15 @@ app.post('/submitPost', (req, res) => {
     });
 });
 
+app.post('/users', (req, res) => {
+
+  const user = {
+    username: req.body.username,
+    password: req.body.password,
+  };
+
+  
+})
 
 app.post('/test', (req, res) => {
   const image = req.files.photo;
