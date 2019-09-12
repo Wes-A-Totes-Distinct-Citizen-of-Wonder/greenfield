@@ -59,7 +59,7 @@ const savePost = (post) =>
   // connection.connect();I don't think we need this, but leaving it here for now??
   new Promise((resolve, reject) => {
     // attempt to avoid sql injection. Not sure if this is completely correct though
-    const postInsert = 'INSERT INTO posts(postId, postText, img1, title, location, tags) VALUES (DEFAULT, ?)';
+    const postInsert = 'INSERT INTO posts(postId, text, img1, title, location, tags) VALUES (DEFAULT, ?)';
     // assuming <post> parameter is an object
     const insertValues = [post.text, post.img1, post.title, post.location, post.tags];
 
@@ -86,8 +86,8 @@ const increasePostCount = (userId) => new Promise((resolve, reject) => {
 });
 
 const displayPosts = () => new Promise((resolve, reject) => {
-  const fetchedPosts = 'select posts.*, users.* from posts inner join users order by posts.postId desc';
-
+// const fetchedPosts = 'select posts.*, users.* from posts inner join users order by posts.postId desc';
+  const fetchedPosts = 'select * from posts';
   databaseConnection.query(fetchedPosts, (err, results) => {
     if (err) {
       return reject(err);
