@@ -22,6 +22,7 @@ class SignUpView extends React.Component {
         if (user.password === user.varifyPass) {
             return axios.post('/signUp', user)
         } else {
+            props.changeView('sign-up');
             alert("Your passwords don't match!")
         }
     }
