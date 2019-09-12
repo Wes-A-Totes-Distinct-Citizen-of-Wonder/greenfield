@@ -87,10 +87,7 @@ class App extends React.Component {
     // need some instruction on how to actually sort by geolocation though....
     getNearbyPosts() {
         return axios.get('/posts')
-        .then(response => {
-            debugger;
-            response.data 
-        })
+        .then(response => response.data);
     }
     // used for changeing the view of the page
     changeView(newView) {
