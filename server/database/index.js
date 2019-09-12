@@ -63,16 +63,14 @@ const savePost = (post) =>
     // assuming <post> parameter is an object
     const insertValues = [post.text, post.img1, post.title, post.location, post.tags];
 
-  const insertValues = [post.img1, post.title, post.text, post.tags, post.address, post.city, post.state, post.zip];
-
-  databaseConnection.query(postInsert, [insertValues], (err, results) => {
-    if (err) {
-      console.log(err);
-      return reject(err);
-    }
-    return resolve(results); // need this?
+    databaseConnection.query(postInsert, [insertValues], (err, results) => {
+      if (err) {
+        console.log(err);
+        return reject(err);
+      }
+      return resolve(results); // need this?
+    });
   });
-});
 
 const increasePostCount = (userId) => new Promise((resolve, reject) => {
   const increaseInsert = 'UPDATE postCount SET count = count + 1 WHERE userId = ?';
