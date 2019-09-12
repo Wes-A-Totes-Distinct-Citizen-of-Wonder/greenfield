@@ -8,15 +8,17 @@ const bodyParser = require('body-parser');
 // const flash = require('connect-flash');//for User authentication pop up notifications
 
 const app = express();
-const {
-  findUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts
-} = require('./database/index.js');
 
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
-const config = require('./config.js');
+const cloudinaryConfig = require('./config.js');
+const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
-cloudinary.config(config);// config object for connecting to cloudinary
+const {
+  findUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
+} = require('./database/index.js');
+
+cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
 
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
@@ -79,23 +81,33 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
-  // const { userId } = req.body;
-
+  const image = req.files.photo;
+  const userId = 1;
   const post = {
-    img1: req.body.img1,
     text: req.body.text,
+    img1: null,
     title: req.body.title,
+    location: null,
     tags: req.body.tags,
-    address: req.body.address,
-    city: req.body.city,
-    state: req.body.state,
-    zip: req.body.zip,
-    // geolocationLat: null,
-    // geolocationLng: null,
-    // userId: req.body.userId,
   };
 
-  savePost(post)
+  cloudinary.uploader.upload(image.tempFilePath)
+    .then((result) => {
+      post.img1 = result.secure_url;
+      const {
+        address, city, state, zip,
+      } = req.body;
+      const fullAddress = {
+        address, city, state, zip,
+      };
+
+      return convertToCoordinates(fullAddress);
+    })
+    .then((geoLocation) => {
+      const { location } = geoLocation.data.results[0].geometry;
+      post.location = `${location.lat}, ${location.lng}`;
+      savePost(post);
+    })
     .then(() => {
       const userId = 1;
       increasePostCount(userId)

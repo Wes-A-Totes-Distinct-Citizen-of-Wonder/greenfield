@@ -18,7 +18,7 @@ CREATE TABLE posts (
   img1 varchar (255) NOT NULL,
   title varchar (50),
   location varchar (255),
-  geolocation varchar (255),
+  tags varchar (300),
   postNum INT DEFAULT 0,
   userId INT,
   PRIMARY KEY (postId),
