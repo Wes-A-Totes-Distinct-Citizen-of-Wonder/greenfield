@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const users = require('../server/database');
 
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
@@ -7,6 +8,10 @@ const bodyParser = require('body-parser');
 // const flash = require('connect-flash');//for User authentication pop up notifications
 
 const app = express();
+const {
+  findUser, saveUser, savePost, increasePostCount, saveUsersPostCount,
+} = require('./database/index.js');
+
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
 const config = require('./config.js');
@@ -37,17 +42,21 @@ app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
   // if user already exists, redirect back to sign-in
   // if username already taken, redirect back to sign-up
-
   let userId;
-
   const userInfo = {
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
     business: req.body.business,
   };
-  saveUser(userInfo)
-  // .then () start session with hashed sessionId and userId, etc
+
+  return findUser(userInfo.username)
+    .then((foundUser) => {
+      res.send(foundUser);
+    }).catch(() => {
+      saveUser(userInfo);
+      // .then () start session with hashed sessionId and userId, etc
+    })
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
@@ -62,6 +71,7 @@ app.post('/signUp', (req, res) => {
         });
     });
 });
+
 
 app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
