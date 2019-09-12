@@ -86,13 +86,8 @@ const increasePostCount = (userId) => new Promise((resolve, reject) => {
 });
 
 const displayPosts = () => new Promise((resolve, reject) => {
-<<<<<<< HEAD
-  const fetchedPosts = 'select posts.*, users.* from posts inner join users order by posts.postId desc';
-
-=======
 // const fetchedPosts = 'select posts.*, users.* from posts inner join users order by posts.postId desc';
   const fetchedPosts = 'select * from posts';
->>>>>>> 96f390c82d8ef8edd0ef7ba7199cfcd7b1a658bc
   databaseConnection.query(fetchedPosts, (err, results) => {
     if (err) {
       return reject(err);
