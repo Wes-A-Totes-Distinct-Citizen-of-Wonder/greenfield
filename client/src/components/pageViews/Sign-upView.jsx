@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import axios from 'axios';
 
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
+import Axios from "axios";
 
 class SignUpView extends React.Component {
     constructor(props) {
@@ -19,6 +20,8 @@ class SignUpView extends React.Component {
 
     onSignUpSubmit() {
         const user = this.state;
+        axios.post('/signUp', { username: `${user.username}` })
+
         if (user.password === user.varifyPass) {
             return axios.post('/signUp', user)
         } else {
