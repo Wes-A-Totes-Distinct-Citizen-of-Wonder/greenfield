@@ -16,14 +16,13 @@ class LoginView extends React.Component {
     render() {
         return (
             <div>
-                <h1>LOGIN HERE!!!</h1>
                 <Form>
                     <FormGroup>
-                        <Label>Username</Label>
+                        <Label  style={{ color: 'white' }}>Username</Label>
                         <Input type='textarea' name='user' id='user-login'></Input>
                     </FormGroup>
                     <FormGroup>
-                        <Label>Password</Label>
+                        <Label  style={{ color: 'white' }}>Password</Label>
                         <Input type='textarea' name='password' id='password'></Input>
                     </FormGroup>
                     <Button type="submit" color="primary" block>Submit</Button>
