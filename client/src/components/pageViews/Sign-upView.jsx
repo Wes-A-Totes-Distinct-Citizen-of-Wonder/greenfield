@@ -46,7 +46,7 @@ class SignUpView extends React.Component {
                 </FormGroup>
                 <FormGroup>
                     <Label style={{ color: 'white' }} >Enter Email</Label>
-                    <Input type='text' name='email' id='email-registration' value={state.email} onChange={e => this.setState({ email: e.target.value })}></Input>
+                    <Input type='email' name='email' id='email-registration' value={state.email} onChange={e => this.setState({ email: e.target.value })}></Input>
                 </FormGroup>
                 <FormGroup>
                     <Label style={{ color: 'white' }} >Enter Place of Business(Optional)</Label>
