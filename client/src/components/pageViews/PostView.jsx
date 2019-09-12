@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import MapContainer from "./../MapContainer.jsx";
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col, Row, CardColumns } from 'reactstrap';
 
 const PostView = (props) => {
@@ -12,6 +13,7 @@ const PostView = (props) => {
                 <CardSubtitle>{post.subtitle}</CardSubtitle>
                 <CardText>{post.description}</CardText>
             </CardBody>
+            <MapContainer />
         </Card>
     );
 }
