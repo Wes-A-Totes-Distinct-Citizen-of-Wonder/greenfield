@@ -23,10 +23,12 @@ class CreatePost extends React.Component {
     onPostSubmit() {
         const user = this.state;
         const bodyFormData = new FormData();
-        bodyFormData.append('photo', user.img1);
+        
         // debugger;
         Object.entries(user).forEach((postProp) => {
-            if (postProp[0] === 'img1') {}
+            if (postProp[0] === 'img1') {
+                bodyFormData.append('photo', user.img1);
+            }
             else {
                 bodyFormData.set(postProp[0], postProp[1]);
             }
