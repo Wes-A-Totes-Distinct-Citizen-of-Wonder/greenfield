@@ -10,6 +10,19 @@ const databaseConnection = mysql.createConnection({
   insecureAuth: true,
 });
 
+const findUser = (user) => new Promise((resolve, reject) => {
+  // select user from database if exists
+  const foundUser = `SELECT * FROM users where username= "${user}"`;
+
+  databaseConnection.query(foundUser, [user], (err, results, fields) => {
+    if (err) {
+      console.log(err);
+      return resolve(user);
+    } else {
+      return reject(err);
+    }
+  });
+});
 
 const saveUser = (user) =>
   // connection.connect();I don't think we need this, but leaving it here for now??
@@ -73,6 +86,7 @@ const increasePostCount = (userId) => new Promise((resolve, reject) => {
 
 
 module.exports = {
+  findUser,
   databaseConnection,
   saveUser,
   savePost,
