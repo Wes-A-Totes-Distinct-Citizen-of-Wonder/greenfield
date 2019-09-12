@@ -72,6 +72,7 @@ class App extends React.Component {
         this.currentPage = this.currentPage.bind(this);
         this.changeView = this.changeView.bind(this);
         this.changeUser = this.changeUser.bind(this);
+        this.getNearbyPosts = this.getNearbyPosts.bind(this);
     }
 
     componentDidMount() {
@@ -86,7 +87,10 @@ class App extends React.Component {
     // need some instruction on how to actually sort by geolocation though....
     getNearbyPosts() {
         return axios.get('/posts')
-        .then(response => response.data)
+        .then(response => {
+            debugger;
+            response.data 
+        })
     }
     // used for changeing the view of the page
     changeView(newView) {

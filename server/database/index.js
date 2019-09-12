@@ -20,9 +20,8 @@ const findUser = (user) => new Promise((resolve, reject) => {
     if (err) {
       console.log(err);
       return resolve(user);
-    } else {
-      return reject(err);
     }
+    return reject(err);
   });
 });
 
