@@ -20,9 +20,8 @@ const findUser = (user) => new Promise((resolve, reject) => {
     if (err) {
       console.log(err);
       return resolve(user);
-    } else {
-      return reject(err);
     }
+    return reject(err);
   });
 });
 
@@ -87,7 +86,7 @@ const increasePostCount = (userId) => new Promise((resolve, reject) => {
 });
 
 const displayPosts = () => new Promise((resolve, reject) => {
-  const fetchedPosts = 'select posts.*, users.* from posts inner join users order by posts.postId desc';
+  const fetchedPosts = 'select posts.*, users.* from posts inner join users order by posts.postId desc';
 
   databaseConnection.query(fetchedPosts, (err, results) => {
     if (err) {
