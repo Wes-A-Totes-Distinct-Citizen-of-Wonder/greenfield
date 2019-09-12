@@ -78,7 +78,7 @@ app.post('/submitPost', (req, res) => {
     img1: null,
     title: req.body.title,
     location: null,
-    tags: null,
+    tags: req.body.tags,
   };
 
   cloudinary.uploader.upload(image.tempFilePath)
