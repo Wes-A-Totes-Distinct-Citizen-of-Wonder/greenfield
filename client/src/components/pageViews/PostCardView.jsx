@@ -7,11 +7,11 @@ const PostCard = (props) => {
     const { changePostView } = props;
     const cards = posts.map(post => (
         <Card onClick={() => {changePostView(post)}}>
-            <CardImg src={`${post.img}`} />
+            <CardImg src={`${post.img1}`} />
             <CardBody>
                 <CardTitle>{post.title}</CardTitle>
                 <CardSubtitle>{post.subtitle}</CardSubtitle>
-                <CardText>{post.description}</CardText>
+                <CardText>{post.postText}</CardText>
             </CardBody>
         </Card>
     ));

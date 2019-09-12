@@ -7,11 +7,11 @@ const PostView = (props) => {
     const { post } = props;
     return (
         <Card>
-            <CardImg src={`${post.img}`} />
+            <CardImg src={`${post.img1}`} />
             <CardBody>
                 <CardTitle>{post.title}</CardTitle>
-                <CardSubtitle>{post.subtitle}</CardSubtitle>
-                <CardText>{post.description}</CardText>
+                <CardSubtitle>{post.postText}</CardSubtitle>
+                <CardText>{post.postText}</CardText>
             </CardBody>
             <MapContainer />
         </Card>
