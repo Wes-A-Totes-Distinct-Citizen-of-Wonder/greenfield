@@ -16,18 +16,32 @@ class CreatePost extends React.Component {
             city: '',
             state: '',
             zip: '',
-            geolocation: {
-                lat: '',
-                lng: ''
-            },
         };
         this.onPostSubmit = this.onPostSubmit.bind(this);
     }
 
     onPostSubmit() {
         const user = this.state;
-        // alert(JSON.stringify(this.state, null, " "));
-        return axios.post('/submitPost', user);
+        const bodyFormData = new FormData();
+        bodyFormData.append('photo', user.img1);
+        // debugger;
+        Object.entries(user).forEach((postProp) => {
+            if (postProp[0] === 'img1') {}
+            else {
+                bodyFormData.set(postProp[0], postProp[1]);
+            }
+           
+        })
+       
+        axios.post('/submitPost', bodyFormData)
+            .then(function (response) {
+                //handle success
+                console.log(response);
+            })
+            .catch(function (response) {
+                //handle error
+                console.log(response);
+            });
         // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
     }
 
@@ -37,7 +51,7 @@ class CreatePost extends React.Component {
             <Form onSubmit={this.onPostSubmit}>
                 <FormGroup>
                     <Label for="post-img" style={{ color: 'white' }}>Image File</Label>
-                    <Input type="file" name="photo" id="post-img" style={{ color: 'white' }} value={state.img1} onChange={e => this.setState({ img1: e.target.value })}/>
+                    <Input type="file" name="photo" id="post-img" style={{ color: 'white' }} value={state.img1} onChange={e => this.setState({ img1: e.target.files[0] })}/>
                     <FormText color="muted">
                         Please include an image(s) of the materials you wish to share.
                     </FormText>
