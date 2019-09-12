@@ -12,6 +12,23 @@ const databaseConnection = mysql.createConnection({
   insecureAuth: true,
 });
 
+<<<<<<< HEAD
+=======
+const findUser = (user) => new Promise((resolve, reject) => {
+  // select user from database if exists
+  const foundUser = `SELECT * FROM users where username= "${user}"`;
+
+  databaseConnection.query(foundUser, [user], (err, results, fields) => {
+    if (err) {
+      console.log(err);
+      return resolve(user);
+    } else {
+      return reject(err);
+    }
+  });
+});
+
+>>>>>>> 8bde6346263ee08e66f72f442c4177f15fbf0dde
 const saveUser = (user) =>
   // connection.connect();I don't think we need this, but leaving it here for now??
   new Promise((resolve, reject) => {
@@ -90,6 +107,7 @@ const saveImage = (image) => cloudinary.uploader.upload(image.tempFilePath);
 
 
 module.exports = {
+  findUser,
   databaseConnection,
   saveUser,
   savePost,
