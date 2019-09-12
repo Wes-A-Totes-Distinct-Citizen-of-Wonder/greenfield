@@ -37,7 +37,7 @@ class CreatePost extends React.Component {
             <Form onSubmit={this.onPostSubmit}>
                 <FormGroup>
                     <Label for="post-img" style={{ color: 'white' }}>Image File</Label>
-                    <Input type="file" name="file" id="post-img" style={{ color: 'white' }} value={state.img1} onChange={e => this.setState({ img1: e.target.value })}/>
+                    <Input type="file" name="photo" id="post-img" style={{ color: 'white' }} value={state.img1} onChange={e => this.setState({ img1: e.target.value })}/>
                     <FormText color="muted">
                         Please include an image(s) of the materials you wish to share.
                     </FormText>
