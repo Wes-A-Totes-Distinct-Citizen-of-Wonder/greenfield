@@ -76,6 +76,10 @@ app.post('/submitPost', (req, res) => {
     });
 });
 
+app.get('/posts', (req, res) => {
+  
+});
+
 app.listen(PORT, () => {
   console.log('Bitches be crazy on: 8080');
 });

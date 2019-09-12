@@ -10,6 +10,12 @@ const databaseConnection = mysql.createConnection({
   insecureAuth: true,
 });
 
+const getNearPosts = () => new Promise((resolve, reject) => {
+  const postsRecieved = 'SELECT * FROM POSTS';
+  // this needs to select everything from table WHERE specific posts match a geolocation when we add it
+  
+});
+
 
 const saveUser = (user) =>
   // connection.connect();I don't think we need this, but leaving it here for now??
