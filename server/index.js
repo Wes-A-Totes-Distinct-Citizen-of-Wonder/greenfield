@@ -59,17 +59,20 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
+  const image = req.files.photo;
   const { userId } = req.body;
-
-  const post = {
-    text: req.body.text,
-    img1: req.body.img1,
-    img2: req.body.img2 || null,
-    img3: req.body.img3 || null,
-    userId: req.body.userId,
-  };
-
-  savePost(post)
+  // saveImage(image);
+  cloudinary.uploader.upload(image.tempFilePath)
+    .then((result) => {
+      const post = {
+        text: req.body.text,
+        img1: result.secure_url,
+        img2: req.body.img2 || null,
+        img3: req.body.img3 || null,
+        userId: req.body.userId,
+      };
+      return savePost(post);
+    })
     .then(() => {
       increasePostCount(userId)
         .then(() => {

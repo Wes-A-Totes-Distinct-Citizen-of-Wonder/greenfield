@@ -20,6 +20,7 @@ CREATE TABLE posts (
   img2 varchar(255),
   img3 varchar(255),
   postNum INT DEFAULT 0,
+  location varchar(60),
   userId INT,
   PRIMARY KEY (postId),
   FOREIGN KEY (userId) REFERENCES users(userId)

@@ -47,7 +47,7 @@ const savePost = (post) =>
   // connection.connect();I don't think we need this, but leaving it here for now??
   new Promise((resolve, reject) => {
     // attempt to avoid sql injection. Not sure if this is completely correct though
-    const postInsert = 'INSERT INTO posts(postId, postText, img1, img2, img3, userId) VALUES (DEFAULT, ?)';
+    const postInsert = 'INSERT INTO posts(postId, postText, img1, img2, img3, location) VALUES (DEFAULT, ?)';
     // assuming <post> parameter is an object
     const insertValues = [post.text, post.img1, post.img2, post.img3, post.userId];
 
