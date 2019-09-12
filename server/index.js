@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const users = require('../server/database');
+// const users = require('../server/database');
 
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
@@ -9,13 +9,12 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const {
-  findUser, saveUser, savePost, increasePostCount, saveUsersPostCount,
+  findUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts
 } = require('./database/index.js');
 
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
 const config = require('./config.js');
-const { saveUser, savePost, increasePostCount, saveImage, saveUsersPostCount, displayPosts } = require('./database/index.js');
 
 cloudinary.config(config);// config object for connecting to cloudinary
 
