@@ -81,25 +81,15 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
-<<<<<<< HEAD
-  // const { userId } = req.body;
-
-=======
   const image = req.files.photo;
   const userId = 1;
->>>>>>> fe24e24f657b124443e2bfbcf8445a2d7191c292
   const post = {
     title: req.body.title,
     text: req.body.text,
-<<<<<<< HEAD
-    img1: req.body.img1,
-    // userId: req.body.userId,
-=======
     img1: null,
     title: req.body.title,
     location: null,
     tags: req.body.tags,
->>>>>>> fe24e24f657b124443e2bfbcf8445a2d7191c292
   };
 
   cloudinary.uploader.upload(image.tempFilePath)

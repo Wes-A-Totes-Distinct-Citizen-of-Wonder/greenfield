@@ -72,14 +72,19 @@ class App extends React.Component {
         this.currentPage = this.currentPage.bind(this);
         this.changeView = this.changeView.bind(this);
         this.changeUser = this.changeUser.bind(this);
+        this.getNearbyPosts = this.getNearbyPosts.bind(this);
     }
 
     componentDidMount() {
         this.getNearbyPosts()
         .then(nearPosts => {
+            if (nearPosts.length < 1) {
+                // return;
+            } else {
             this.setState({
                 posts: nearPosts
             })
+        }
         })
     }
     // grabs all posts close to geolocation and puts them in the posts array inside this.state
@@ -88,7 +93,10 @@ class App extends React.Component {
 
     getNearbyPosts() {
         return axios.get('/posts')
-        .then(response => response.data)
+        .then(response => {
+            // debugger;
+            response.data
+        })
     }
 
     changeView(newView) {

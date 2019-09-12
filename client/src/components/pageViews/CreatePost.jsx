@@ -32,9 +32,9 @@ class CreatePost extends React.Component {
             else {
                 bodyFormData.set(postProp[0], postProp[1]);
             }
-           
+        
         })
-       
+        
         axios.post('/submitPost', bodyFormData)
             .then(function (response) {
                 //handle success
