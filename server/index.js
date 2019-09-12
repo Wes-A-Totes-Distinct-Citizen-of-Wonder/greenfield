@@ -10,7 +10,7 @@ const app = express();
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
 const config = require('./config.js');
-const { saveUser, savePost, increasePostCount, saveImage, saveUsersPostCount } = require('./database/index.js');
+const { saveUser, savePost, increasePostCount, saveImage, saveUsersPostCount, displayPosts } = require('./database/index.js');
 
 cloudinary.config(config);// config object for connecting to cloudinary
 
