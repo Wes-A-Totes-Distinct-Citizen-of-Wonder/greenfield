@@ -12,13 +12,6 @@ const databaseConnection = mysql.createConnection({
   insecureAuth: true,
 });
 
-const getNearPosts = () => new Promise((resolve, reject) => {
-  const postsRecieved = 'SELECT * FROM POSTS';
-  // this needs to select everything from table WHERE specific posts match a geolocation when we add it
-  
-});
-
-
 const saveUser = (user) =>
   // connection.connect();I don't think we need this, but leaving it here for now??
   new Promise((resolve, reject) => {
@@ -53,9 +46,9 @@ const savePost = (post) =>
   // connection.connect();I don't think we need this, but leaving it here for now??
   new Promise((resolve, reject) => {
     // attempt to avoid sql injection. Not sure if this is completely correct though
-    const postInsert = 'INSERT INTO posts(postId, postText, img1, img2, img3, userId) VALUES (DEFAULT, ?)';
+    const postInsert = 'INSERT INTO posts(postId, postText, img1, title) VALUES (DEFAULT, ?)';
     // assuming <post> parameter is an object
-    const insertValues = [post.text, post.img1, post.img2, post.img3, post.userId];
+    const insertValues = [post.text, post.img1, post.title];
 
     databaseConnection.query(postInsert, [insertValues], (err, results, fields) => {
       if (err) {
@@ -80,7 +73,7 @@ const increasePostCount = (userId) => new Promise((resolve, reject) => {
 });
 
 const displayPosts = () => new Promise((resolve, reject) => {
-  const fetchedPosts = 'select posts.*, users.* from posts inner join users order by posts.postId desc';
+  const fetchedPosts = 'select posts.*, users.* from posts inner join users order by posts.postId desc';
 
   databaseConnection.query(fetchedPosts, (err, results) => {
     if (err) {
