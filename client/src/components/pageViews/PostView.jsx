@@ -10,8 +10,12 @@ const PostView = (props) => {
             <CardImg src={post.img1} />
             <CardBody>
                 <CardTitle>{post.title}</CardTitle>
+<<<<<<< HEAD
                 <CardSubtitle>{post.postText}</CardSubtitle>
                 <CardText>{post.postText}</CardText>
+=======
+                <CardText>{post.text}</CardText>
+>>>>>>> 96f390c82d8ef8edd0ef7ba7199cfcd7b1a658bc
             </CardBody>
             <MapContainer />
         </Card>

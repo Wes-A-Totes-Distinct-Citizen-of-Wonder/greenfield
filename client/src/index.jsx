@@ -93,10 +93,14 @@ class App extends React.Component {
 
     getNearbyPosts() {
         return axios.get('/posts')
+<<<<<<< HEAD
         .then(response => {
             // debugger;
             response.data
         })
+=======
+        .then(response => response.data);
+>>>>>>> 96f390c82d8ef8edd0ef7ba7199cfcd7b1a658bc
     }
 
     changeView(newView) {

@@ -15,7 +15,7 @@ CREATE TABLE users (
 
 CREATE TABLE posts (
   postId INT NOT NULL AUTO_INCREMENT,
-  postText varchar (255), 
+  text varchar (255), 
   img1 varchar (255) NOT NULL,
   title varchar (50),
   location varchar (255),
