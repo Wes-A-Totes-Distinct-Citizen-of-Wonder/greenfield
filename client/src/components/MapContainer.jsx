@@ -3,7 +3,7 @@ import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { convertToCoordinates } from './GeoLocation.js'
 import { API_KEY } from '../helpers/config.js'
 
-const mapStyles = {
+const mapStyles = {//sets map size
     width: '100%',
     height: '100%',
 }
@@ -13,7 +13,7 @@ class MapContainer extends Component {
       super(props);
   
       this.state = {
-        latLng: {
+        latLng: {//coordinates for map center and marker placement
           lat: 30,
           lng: -90
         },
@@ -21,7 +21,7 @@ class MapContainer extends Component {
     }
 
     componentDidMount() {
-      const { address } = this.props;
+      const { address } = this.props;//sets map center and marker on load
         if(address){
             convertToCoordinates(address)
             .then(response => {
