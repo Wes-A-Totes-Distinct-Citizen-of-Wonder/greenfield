@@ -85,6 +85,12 @@ class App extends React.Component {
     // grabs all posts close to geolocation and puts them in the posts array inside this.state
     // need some instruction on how to actually sort by geolocation though....
     // used for changeing the view of the page
+
+    getNearbyPosts() {
+        return axios.get('/posts')
+        .then(response => response.data)
+    }
+
     changeView(newView) {
         this.setState({
             view: newView
@@ -112,7 +118,7 @@ class App extends React.Component {
         switch(page) {
             case 'sign-up':
                 return(
-                    <SignUpView />
+                    <SignUpView changeView={this.changeView} />
                 )
             case 'login':
                 return(
