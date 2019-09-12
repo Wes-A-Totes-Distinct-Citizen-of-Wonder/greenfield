@@ -7,7 +7,9 @@ const bodyParser = require('body-parser');
 // const flash = require('connect-flash');//for User authentication pop up notifications
 
 const app = express();
-const { saveUser, savePost, increasePostCount } = require('./database/index.js');
+const {
+  saveUser, savePost, increasePostCount, saveUsersPostCount,
+} = require('./database/index.js');
 
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
@@ -19,8 +21,9 @@ app.post('/signUp', (req, res) => {
   // if user already exists, redirect back to sign-in
   // if username already taken, redirect back to sign-up
 
+  let userId;
+
   const userInfo = {
-    numPosts: 0,
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
@@ -28,12 +31,18 @@ app.post('/signUp', (req, res) => {
   };
   saveUser(userInfo)
   // .then () start session with hashed sessionId and userId, etc
-    .then(() => {
-      res.status(201).send('user saved in db');
+    .then((savedUser) => {
+      userId = savedUser.insertId;
     })
-    .catch((error) => {
-      console.log(error);
-      res.status(404).send('something went wrong and user was not saved in db');
+    .then(() => {
+      saveUsersPostCount(userId)
+        .then(() => {
+          res.status(201).send('user saved in db');
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(404).send('something went wrong and user was not saved in db');
+        });
     });
 });
 
@@ -44,7 +53,7 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
-  const userId = req.body.userId;
+  const { userId } = req.body;
 
   const post = {
     text: req.body.text,
@@ -65,6 +74,10 @@ app.post('/submitPost', (req, res) => {
           res.status(404).send('something went wrong with your post');
         });
     });
+});
+
+app.get('/posts', (req, res) => {
+  
 });
 
 app.listen(PORT, () => {

@@ -8,8 +8,9 @@ class CreatePost extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            img: '',
-            description: '',
+            img1: '',
+            title: '',
+            text: '',
             tags: '',
             address: '',
             city: '',
@@ -24,7 +25,9 @@ class CreatePost extends React.Component {
     }
 
     onPostSubmit() {
-        alert(JSON.stringify(this.state, null, " "))
+        const user = this.state;
+        // alert(JSON.stringify(this.state, null, " "));
+        return axios.post('/submitPost', user);
         // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
     }
 
@@ -34,14 +37,17 @@ class CreatePost extends React.Component {
             <Form onSubmit={this.onPostSubmit}>
                 <FormGroup>
                     <Label for="post-img" style={{ color: 'white' }}>Image File</Label>
-                    <Input type="file" name="file" id="post-img" style={{ color: 'white' }} value={state.img} onChange={e => this.setState({ img: e.target.value })}/>
+                    <Input type="file" name="photo" id="post-img" style={{ color: 'white' }} value={state.img1} onChange={e => this.setState({ img1: e.target.value })}/>
                     <FormText color="muted">
                         Please include an image(s) of the materials you wish to share.
                     </FormText>
                 </FormGroup>
                 <FormGroup>
+                    <Input type="text" name="text" id="post-desc" value={state.title} onChange={e => this.setState({ title: e.target.value })}placeholder="title your post" />
+                </FormGroup>
+                <FormGroup>
                     <Label for="post-desc" style={{ color: 'white' }}>Description</Label>
-                    <Input type="textarea" name="text" id="post-desc" value={state.description} onChange={e => this.setState({ description: e.target.value })}placeholder="limit of 255 characters" />
+                    <Input type="textarea" name="text" id="post-desc" value={state.text} onChange={e => this.setState({ text: e.target.value })}placeholder="limit of 255 characters" />
                 </FormGroup>
                 <FormGroup check>
                     <Label check for="post-tags" style={{ color: 'white' }}>

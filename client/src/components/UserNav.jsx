@@ -1,31 +1,31 @@
 import React from 'react';
 import { Nav, NavItem, NavLink } from 'reactstrap';
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
-class UserNav extends React.Component {
-    constructor (props) {
-        super(props);
-        this.state = {
+const UserNav = (props) => {
+    // constructor (props) {
+    //     super(props);
+    //     this.state = {
 
-        }
-
-    }
-        // userLogin(username, password) {
-
-        // }
-    render() {
+    //     }
+    // }
+    //     // userLogin(username, password) {
+        
+        //     // }
+        // render() {
+    const { changeView } = props;
+    const { user } = props;
     return (
         <div>
             <section float="left" width="10%" margin="0 1.5%">
-            <p style={{color: 'white'}}>USERNAME</p>
             <Nav vertical>
-                <NavLink className="Login" href="#">Login</NavLink> 
-                <NavLink className="Sign-up"href="#">Sign-up</NavLink>
+                <NavLink className="Username" href="#" style={{color: 'white'}} onClick={() => changeView('user-profile')}><h2>{user.username || ""}</h2></NavLink>
+                <NavLink className="Login" href="#" style={{color: 'white'}} onClick={() => changeView('login')}>Login</NavLink> 
+                <NavLink className="Sign-up" href="#" style={{color: 'white'}} onClick={() => changeView('sign-up')}>Sign-up</NavLink>
             </Nav>
             </section>
         </div>
     );
 }
-}
+
 
 export default UserNav;
