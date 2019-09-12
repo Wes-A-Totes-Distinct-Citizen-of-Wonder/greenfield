@@ -13,17 +13,22 @@ class LoginView extends React.Component {
         };
     }
 
+    onLoginSubmit() {
+        const user = this.state
+        return axios.post('/users', user)
+    }
+
     render() {
         return (
             <div>
-                <Form>
+                <Form onSubmit={this.onLoginSubmit}>
                     <FormGroup>
                         <Label  style={{ color: 'white' }}>Username</Label>
-                        <Input type='textarea' name='user' id='user-login'></Input>
+                        <Input type='text' name='username' id='user-login' value={state.username} onChange={e => this.setState({ username: e.target.value })}></Input>
                     </FormGroup>
                     <FormGroup>
                         <Label  style={{ color: 'white' }}>Password</Label>
-                        <Input type='textarea' name='password' id='password'></Input>
+                        <Input type='password' name='password' id='password' value={state.password} onChange={e => this.setState({ password: e.target.value })}></Input>
                     </FormGroup>
                     <Button type="submit" color="primary" block>Submit</Button>
                 </Form>
