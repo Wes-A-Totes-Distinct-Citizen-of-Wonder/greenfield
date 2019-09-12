@@ -1,5 +1,7 @@
 const mysql = require('mysql');
 // did some research and mysql2 seems better than mysql so using it here instead
+const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
+const config = require('../config.js');
 
 const databaseConnection = mysql.createConnection({
   // leaving this as localhost now, but I think it has to be changed for the deployed version
@@ -77,13 +79,31 @@ const increasePostCount = (userId) => new Promise((resolve, reject) => {
   });
 });
 
+const displayPosts = () => new Promise((resolve, reject) => {
+  const fetchedPosts = 'select posts.*, users.* from posts inner join users order by posts.postId desc';
+
+  databaseConnection.query(fetchedPosts, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
+
+cloudinary.config(config);// config object for connecting to cloudinary
+
+const saveImage = (image) => cloudinary.uploader.upload(image.tempFilePath);
+
 
 module.exports = {
   databaseConnection,
   saveUser,
   savePost,
   increasePostCount,
+  saveImage,
   saveUsersPostCount,
+  displayPosts,
 };
 
 
