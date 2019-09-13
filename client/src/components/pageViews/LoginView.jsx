@@ -11,11 +11,12 @@ class LoginView extends React.Component {
             username: '',
             password: '',
         };
+        this.onLoginSubmit = this.onLoginSubmit.bind(this);
     }
 
     onLoginSubmit() {
         const user = this.state
-        return axios.post('/users', user)
+        return axios.post('/login', user)
     }
 
     render() {
@@ -24,11 +25,11 @@ class LoginView extends React.Component {
                 <Form onSubmit={this.onLoginSubmit}>
                     <FormGroup>
                         <Label  style={{ color: 'white' }}>Username</Label>
-                        <Input type='text' name='username' id='user-login' value={state.username} onChange={e => this.setState({ username: e.target.value })}></Input>
+                        <Input type='text' name='username' id='user-login' value={this.state.username} onChange={e => this.setState({ username: e.target.value })}></Input>
                     </FormGroup>
                     <FormGroup>
                         <Label  style={{ color: 'white' }}>Password</Label>
-                        <Input type='password' name='password' id='password' value={state.password} onChange={e => this.setState({ password: e.target.value })}></Input>
+                        <Input type='password' name='password' id='password' value={this.state.password} onChange={e => this.setState({ password: e.target.value })}></Input>
                     </FormGroup>
                     <Button type="submit" color="primary" block>Submit</Button>
                 </Form>
