@@ -81,6 +81,9 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
+
+  // const to preserve tags for call to saveTags(tags) below
+  const { tags } = req.body;
   const image = req.files.photo;
   const userId = 1;
   const post = {
@@ -110,14 +113,17 @@ app.post('/submitPost', (req, res) => {
     })
     .then(() => {
       const userId = 1;
-      increasePostCount(userId)
-        .then(() => {
-          res.status(201).send('got your post!');
-        })
-        .catch((error) => {
-          console.log(error);
-          res.status(404).send('something went wrong with your post');
-        });
+      increasePostCount(userId);
+    })
+    .then(() => {
+      console.log(tags);
+    })
+    .then(() => {
+      res.status(201).send('got your post!');
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(404).send('something went wrong with your post');
     });
 });
 
