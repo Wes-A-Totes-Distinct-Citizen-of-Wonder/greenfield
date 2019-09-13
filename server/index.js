@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const bcrypt = require('bcrypt');
 // const users = require('../server/database');
 
 const PORT = process.env.PORT || 8080;
@@ -43,14 +44,17 @@ app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
   // if user already exists, redirect back to sign-in
   // if username already taken, redirect back to sign-up
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(req.body.password, salt);
+  
   let userId;
   const userInfo = {
     username: req.body.username,
-    password: req.body.password,
+    password: hash,
     email: req.body.email,
     business: req.body.business,
   };
-
+  
   return findUser(userInfo.username)
     .then((foundUser) => {
       res.status(409).send(foundUser);
