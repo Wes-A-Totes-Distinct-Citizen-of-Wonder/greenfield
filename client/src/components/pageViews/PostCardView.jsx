@@ -10,7 +10,7 @@ const PostCard = (props) => {
             <CardImg src={post.img1} />
             <CardBody>
                 <CardTitle>{post.title}</CardTitle>
-                <CardSubtitle>{post.subtitle}</CardSubtitle>
+                <CardSubtitle>{post.tags}</CardSubtitle>
                 <CardText>{post.text}</CardText>
             </CardBody>
         </Card>
