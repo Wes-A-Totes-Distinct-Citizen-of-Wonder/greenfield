@@ -126,15 +126,24 @@ app.post('/submitPost', (req, res) => {
     });
 });
 
-app.post('/users', (req, res) => {
-
+app.post('/login', (req, res) => {
   const user = {
     username: req.body.username,
     password: req.body.password,
   };
-
-
-})
+  return findUser(user.username)
+  .then(response => {
+    console.log('found User in DB')
+    const foundUser = response[0];
+    const eval = bcrypt.compareSync(user.password, foundUser.password);
+    if (eval) {
+      
+    }
+  })
+  .catch(() => {
+    console.log('no user found');
+  });
+});
 
 app.post('/test', (req, res) => {
   const image = req.files.photo;
