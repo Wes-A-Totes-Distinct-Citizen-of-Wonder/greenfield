@@ -36,6 +36,11 @@ CREATE TABLE postCount (
 
 CREATE TABLE tags (
   tagId INT AUTO_INCREMENT,
+  tag1 varchar (15),
+  tag2 varchar (15),
+  tag3 varchar (15),
+  tag4 varchar (15),
+  tag5 varchar (15),
   postId INT,
   PRIMARY KEY (tagId),
   FOREIGN KEY (postId),
