@@ -1,13 +1,15 @@
 const express = require('express');
+
+const app = express();
 const path = require('path');
 const bcrypt = require('bcrypt');
 
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
-// const passport = require('passport');//for User authentication
-// const flash = require('connect-flash');//for User authentication pop up notifications
 
-const app = express();
+const passport = require('passport'); // for User authentication
+// const flash = require('connect-flash'); // for User authentication pop up notifications
+
 
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;
@@ -27,6 +29,16 @@ app.use(fileUpload({
   useTempFiles: true,
 }));
 
+
+app.post('/signIn', (req, res) =>{
+  // will have to use passport for auth
+  const givenUser = req.body.username;
+  const givenPassword = req.body.password;
+  return findUser(givenUser)
+    .then((foundUser) => {
+      bcrypt.compareSync(givenPassword, foundUser.password);
+    })
+});
 
 app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
@@ -49,10 +61,10 @@ app.post('/signUp', (req, res) => {
       res.send(foundUser);
     }).catch(() => {
       saveUser(userInfo);
-      // .then () start session with hashed sessionId and userId, etc
     })
     .then((savedUser) => {
       userId = savedUser.insertId;
+      // then start a session and create a token
     })
     .then(() => {
       saveUsersPostCount(userId)
