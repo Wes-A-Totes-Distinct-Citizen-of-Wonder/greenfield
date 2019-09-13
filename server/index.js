@@ -57,7 +57,7 @@ app.post('/signUp', (req, res) => {
     .then(() => {
       saveUsersPostCount(userId)
         .then(() => {
-          res.status(201).send('user saved in db');
+          res.status(201).send('user saved in db'); // send token to use for sessions, where to store?
         })
         .catch((error) => {
           console.log(error);
