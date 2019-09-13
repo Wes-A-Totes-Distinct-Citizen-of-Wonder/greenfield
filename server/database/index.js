@@ -17,11 +17,11 @@ const findUser = (user) => new Promise((resolve, reject) => {
   const foundUser = `SELECT * FROM users where username= "${user}"`;
 
   databaseConnection.query(foundUser, [user], (err, results, fields) => {
-    if (err) {
-      console.log(err);
-      return resolve(user);
+    if (results.length === 0) {
+      // console.log(err);
+      return reject(user);
     }
-    return reject(err);
+    return resolve(results);
   });
 });
 
