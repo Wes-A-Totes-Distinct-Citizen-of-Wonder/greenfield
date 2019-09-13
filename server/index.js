@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const users = require('../server/database');
+const bcrypt = require('bcrypt');
 
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
@@ -8,16 +8,17 @@ const bodyParser = require('body-parser');
 // const flash = require('connect-flash');//for User authentication pop up notifications
 
 const app = express();
+
+const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
+const cloudinary = require('cloudinary').v2;
+// api for dealing with image DB, cloudinary
+cloudinary.config(config);// config object for connecting to cloudinary
+const config = require('./config.js');
+
 const {
   findUser, saveUser, savePost, increasePostCount, saveUsersPostCount,
 } = require('./database/index.js');
-
-const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
-const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
-const config = require('./config.js');
-const { saveUser, savePost, increasePostCount, saveImage, saveUsersPostCount } = require('./database/index.js');
-
-cloudinary.config(config);// config object for connecting to cloudinary
+const users = require('../server/database');
 
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
@@ -31,10 +32,14 @@ app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
   // if user already exists, redirect back to sign-in
   // if username already taken, redirect back to sign-up
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(req.body.password, salt);
+
   let userId;
   const userInfo = {
     username: req.body.username,
-    password: req.body.password,
+    salt,
+    password: hash,
     email: req.body.email,
     business: req.body.business,
   };
