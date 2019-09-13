@@ -43,7 +43,7 @@ CREATE TABLE tags (
   tag5 varchar (15),
   postId INT,
   PRIMARY KEY (tagId),
-  FOREIGN KEY (postId),
+  FOREIGN KEY (postId)
   REFERENCES posts(postId)
 )
 
