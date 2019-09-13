@@ -100,6 +100,17 @@ cloudinary.config(config);// config object for connecting to cloudinary
 
 const saveImage = (image) => cloudinary.uploader.upload(image.tempFilePath);
 
+// const saveTags = (tags) => new Promise((resolve, reject) => {
+//   //insert tags., tags. tags., tags. into tags table
+// });
+
+// const searchTags = () => new Promise ((resolve, reject) => {
+//   //when someone clicks the "search by tags" button, the server will need this function
+//   //to select * from posts and prob users.username/email/business inner join tags where posts.postId=tags.postId order by posts.postId desc
+//   //then display those on the screen
+//   //which means we'll need an app.get('/tagSearch') on server/index.js that calls this fn
+//   //and we'll need to call 
+// })
 
 module.exports = {
   findUser,
