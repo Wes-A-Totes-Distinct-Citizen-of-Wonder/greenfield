@@ -100,10 +100,10 @@ cloudinary.config(config);// config object for connecting to cloudinary
 
 const saveImage = (image) => cloudinary.uploader.upload(image.tempFilePath);
 
-const saveTags = (tags) => new Promise((resolve, reject) => {
+const saveTags = (tags, postId) => new Promise((resolve, reject) => {
   const formattedTags = { ...tags.split('/').splice(1) };
-  const tagsInsert = 'INSERT INTO tags(tagId, tag1, tag2, tag3, tag4, tag5) VALUES (DEFAULT, ?)';
-  const insertValues = [formattedTags.tag1, formattedTags.tag2 || null, formattedTags.tag3 || null, formattedTags.tag4 || null, formattedTags.tag5 || null];
+  const tagsInsert = 'INSERT INTO tags(tagId, tag1, tag2, tag3, tag4, tag5, postId) VALUES (DEFAULT, ?)';
+  const insertValues = [formattedTags.tag1, formattedTags.tag2 || null, formattedTags.tag3 || null, formattedTags.tag4 || null, formattedTags.tag5 || null, postId];
   databaseConnection.query(tagsInsert, [insertValues], (err, results) => {
     if (err) {
       return reject(err);
