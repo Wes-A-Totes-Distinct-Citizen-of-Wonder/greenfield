@@ -20,13 +20,14 @@ class App extends React.Component {
             view: 'default',
             selectedPost: {},
             user: {
-                username: "Wes",
-                email: "wtschmidt94@gmail.com",
-                loggedIn: false,
-                geolocation: {
-                    lat: 'here',
-                    lng: 'now'
-                },
+                userId: '',
+                username: "",
+                email: "",
+                business: '',
+                // geolocation: {
+                //     lat: 'here',
+                //     lng: 'now'
+                // },
             },
             posts: [
                 // example data:
@@ -84,6 +85,7 @@ class App extends React.Component {
             this.setState({
                 posts: nearPosts
             })
+            event.preventDefault();
         }
         })
     }
@@ -114,6 +116,7 @@ class App extends React.Component {
         this.setState({
             user: newUser
         })
+        event.preventDefault();
     }
 
     currentPage(page) {
