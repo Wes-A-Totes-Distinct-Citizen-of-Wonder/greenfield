@@ -18,7 +18,7 @@ const cloudinaryConfig = require('./config.js');
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
-  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
+  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, saveTags, displayPosts,
 } = require('./database/index.js');
 
 cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
