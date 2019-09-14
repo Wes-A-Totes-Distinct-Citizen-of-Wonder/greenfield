@@ -23,9 +23,9 @@ class LoginView extends React.Component {
         // .then((newUser) => {
         //     console.log(newUser)
         // })
-        .then(response => {
-            console.error(response);
-            this.props.changeUser(newUser.data);
+        .then(newUser => {
+            console.log(newUser.data);
+            this.props.changeUser(newUser);
             event.preventDefault();
         })
         .catch(err => {
