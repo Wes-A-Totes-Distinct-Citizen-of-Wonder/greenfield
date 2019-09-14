@@ -134,7 +134,7 @@ class App extends React.Component {
                 )
             case 'create-post':
                 return(
-                    <CreatePost changeView={this.changeView} />
+                    <CreatePost changeView={this.changeView} getNearbyPosts={this.getNearbyPosts} />
                     );
             case 'post-view':
                 return(

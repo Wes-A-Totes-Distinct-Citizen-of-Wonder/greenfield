@@ -34,7 +34,6 @@ class CreatePost extends React.Component {
         axios.post('/submitPost', bodyFormData)
             .then(function (response) {
                 //handle success
-                console.log(response);
             })
             .catch(function (response) {
                 //handle error
