@@ -145,7 +145,7 @@ app.post(`/login`, (req, res) => {
   findUser(user.username)
   .then(response => {
     let authUser = authorize(response, user)
-    res.send("poopy doodoo");
+    res.send(authUser);
     // console.log('found User in DB')
   })
       // .then(returnUser => {
@@ -160,7 +160,7 @@ app.post(`/login`, (req, res) => {
 })
 
 const authorize = (signIn, user) => {
-  return new Promise ((resolve, reject) => {
+  // return new Promise ((resolve, reject) => {
     const foundUser = signIn[0];
     const eval = bcrypt.compareSync(user.password, foundUser.password);
     if (eval) {
@@ -170,11 +170,11 @@ const authorize = (signIn, user) => {
         email: foundUser.email,
         business: foundUser.business,
       }
-      resolve (returnUser);
+      return (returnUser);
     } else {
-      reject ("password doesn't match!")
+      return ("password doesn't match!")
     }
-  })
+  // })
 }
 
 app.post('/test', (req, res) => {
