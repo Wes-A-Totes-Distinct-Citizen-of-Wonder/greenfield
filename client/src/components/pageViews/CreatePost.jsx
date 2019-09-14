@@ -23,7 +23,6 @@ class CreatePost extends React.Component {
     onPostSubmit() {
         const user = this.state;
         const bodyFormData = new FormData();
-        
         Object.entries(user).forEach((postProp) => {
             if (postProp[0] === 'img1') {
                 bodyFormData.append('photo', user.img1);
@@ -31,7 +30,6 @@ class CreatePost extends React.Component {
             else {
                 bodyFormData.set(postProp[0], postProp[1]);
             }
-        
         })
         axios.post('/submitPost', bodyFormData)
             .then(function (response) {
