@@ -5,9 +5,9 @@ CREATE DATABASE trashPanda;
 USE trashPanda;
 
 CREATE TABLE users (
-  userId INT NOT NULL AUTO_INCREMENT,
+  userId INT AUTO_INCREMENT,
   username varchar(50) NOT NULL,
-  password varchar(100) NOT NULL,
+  password varchar(200) NOT NULL,
   email varchar(50) NOT NULL,
   business varchar(255),
   PRIMARY KEY (userId)
@@ -29,7 +29,6 @@ CREATE TABLE posts (
 CREATE TABLE postCount (
   count INT DEFAULT 0,
   userId INT,
-  -- PRIMARY KEY (count),
   FOREIGN KEY (userId)
   REFERENCES users(userId)
 );

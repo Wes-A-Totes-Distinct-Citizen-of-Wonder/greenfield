@@ -3,6 +3,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+// const users = require('../server/database');
 
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
@@ -17,7 +18,7 @@ const cloudinaryConfig = require('./config.js');
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
-  getUser, findUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
+  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
 } = require('./database/index.js');
 
 cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
@@ -55,7 +56,6 @@ app.post('/signUp', (req, res) => {
   // if username already taken, redirect back to sign-up
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(req.body.password, salt);
-  
   let userId;
   const userInfo = {
     username: req.body.username,
@@ -65,13 +65,8 @@ app.post('/signUp', (req, res) => {
   };
   
   return findUser(userInfo.username)
-    // .then((foundUser) => {
-    //   res.status(409).send(foundUser);
-    // })
-    .then(() => {
-      return saveUser(userInfo);
+    .then(() => saveUser(userInfo))
       // .then () start session with hashed sessionId and userId, etc
-    })
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
@@ -84,7 +79,8 @@ app.post('/signUp', (req, res) => {
           console.log(error);
           res.status(404).send('something went wrong and user was not saved in db');
         });
-    }).catch((user) => {
+    })
+    .catch((user) => {
       res.status(409).send(user);
     });
 });
@@ -142,7 +138,7 @@ app.post(`/login`, (req, res) => {
     username: req.body.username,
     password: req.body.password,
   };
-  getUser(user.username)
+  return getUser(user.username)
   .then((response) => {
     let result = authorize(response, user)
     res.json(result);

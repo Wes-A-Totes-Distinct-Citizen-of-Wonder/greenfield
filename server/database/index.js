@@ -20,7 +20,6 @@ const findUser = (user) => new Promise((resolve, reject) => {
 
   databaseConnection.query(foundUser, [user], (err, results, fields) => {
     if (results.length > 0) {
-      // console.log(err);
       return reject(user);
     }
     return resolve(results);
@@ -79,14 +78,13 @@ const savePost = (post) =>
     // assuming <post> parameter is an object
     const insertValues = [post.text, post.img1, post.title, post.location, post.tags];
 
-    databaseConnection.query(postInsert, [insertValues], (err, results, fields) => {
+    databaseConnection.query(postInsert, [insertValues], (err, results) => {
       if (err) {
         console.log(err);
         return reject(err);
       }
-      return resolve(results, fields); // need this?
+      return resolve(results); // need this?
     });
-    // connection.end(); I don't think we need this, but leaving it here for now??
   });
 
 const increasePostCount = (userId) => new Promise((resolve, reject) => {
