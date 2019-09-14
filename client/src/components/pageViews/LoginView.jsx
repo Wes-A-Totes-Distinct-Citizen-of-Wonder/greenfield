@@ -15,18 +15,18 @@ class LoginView extends React.Component {
     }
 
     onLoginSubmit() {
+        event.preventDefault()
         const user = this.state
-        // debugger;
         axios.post(`/login`, user)
-        // console.log(newUser)
-        // .then((newUser) => {
-        //     console.log(newUser)
-        // })
         .then(newUser => {
+<<<<<<< HEAD
             console.log(newUser.data)
             alert(newUser.data);
             this.props.changeUser(newUser.data);
             event.preventDefault();
+=======
+        return this.props.changeUser(newUser.data);
+>>>>>>> b667462be9294575296a96269103aed5595f1661
         })
         .catch(err => {
             console.error(err);

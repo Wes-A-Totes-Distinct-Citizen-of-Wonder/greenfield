@@ -80,8 +80,10 @@ app.post('/signUp', (req, res) => {
   };
 
   return findUser(userInfo.username)
-    .then(() => saveUser(userInfo))
-  // .then () start session with hashed sessionId and userId, etc
+    .then(() => {
+      return saveUser(userInfo)
+    })
+      // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
