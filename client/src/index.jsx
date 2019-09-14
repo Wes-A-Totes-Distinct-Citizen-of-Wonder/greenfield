@@ -22,11 +22,6 @@ class App extends React.Component {
             user: {
                 username: "Wes",
                 email: "wtschmidt94@gmail.com",
-                loggedIn: false,
-                geolocation: {
-                    lat: 'here',
-                    lng: 'now'
-                },
             },
             posts: [
                 // example data:

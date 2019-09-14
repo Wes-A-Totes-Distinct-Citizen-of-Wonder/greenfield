@@ -16,12 +16,12 @@ export default class LoginForm extends React.Component {
         }
     }
 
-    handleVlidSubmit = (event, values) => {
+    handleValidSubmit(event, values) {
         this.setState({email: values.email}) //needs tobe edited 
         console.log('Login Succesful')
     };
 
-    handleInvalidSubmit = (event, errors, values) => {
+    handleInvalidSubmit (event, errors, values) {
         this.setState({ email: values.email, error: true});
         console.log('Login failed');
     };
