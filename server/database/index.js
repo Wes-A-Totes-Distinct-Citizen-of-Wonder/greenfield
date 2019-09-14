@@ -17,11 +17,24 @@ const findUser = (user) => new Promise((resolve, reject) => {
   const foundUser = `SELECT * FROM users where username= "${user}"`;
 
   databaseConnection.query(foundUser, [user], (err, results, fields) => {
-    if (err) {
-      console.log(err);
-      return resolve(user);
+    if (results.length > 0) {
+      return reject(user);
     }
-    return reject(err);
+    return resolve(results);
+  });
+});
+
+// same code as above, just reversed the reject and resolve for login
+const getUser = (user) => new Promise((resolve, reject) => {
+  // select user from database if exists
+  const foundUser = `SELECT * FROM users where username= "${user}"`;
+
+  databaseConnection.query(foundUser, [user], (err, results, fields) => {
+    if (results.length > 0) {
+      // console.log(err);
+      return resolve(results);
+    }
+    return reject(user);
   });
 });
 
@@ -122,6 +135,7 @@ const saveTags = (tags, postId) => new Promise((resolve, reject) => {
 
 module.exports = {
   findUser,
+  getUser,
   databaseConnection,
   saveUser,
   savePost,

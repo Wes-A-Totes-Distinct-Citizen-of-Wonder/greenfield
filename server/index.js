@@ -1,5 +1,8 @@
 const express = require('express');
 const path = require('path');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 // const users = require('../server/database');
 
 const PORT = process.env.PORT || 8080;
@@ -15,10 +18,19 @@ const cloudinaryConfig = require('./config.js');
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
-  findUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
+  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
 } = require('./database/index.js');
 
 cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
+
+app.use(cookieParser());
+
+app.use(session({
+  secret: 'trashPanda secret',
+  cookie: {
+    expires: 600000
+  },
+}))
 
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
@@ -43,26 +55,27 @@ app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
   // if user already exists, redirect back to sign-in
   // if username already taken, redirect back to sign-up
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(req.body.password, salt);
+
   let userId;
   const userInfo = {
     username: req.body.username,
-    password: req.body.password,
+    password: hash,
     email: req.body.email,
     business: req.body.business,
   };
 
   return findUser(userInfo.username)
-    .then((foundUser) => {
-      res.send(foundUser);
-    }).catch(() => {
-      saveUser(userInfo);
-      // .then () start session with hashed sessionId and userId, etc
+    .then(() => {
+      return saveUser(userInfo)
     })
+      // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
     .then(() => {
-      saveUsersPostCount(userId)
+     return saveUsersPostCount(userId)
         .then(() => {
           res.status(201).send('user saved in db');
         })
@@ -70,6 +83,9 @@ app.post('/signUp', (req, res) => {
           console.log(error);
           res.status(404).send('something went wrong and user was not saved in db');
         });
+    })
+    .catch((user) => {
+      res.status(409).send(user);
     });
 });
 
@@ -109,7 +125,7 @@ app.post('/submitPost', (req, res) => {
     .then((geoLocation) => {
       const { location } = geoLocation.data.results[0].geometry;
       post.location = `${location.lat}, ${location.lng}`;
-      savePost(post);
+      return savePost(post);
     })
     .then(() => {
       const userId = 1;
@@ -127,6 +143,47 @@ app.post('/submitPost', (req, res) => {
     });
 });
 
+app.post(`/login`, (req, res) => {
+  // let authUser;
+  const user = {
+    username: req.body.username,
+    password: req.body.password,
+  };
+  return getUser(user.username)
+  .then((response) => {
+    let result = authorize(response, user)
+    res.json(result);
+  })
+    // console.log('found User in DB')
+  // })
+      // .then(returnUser => {
+      //   res.status(201).send(returnUser)
+      // })
+      // .catch((err) => {
+      //   res.send(err)
+      // })
+  .catch(() => {
+    console.log('no user found');
+  });
+})
+
+const authorize = (signIn, user) => {
+  // return new Promise ((resolve, reject) => {
+    const foundUser = signIn[0];
+    const eval = bcrypt.compareSync(user.password, foundUser.password);
+    if (eval) {
+      const returnUser = {
+        userId: foundUser.userId,
+        username: foundUser.username,
+        email: foundUser.email,
+        business: foundUser.business,
+      }
+      return (returnUser);
+    } else {
+      return ("password doesn't match!")
+    }
+  // })
+}
 
 app.post('/test', (req, res) => {
   const image = req.files.photo;

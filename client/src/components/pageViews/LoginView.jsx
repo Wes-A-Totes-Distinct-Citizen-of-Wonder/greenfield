@@ -11,20 +11,39 @@ class LoginView extends React.Component {
             username: '',
             password: '',
         };
+        this.onLoginSubmit = this.onLoginSubmit.bind(this);
+    }
+
+    onLoginSubmit() {
+        const user = this.state
+        // debugger;
+        axios.post(`/login`, user)
+        // console.log(newUser)
+        // .then((newUser) => {
+        //     console.log(newUser)
+        // })
+        .then(newUser => {
+            console.log(newUser.data)
+            alert(newUser.data);
+            this.props.changeUser(newUser);
+            event.preventDefault();
+        })
+        .catch(err => {
+            console.error(err);
+        })
     }
 
     render() {
         return (
             <div>
-                <h1>LOGIN HERE!!!</h1>
-                <Form>
+                <Form onSubmit={this.onLoginSubmit}>
                     <FormGroup>
-                        <Label>Username</Label>
-                        <Input type='textarea' name='user' id='user-login'></Input>
+                        <Label  style={{ color: 'white' }}>Username</Label>
+                        <Input type='text' name='username' id='user-login' value={this.state.username} onChange={e => this.setState({ username: e.target.value })}></Input>
                     </FormGroup>
                     <FormGroup>
-                        <Label>Password</Label>
-                        <Input type='textarea' name='password' id='password'></Input>
+                        <Label  style={{ color: 'white' }}>Password</Label>
+                        <Input type='password' name='password' id='password' value={this.state.password} onChange={e => this.setState({ password: e.target.value })}></Input>
                     </FormGroup>
                     <Button type="submit" color="primary" block>Submit</Button>
                 </Form>
