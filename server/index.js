@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
-// const users = require('../server/database');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
@@ -20,6 +21,15 @@ const {
 } = require('./database/index.js');
 
 cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
+
+app.use(cookieParser());
+
+app.use(session({
+  secret: 'trashPanda secret',
+  cookie: {
+    expires: 600000
+  },
+}))
 
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
@@ -126,24 +136,46 @@ app.post('/submitPost', (req, res) => {
     });
 });
 
-app.post('/login', (req, res) => {
+app.post(`/login`, (req, res) => {
+  // let authUser;
   const user = {
     username: req.body.username,
     password: req.body.password,
   };
-  return findUser(user.username)
+  findUser(user.username)
   .then(response => {
-    console.log('found User in DB')
-    const foundUser = response[0];
-    const eval = bcrypt.compareSync(user.password, foundUser.password);
-    if (eval) {
-      
-    }
+    let authUser = authorize(response, user)
+    res.send("poopy doodoo");
+    // console.log('found User in DB')
   })
+      // .then(returnUser => {
+      //   res.status(201).send(returnUser)
+      // })
+      // .catch((err) => {
+      //   res.send(err)
+      // })
   .catch(() => {
     console.log('no user found');
   });
-});
+})
+
+const authorize = (signIn, user) => {
+  return new Promise ((resolve, reject) => {
+    const foundUser = signIn[0];
+    const eval = bcrypt.compareSync(user.password, foundUser.password);
+    if (eval) {
+      const returnUser = {
+        userId: foundUser.userId,
+        username: foundUser.username,
+        email: foundUser.email,
+        business: foundUser.business,
+      }
+      resolve (returnUser);
+    } else {
+      reject ("password doesn't match!")
+    }
+  })
+}
 
 app.post('/test', (req, res) => {
   const image = req.files.photo;
