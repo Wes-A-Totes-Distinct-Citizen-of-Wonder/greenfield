@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
+import { changeUser } from '../../index.jsx';
 
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
 
@@ -16,7 +17,20 @@ class LoginView extends React.Component {
 
     onLoginSubmit() {
         const user = this.state
-        return axios.post('/login', user)
+        // debugger;
+        axios.post(`/login`, user)
+        // console.log(newUser)
+        // .then((newUser) => {
+        //     console.log(newUser)
+        // })
+        .then(response => {
+            console.error(response);
+            this.props.changeUser(newUser.data);
+            event.preventDefault();
+        })
+        .catch(err => {
+            console.error(err);
+        })
     }
 
     render() {
