@@ -23,6 +23,11 @@ class SignUpView extends React.Component {
         // axios.post('/signUp', { username: `${user.username}` })
         if (user.password === user.varifyPass) {
             return axios.post('/signUp', user)
+            .then((successfulSignUp) => {
+                alert(successfulSignUp);
+            }).catch(() => {
+                alert(`username: ${user.username} has already been taken, sorry.... jackass`)
+            })
         } else {
             // props.changeView('sign-up');
             alert("Your passwords don't match!")

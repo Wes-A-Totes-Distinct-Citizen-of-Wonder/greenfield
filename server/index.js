@@ -17,7 +17,7 @@ const cloudinaryConfig = require('./config.js');
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
-  findUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
+  getUser, findUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
 } = require('./database/index.js');
 
 cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
@@ -49,7 +49,6 @@ app.get('/posts', (req, res) => {
     });
 });
 
-
 app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
   // if user already exists, redirect back to sign-in
@@ -66,17 +65,18 @@ app.post('/signUp', (req, res) => {
   };
   
   return findUser(userInfo.username)
-    .then((foundUser) => {
-      res.status(409).send(foundUser);
-    }).catch(() => {
-      saveUser(userInfo);
+    // .then((foundUser) => {
+    //   res.status(409).send(foundUser);
+    // })
+    .then(() => {
+      return saveUser(userInfo);
       // .then () start session with hashed sessionId and userId, etc
     })
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
     .then(() => {
-      saveUsersPostCount(userId)
+      return saveUsersPostCount(userId)
         .then(() => {
           res.status(201).send('user saved in db');
         })
@@ -84,9 +84,10 @@ app.post('/signUp', (req, res) => {
           console.log(error);
           res.status(404).send('something went wrong and user was not saved in db');
         });
+    }).catch((user) => {
+      res.status(409).send(user);
     });
 });
-
 
 app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
@@ -98,7 +99,6 @@ app.post('/submitPost', (req, res) => {
   const image = req.files.photo;
   const userId = 1;
   const post = {
-    title: req.body.title,
     text: req.body.text,
     img1: null,
     title: req.body.title,
@@ -121,7 +121,7 @@ app.post('/submitPost', (req, res) => {
     .then((geoLocation) => {
       const { location } = geoLocation.data.results[0].geometry;
       post.location = `${location.lat}, ${location.lng}`;
-      savePost(post);
+      return savePost(post);
     })
     .then(() => {
       const userId = 1;
@@ -142,12 +142,13 @@ app.post(`/login`, (req, res) => {
     username: req.body.username,
     password: req.body.password,
   };
-  findUser(user.username)
-  .then(response => {
-    let authUser = authorize(response, user)
-    res.send(authUser);
-    // console.log('found User in DB')
+  getUser(user.username)
+  .then((response) => {
+    let result = authorize(response, user)
+    res.json(result);
   })
+    // console.log('found User in DB')
+  // })
       // .then(returnUser => {
       //   res.status(201).send(returnUser)
       // })

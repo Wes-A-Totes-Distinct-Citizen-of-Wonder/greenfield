@@ -29,45 +29,7 @@ class App extends React.Component {
                 //     lng: 'now'
                 // },
             },
-            posts: [
-                // example data:
-            // {
-            //     img: require("./../images/Drawing1.png"),
-            //     title: "Card Title",
-            //     subtitle: "Card Subtitle",
-            //     description: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-            // },
-            // {
-            //     img: require('./../images/Space Hand Painting.jpg'),
-            //     title: "Space hand",
-            //     subtitle: "Simply a hand in space",
-            //     description: "Created using acrylics on canvas.",
-            // },
-            // {
-            //     img: require('./../images/Space Forrest Painting.jpg'),
-            //     title: "Interstellar Forest",
-            //     subtitle: "It's fall somewhere at least",
-            //     description: "Created using acrylics on canvas.",
-            // },
-            // {
-            //     img: require("./../images/Drawing1.png"),
-            //     title: "Card Title",
-            //     subtitle: "Card Subtitle",
-            //     description: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-            // },
-            // {
-            //     img: require('./../images/Space Hand Painting.jpg'),
-            //     title: "Space hand",
-            //     subtitle: "Simply a hand in space",
-            //     description: "Created using acrylics on canvas.",
-            // },
-            // {
-            //     img: require('./../images/Space Forrest Painting.jpg'),
-            //     title: "Interstellar Forest",
-            //     subtitle: "It's fall somewhere at least",
-            //     description: "Created using acrylics on canvas.",
-            // },
-            ]
+            posts: []
         }
         this.changePostView = this.changePostView.bind(this);
         this.currentPage = this.currentPage.bind(this);

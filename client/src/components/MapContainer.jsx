@@ -22,7 +22,7 @@ class MapContainer extends Component {
     componentDidMount() {
       const { geoLocation } = this.props;
       const coordinatesArray = geoLocation.split(', ');
-      debugger;
+      // debugger;
       this.setState({
         latLng:{
         lat: parseFloat(coordinatesArray[0]),

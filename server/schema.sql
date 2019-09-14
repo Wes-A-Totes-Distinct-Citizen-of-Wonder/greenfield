@@ -29,7 +29,7 @@ CREATE TABLE posts (
 CREATE TABLE postCount (
   count INT DEFAULT 0,
   userId INT,
-  PRIMARY KEY (count),
+  -- PRIMARY KEY (count),
   FOREIGN KEY (userId)
   REFERENCES users(userId)
 );
