@@ -17,11 +17,24 @@ const findUser = (user) => new Promise((resolve, reject) => {
   const foundUser = `SELECT * FROM users where username= "${user}"`;
 
   databaseConnection.query(foundUser, [user], (err, results, fields) => {
-    if (err) {
-      console.log(err);
-      return resolve(user);
+    if (results.length > 0) {
+      return reject(user);
     }
-    return reject(err);
+    return resolve(results);
+  });
+});
+
+// same code as above, just reversed the reject and resolve for login
+const getUser = (user) => new Promise((resolve, reject) => {
+  // select user from database if exists
+  const foundUser = `SELECT * FROM users where username= "${user}"`;
+
+  databaseConnection.query(foundUser, [user], (err, results, fields) => {
+    if (results.length > 0) {
+      // console.log(err);
+      return resolve(results);
+    }
+    return reject(user);
   });
 });
 
@@ -63,14 +76,13 @@ const savePost = (post) =>
     // assuming <post> parameter is an object
     const insertValues = [post.text, post.img1, post.title, post.location, post.tags];
 
-    databaseConnection.query(postInsert, [insertValues], (err, results, fields) => {
+    databaseConnection.query(postInsert, [insertValues], (err, results) => {
       if (err) {
         console.log(err);
         return reject(err);
       }
-      return resolve(results, fields); // need this?
+      return resolve(results); // need this?
     });
-    // connection.end(); I don't think we need this, but leaving it here for now??
   });
 
 const increasePostCount = (userId) => new Promise((resolve, reject) => {
@@ -104,6 +116,7 @@ const saveImage = (image) => cloudinary.uploader.upload(image.tempFilePath);
 
 module.exports = {
   findUser,
+  getUser,
   databaseConnection,
   saveUser,
   savePost,
