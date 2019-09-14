@@ -67,13 +67,15 @@ app.post('/signUp', (req, res) => {
   };
 
   return findUser(userInfo.username)
-    .then(() => saveUser(userInfo))
+    .then(() => {
+      return saveUser(userInfo)
+    })
       // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
     .then(() => {
-     return saveUsersPostCount(userId)
+    return saveUsersPostCount(userId)
         .then(() => {
           res.status(201).send('user saved in db');
         })
