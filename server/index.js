@@ -116,7 +116,7 @@ app.post('/submitPost', (req, res) => {
       increasePostCount(userId);
     })
     .then(() => {
-      console.log(tags);
+      saveTags(post.tags);
     })
     .then(() => {
       res.status(201).send('got your post!');
