@@ -105,10 +105,11 @@ class App extends React.Component {
     }
 
     changeUser(newUser) {
+        event.preventDefault();
         this.setState({
-            user: newUser
+            user: newUser,
+            view: 'default'
         })
-        this.changeView('default');
     }
 
     currentPage(page) {
