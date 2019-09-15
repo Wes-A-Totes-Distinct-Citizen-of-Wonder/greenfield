@@ -24,8 +24,8 @@ class App extends React.Component {
             },
             user: {
                 username: (function(){
-                    if(JSON.parse(sessionStorage.getItem('user')).isLoggedIn) {
-                        const { username } = JSON.parse(sessionStorage.getItem('user'));
+                    if(sessionStorage.getItem('user') && JSON.parse(sessionStorage.getItem('user')).isLoggedIn) {
+                        const { username } = JSON.parse(sessionStorage.getItem('user') );
                         return username;
                     }
                 })() || "guest",
@@ -130,7 +130,7 @@ class App extends React.Component {
             this.setState({
                 selectedPost: {
                     postInfo: newPost,
-                    userInfo: response.data,
+                    userInfo: response.data[0],
                 },
                 view: 'post-view'
             })
