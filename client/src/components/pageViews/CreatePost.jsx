@@ -21,13 +21,15 @@ class CreatePost extends React.Component {
             city: '',
             state: '',
             zip: '',
-            currUser: currUser
+            currUser: currUser 
+            //may not need ^^^^^ this is req.sessions can aquire current user info
         };
         this.onPostSubmit = this.onPostSubmit.bind(this);
     }
 
     onPostSubmit(event) {
         // event.preventDefault();
+        // const userItem = JSON.parse(sessionStorage.getItem(user))
         const user = this.state;
         // alert(user.currUser.email);
         const bodyFormData = new FormData();
@@ -48,9 +50,17 @@ class CreatePost extends React.Component {
                 this.props.changeView('default');
             })
             .catch((response) => {
+                if (response.response.status === 400) {
+                    alert(response.response.data);
+                }
                 
-                this.props.changeView('sign-up');
-                alert(response);
+                if (response.response.status === 404) {
+                    alert(response.response.data);
+                    this.props.changeView('login');
+                }
+                if (response.response.status === 500) {
+                    alert('You must include an image with your post');
+                }
             });
         // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
     }

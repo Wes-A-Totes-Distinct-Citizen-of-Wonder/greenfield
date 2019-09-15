@@ -18,33 +18,41 @@ class App extends React.Component {
         super(props);
         this.state = {
             view: 'default',
-            selectedPost: {},
-            user: {
-                username: "guest",
-                email: "",
-                userId: 0,
+            selectedPost: {
+                postInfo: {},
+                userInfo: {}
             },
+            user: {
+                username: (function(){
+                            if(JSON.parse(sessionStorage.getItem('user')).isLoggedIn && sessionStorage.getItem('user')) {
+                                const { username } = JSON.parse(sessionStorage.getItem('user'));
+                                return username;
+                            }
+                          })() || "guest",
+                            email: "",
+                            userId: 0,
+                  },
             posts: [
-                // {
-                //     img1: require('../images/Space Hand Painting.jpg'),
-                //     text: "hey bro",
-                //     tags: "/lumber/metal",
-                //     // address: "yo mama",
-                //     // city: "Kenner",
-                //     // state: "LA",
-                //     // zip: "70065",
-                //     location: "5 charlene ct./Kenner/LA/70065"
-                // },
-                // {
-                //     img1: require('../images/Drawing1.png'),
-                //     text: "cat bro",
-                //     tags: "/lumber/metal",
-                //     // address: "yo mama",
-                //     // city: "Kenner",
-                //     // state: "LA",
-                //     // zip: "70065",
-                //     location: "5 charlene ct./Kenner/LA/70065"
-                // }
+                {
+                    img1: require('../images/Space Hand Painting.jpg'),
+                    text: "hey bro",
+                    tags: "/lumber/metal",
+                    // address: "yo mama",
+                    // city: "Kenner",
+                    // state: "LA",
+                    // zip: "70065",
+                    location: "5 charlene ct./Kenner/LA/70065"
+                },
+                {
+                    img1: require('../images/Drawing1.png'),
+                    text: "cat bro",
+                    tags: "/lumber/metal",
+                    // address: "yo mama",
+                    // city: "Kenner",
+                    // state: "LA",
+                    // zip: "70065",
+                    location: "5 charlene ct./Kenner/LA/70065"
+                }
             ],
         }
         this.changePostView = this.changePostView.bind(this);
@@ -62,15 +70,34 @@ class App extends React.Component {
             if (nearPosts.length < 1) {
                 // return;
             } else {
-            this.setState({
-                posts: nearPosts
-            })
-            event.preventDefault();
-        }
+                this.setState({
+                    posts: nearPosts,
+                })
+                // event.preventDefault();
+            }
         })
-        .then(() => {
+        .then(() => axios.get('/userSession'))
+        .then((response) => {
+            const userInfo = response.data;
+            sessionStorage.setItem("user", JSON.stringify(userInfo));
             
+            if (userInfo.isLoggedIn){
+                this.setState({
+                    user: {
+                        username: userInfo.username,
+                        email: userInfo.email,
+                    }
+                });
+            } else (
+                this.setState({
+                    user: {
+                        username: 'guest',
+                        email: '',
+                    }
+                })
+            )
         })
+        .catch((err) => alert(err))
     }
     // grabs all posts close to geolocation and puts them in the posts array inside this.state
     // need some instruction on how to actually sort by geolocation though....
@@ -98,9 +125,15 @@ class App extends React.Component {
     // used when clicking on a post to show more detail
     // may not need this if we're looking for post id in DB
     changePostView(newPost) {
-        this.setState({
-            selectedPost: newPost,
-            view: 'post-view'
+        return axios.post('/postInfo', { userId: newPost.userId })
+        .then(response => {
+            this.setState({
+                selectedPost: {
+                    postInfo: newPost,
+                    userInfo: response.data,
+                },
+                view: 'post-view'
+            })
         })
     }
 
@@ -131,7 +164,7 @@ class App extends React.Component {
                 );
             case 'post-view':
                 return(
-                    <PostView post={selectedPost} changeView={this.changeView} />
+                    <PostView post={selectedPost.postInfo} user={selectedPost.userInfo} changeView={this.changeView} />
                 );
             case 'user-profile':
                 // Not being used currently -> was gonna put active posts for users
@@ -146,8 +179,8 @@ class App extends React.Component {
     }
 
     logout(event){
-        return axios.delete('/logout')
-        .then(() => alert('You have been logged out'))
+        axios.post('/logout')
+        .catch((err) => console.error(err))
     }
 
     render() {
@@ -163,7 +196,7 @@ class App extends React.Component {
                 </Row>
                 <Row style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px'}}>
                     <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: 'auto'}}>
-                        <UserNav changeView={this.changeView} user={user}/>
+                        <UserNav changeView={this.changeView} user={user} logout={this.logout}/>
                     </Col>
                     <Col sm='10' style={{padding: '25px', backgroundColor: "rgb(47, 74, 94)", paddingBottom: 'auto', borderRadius: '4px'}}>
                         {this.currentPage(view)}
