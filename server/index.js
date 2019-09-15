@@ -81,9 +81,7 @@ app.post('/signUp', (req, res) => {
   };
 
   return findUser(userInfo.username)
-    .then(() => {
-      return saveUser(userInfo)
-    })
+    .then(() => saveUser(userInfo))
     // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
@@ -241,6 +239,17 @@ app.post('/tagSearch', (req, res) => {
       res.status(201).send(posts);
     })
     .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post('/postInfo', (req, res) => {
+  getPostInfo()
+    .then((onePostInfo) => {
+      res.status(201).send(onePostInfo);
+    })
+    .catch((error) => {
+      console.log(error);
       res.status(500).send(error);
     });
 });
