@@ -7,6 +7,7 @@ import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'react
 class CreatePost extends React.Component {
     constructor(props) {
         super(props);
+        const { currUser } = this.props;
         this.state = {
             img1: '',
             title: '',
@@ -20,6 +21,7 @@ class CreatePost extends React.Component {
             city: '',
             state: '',
             zip: '',
+            currUser: currUser
         };
         this.onPostSubmit = this.onPostSubmit.bind(this);
     }
@@ -27,6 +29,7 @@ class CreatePost extends React.Component {
     onPostSubmit(event) {
         event.preventDefault();
         const user = this.state;
+        // alert(user.currUser.email);
         const bodyFormData = new FormData();
         
         Object.entries(user).forEach((postProp) => {
@@ -41,7 +44,6 @@ class CreatePost extends React.Component {
         
         axios.post('/submitPost', bodyFormData)
             .then((response) => {
-               
                 console.log(response);
                 this.props.changeView('default');
             })
@@ -73,19 +75,19 @@ class CreatePost extends React.Component {
                 </FormGroup>
                 <FormGroup check>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ lumber: !this.state.lumber })}/>{'Lumber'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.lumber} onChange={() => this.setState({ lumber: !this.state.lumber })}/>{'Lumber'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ metal: !this.state.metal })}/>{'Metal'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.metal} onChange={() => this.setState({ metal: !this.state.metal })}/>{'Metal'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ concrete: !this.state.concrete })}/>{'Concrete'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.concrete} onChange={() => this.setState({ concrete: !this.state.concrete })}/>{'Concrete'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ glass: !this.state.glass })}/>{'Glass'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.glass} onChange={() => this.setState({ glass: !this.state.glass })}/>{'Glass'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ piping: !this.state.piping })}/>{'Piping'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.piping} onChange={() => this.setState({ piping: !this.state.piping })}/>{'Piping'}</Col>
                     </Label>
                     <FormText color="muted">
                         Please select at least one related tag.

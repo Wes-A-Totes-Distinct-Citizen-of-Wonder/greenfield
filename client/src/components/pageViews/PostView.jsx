@@ -7,15 +7,21 @@ import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col
 const PostView = (props) => {
     const { post } = props;
     return (
-        <Card>
+        <Row>
+        <Col sm='6'>
+            <Card>
             <CardImg src={post.img1} />
             <CardBody>
                 <CardTitle>{post.title}</CardTitle>
                 <CardSubtitle>{post.tags}</CardSubtitle>
                 <CardText>{post.text}</CardText>
             </CardBody>
+            </Card>
+        </Col>
+        <Col sm='5'>
             <MapContainer geoLocation={post.location}/>
-        </Card>
+        </Col>
+        </Row>
     );
 }
 
