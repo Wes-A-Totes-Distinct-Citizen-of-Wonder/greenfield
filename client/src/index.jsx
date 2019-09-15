@@ -21,7 +21,12 @@ class App extends React.Component {
             view: 'default',
             selectedPost: {},
             user: {
-                username: "guest",
+                username: (function(){
+                    if(sessionStorage.getItem('user')) {
+                        const { username } = JSON.parse(sessionStorage.getItem('user'));
+                        return username;
+                    }
+                })() || "guest",
                 email: "",
                 tester: 0,
             },
@@ -61,6 +66,7 @@ class App extends React.Component {
                 });
             }
         })
+        .catch((err) => alert(err))
     }
     // grabs all posts close to geolocation and puts them in the posts array inside this.state
     // need some instruction on how to actually sort by geolocation though....
