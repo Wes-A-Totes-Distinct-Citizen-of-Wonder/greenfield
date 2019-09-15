@@ -21,14 +21,10 @@ class App extends React.Component {
             view: 'default',
             selectedPost: {},
             user: {
-                username: "Wes",
-                email: "wtschmidt94@gmail.com",
+                username: "Guestly",
+                email: "",
                 business: "",
                 userId: '',
-                geolocation: {
-                    lat: 'here',
-                    lng: 'now'
-                },
             },
             posts: []
         }
@@ -37,6 +33,7 @@ class App extends React.Component {
         this.changeView = this.changeView.bind(this);
         this.changeUser = this.changeUser.bind(this);
         this.getNearbyPosts = this.getNearbyPosts.bind(this);
+        this.searchByTag= this.searchByTag.bind(this);
     }
 
     componentDidMount() {
@@ -55,6 +52,15 @@ class App extends React.Component {
     // grabs all posts close to geolocation and puts them in the posts array inside this.state
     // need some instruction on how to actually sort by geolocation though....
     // used for changeing the view of the page
+
+    searchByTag(tag) {
+        return axios.post('/tagSearch', tag)
+        .then(response => {
+            this.setState({
+                posts: response.data
+            })
+        })
+    }
 
     getNearbyPosts() {
         return axios.get('/posts')
@@ -110,7 +116,7 @@ class App extends React.Component {
                 )
             default :
                 return (
-                    <PostCard posts={posts} changePostView={this.changePostView} />
+                    <PostCard posts={posts} changePostView={this.changePostView} searchByTag={this.searchByTag} />
                 );
         }
     }
