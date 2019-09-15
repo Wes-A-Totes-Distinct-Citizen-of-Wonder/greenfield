@@ -126,6 +126,7 @@ app.post('/submitPost', (req, res) => {
       concrete: req.body.concrete === 'true',
       glass: req.body.glass === 'true',
       piping: req.body.piping === 'true',
+      userId: req.session.userId,
     };
 
 
@@ -191,6 +192,7 @@ app.post('/login', (req, res) => {
       req.session.username = result.username;
       req.session.email = result.email;
       req.session.business = result.business;
+      req.session.userId = result.userId;
       res.cookie('session_id', req.session.id);
       res.json(result);
     })
