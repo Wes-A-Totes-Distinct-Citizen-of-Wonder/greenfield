@@ -6,15 +6,19 @@ import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col
 
 const PostView = (props) => {
     const { post } = props;
+    const { user } = props;
     return (
         <Row>
         <Col sm='6'>
             <Card>
             <CardImg src={post.img1} />
             <CardBody>
-                <CardTitle>{post.title}</CardTitle>
+                <CardText>Posted by: {user.username}</CardText>
+                <CardText>Business: {user.business}</CardText>
+                <CardText>Contact information: {user.email}</CardText>
+                <CardTitle>Title: {post.title}</CardTitle>
+                <CardText>Description: {post.text}</CardText>
                 <CardSubtitle>{post.tags}</CardSubtitle>
-                <CardText>{post.text}</CardText>
             </CardBody>
             </Card>
         </Col>

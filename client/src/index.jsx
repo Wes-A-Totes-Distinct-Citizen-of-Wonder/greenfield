@@ -18,7 +18,10 @@ class App extends React.Component {
         super(props);
         this.state = {
             view: 'default',
-            selectedPost: {},
+            selectedPost: {
+                postInfo: {},
+                userInfo: {}
+            },
             user: {
                 username: (function(){
                     if(JSON.parse(sessionStorage.getItem('user')).isLoggedIn) {
@@ -30,26 +33,26 @@ class App extends React.Component {
                 userId: 0,
             },
             posts: [
-                // {
-                //     img1: require('../images/Space Hand Painting.jpg'),
-                //     text: "hey bro",
-                //     tags: "/lumber/metal",
-                //     // address: "yo mama",
-                //     // city: "Kenner",
-                //     // state: "LA",
-                //     // zip: "70065",
-                //     location: "5 charlene ct./Kenner/LA/70065"
-                // },
-                // {
-                //     img1: require('../images/Drawing1.png'),
-                //     text: "cat bro",
-                //     tags: "/lumber/metal",
-                //     // address: "yo mama",
-                //     // city: "Kenner",
-                //     // state: "LA",
-                //     // zip: "70065",
-                //     location: "5 charlene ct./Kenner/LA/70065"
-                // }
+                {
+                    img1: require('../images/Space Hand Painting.jpg'),
+                    text: "hey bro",
+                    tags: "/lumber/metal",
+                    // address: "yo mama",
+                    // city: "Kenner",
+                    // state: "LA",
+                    // zip: "70065",
+                    location: "5 charlene ct./Kenner/LA/70065"
+                },
+                {
+                    img1: require('../images/Drawing1.png'),
+                    text: "cat bro",
+                    tags: "/lumber/metal",
+                    // address: "yo mama",
+                    // city: "Kenner",
+                    // state: "LA",
+                    // zip: "70065",
+                    location: "5 charlene ct./Kenner/LA/70065"
+                }
             ],
         }
         this.changePostView = this.changePostView.bind(this);
@@ -122,9 +125,15 @@ class App extends React.Component {
     // used when clicking on a post to show more detail
     // may not need this if we're looking for post id in DB
     changePostView(newPost) {
-        this.setState({
-            selectedPost: newPost,
-            view: 'post-view'
+        return axios.post('/postInfo', { userId: newPost.userId })
+        .then(response => {
+            this.setState({
+                selectedPost: {
+                    postInfo: newPost,
+                    userInfo: response.data,
+                },
+                view: 'post-view'
+            })
         })
     }
 
@@ -155,7 +164,7 @@ class App extends React.Component {
                 );
             case 'post-view':
                 return(
-                    <PostView post={selectedPost} changeView={this.changeView} />
+                    <PostView post={selectedPost.postInfo} user={selectedPost.userInfo} changeView={this.changeView} />
                 );
             case 'user-profile':
                 // Not being used currently -> was gonna put active posts for users

@@ -21,13 +21,15 @@ class CreatePost extends React.Component {
             city: '',
             state: '',
             zip: '',
-            // currUser: currUser
+            currUser: currUser 
+            //may not need ^^^^^ this is req.sessions can aquire current user info
         };
         this.onPostSubmit = this.onPostSubmit.bind(this);
     }
 
     onPostSubmit(event) {
         event.preventDefault();
+        // const userItem = JSON.parse(sessionStorage.getItem(user))
         const user = this.state;
         // alert(user.currUser.email);
         const bodyFormData = new FormData();

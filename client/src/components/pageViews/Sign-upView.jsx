@@ -34,7 +34,7 @@ class SignUpView extends React.Component {
                     business: user.business,
                     userId: response.data.userId
                 }
-                alert(newUser.userId)
+                // alert(newUser.userId)
                 this.props.changeUser(newUser);
             })
         } else {
