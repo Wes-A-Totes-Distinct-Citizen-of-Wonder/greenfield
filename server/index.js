@@ -64,6 +64,24 @@ app.get('/posts', (req, res) => {
     });
 });
 
+app.get('/userSession', (req, res) => {
+  const {
+    userId,
+    isLoggedIn,
+    username,
+    email,
+    buisness,
+  } = req.session;
+
+  const userInfo = {
+    userId,
+    isLoggedIn,
+    username,
+    email,
+    buisness,
+  };
+  res.status(200).send(userInfo);
+});
 
 app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
@@ -104,6 +122,7 @@ app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
   // if not logged in, re-route to sign-up page
 
+  // req.session.isLoggedIn = false;
   if (!req.session.isLoggedIn) {
     console.log(req.session.username);
     res.status(400).send('log in or signup!');
@@ -130,7 +149,6 @@ app.post('/submitPost', (req, res) => {
       userId: req.session.userId,
     };
 
-
     cloudinary.uploader.upload(image.tempFilePath)
       .then((result) => {
         post.img1 = result.secure_url;
@@ -151,12 +169,20 @@ app.post('/submitPost', (req, res) => {
       .then(() => {
         increasePostCount(post.userId);
       })
+    // .then(() => {
+    //   let postId = 2
+    //   saveTags(tags, postId);
+    // })
       .then(() => {
         res.status(201).send('got your post!');
       })
       .catch((error) => {
         console.log(error);
-        res.status(404).send('something went wrong with your post');
+        if (!image) {
+          res.status(400).send('You must include a picture with your post.');
+        } else {
+          res.status(501).send('Something went wrong with your post!');
+        }
       });
   }
 });
@@ -188,6 +214,7 @@ app.post('/login', (req, res) => {
   return getUser(user.username)
     .then((response) => {
       const result = authorize(response, user);
+      req.session.userId = result.userId;
       req.session.isLoggedIn = true;
       req.session.username = result.username;
       req.session.email = result.email;
@@ -209,9 +236,9 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.delete('/logout', (req, res) => {
+app.post('/logout', (req, res) => {
   req.session.isLoggedIn = false;
-  res.status(201);
+  res.status(201).send('great job');
 });
 
 const authorize = (signIn, user) => {

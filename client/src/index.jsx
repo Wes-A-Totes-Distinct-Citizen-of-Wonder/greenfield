@@ -23,7 +23,12 @@ class App extends React.Component {
                 userInfo: {}
             },
             user: {
-                username: "guest",
+                username: (function(){
+                    if(JSON.parse(sessionStorage.getItem('user')).isLoggedIn) {
+                        const { username } = JSON.parse(sessionStorage.getItem('user'));
+                        return username;
+                    }
+                })() || "guest",
                 email: "",
                 userId: 0,
             },
@@ -65,15 +70,34 @@ class App extends React.Component {
             if (nearPosts.length < 1) {
                 // return;
             } else {
-            this.setState({
-                posts: nearPosts
-            })
-            event.preventDefault();
-        }
+                this.setState({
+                    posts: nearPosts,
+                })
+                // event.preventDefault();
+            }
         })
-        .then(() => {
+        .then(() => axios.get('/userSession'))
+        .then((response) => {
+            const userInfo = response.data;
+            sessionStorage.setItem("user", JSON.stringify(userInfo));
             
+            if (userInfo.isLoggedIn){
+                this.setState({
+                    user: {
+                        username: userInfo.username,
+                        email: userInfo.email,
+                    }
+                });
+            } else (
+                this.setState({
+                    user: {
+                        username: 'guest',
+                        email: '',
+                    }
+                })
+            )
         })
+        .catch((err) => alert(err))
     }
     // grabs all posts close to geolocation and puts them in the posts array inside this.state
     // need some instruction on how to actually sort by geolocation though....
@@ -155,8 +179,8 @@ class App extends React.Component {
     }
 
     logout(event){
-        return axios.delete('/logout')
-        .then(() => alert('You have been logged out'))
+        axios.post('/logout')
+        .catch((err) => console.error(err))
     }
 
     render() {
@@ -172,7 +196,7 @@ class App extends React.Component {
                 </Row>
                 <Row style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px'}}>
                     <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: 'auto'}}>
-                        <UserNav changeView={this.changeView} user={user}/>
+                        <UserNav changeView={this.changeView} user={user} logout={this.logout}/>
                     </Col>
                     <Col sm='10' style={{padding: '25px', backgroundColor: "rgb(47, 74, 94)", paddingBottom: 'auto', borderRadius: '4px'}}>
                         {this.currentPage(view)}
