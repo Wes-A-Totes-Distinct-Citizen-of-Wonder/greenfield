@@ -55,6 +55,7 @@ app.use(fileUpload({
 app.get('/posts', (req, res) => {
   displayPosts()
     .then((posts) => {
+      // debugger;
       res.status(201).send(posts);
     })
     .catch((error) => {
@@ -98,8 +99,10 @@ app.post('/signUp', (req, res) => {
   };
 
   return findUser(userInfo.username)
-    .then(() => saveUser(userInfo))
-  // .then () start session with hashed sessionId and userId, etc
+    .then(() => {
+      return saveUser(userInfo)
+    })
+    // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
@@ -134,7 +137,7 @@ app.post('/submitPost', (req, res) => {
     // const to preserve tags for call to saveTags(tags) below
     // const { tags } = req.body;
     const image = req.files.photo;
-    const userId = 1;
+    // const userId = 1;
     const post = {
       text: req.body.text,
       img1: null,
@@ -184,7 +187,10 @@ app.post('/submitPost', (req, res) => {
           res.status(501).send('Something went wrong with your post!');
         }
       });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28e2bf2f7d2e9ffa35d516cfba56345a3f30b451
   }
 });
 
@@ -220,28 +226,31 @@ app.post('/login', (req, res) => {
       req.session.username = result.username;
       req.session.email = result.email;
       req.session.business = result.business;
+      req.session.userId = result.userId;
       res.cookie('session_id', req.session.id);
       res.json(result);
     })
     // console.log('found User in DB')
-  // })
-  // .then(returnUser => {
-  //   res.status(201).send(returnUser)
-  // })
-  // .catch((err) => {
-  //   res.send(err)
-  // })
+    // })
+    // .then(returnUser => {
+    //   res.status(201).send(returnUser)
+    // })
+    // .catch((err) => {
+    //   res.send(err)
+    // })
     .catch((err) => {
+<<<<<<< HEAD
       console.error(err);
       res.status(404).send('incorrect username or password');
+=======
+      res.status(404);
+>>>>>>> 28e2bf2f7d2e9ffa35d516cfba56345a3f30b451
     });
 });
 
 app.delete('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) res.status(400).send('there was an error logging out');
-    else res.status(201).send('successfully logged out!');
-  });
+  req.session.isLoggedIn = false;
+  res.status(201);
 });
 
 const authorize = (signIn, user) => {

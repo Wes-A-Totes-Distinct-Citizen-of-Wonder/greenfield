@@ -20,13 +20,13 @@ class LoginView extends React.Component {
         const user = this.state
         axios.post(`/login`, user)
         .then(newUser => {
-            sessionStorage.setItem('user', JSON.stringify(newUser.data));
+            // sessionStorage.setItem('user', JSON.stringify(newUser.data));
             return this.props.changeUser(newUser.data);
         })
         .then(() => {
             
         })
-        .catch(err => alert(err))
+        .catch(err => alert('incorrect username or password'))
     }
 
     render() {

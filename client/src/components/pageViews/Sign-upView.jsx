@@ -24,6 +24,9 @@ class SignUpView extends React.Component {
         // axios.post('/signUp', user)
         if (user.password === user.varifyPass) {
             return axios.post('/signUp', user)
+            .then(() => {
+                return axios.post(`/login`, { username: user.username, password: user.password })
+            })
             .then((response) => {
                 const newUser = {
                     username: user.username,
@@ -31,6 +34,7 @@ class SignUpView extends React.Component {
                     business: user.business,
                     userId: response.data.userId
                 }
+                alert(newUser.userId)
                 this.props.changeUser(newUser);
             })
         } else {
