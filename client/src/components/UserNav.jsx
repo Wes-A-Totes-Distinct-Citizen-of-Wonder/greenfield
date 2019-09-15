@@ -4,16 +4,6 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 
 
 const UserNav = (props) => {
-    // constructor (props) {
-    //     super(props);
-    //     this.state = {
-
-    //     }
-    // }
-    //     // userLogin(username, password) {
-        
-        //     // }
-        // render() {
     const { changeView } = props;
     const { user } = props;
     return (
@@ -23,6 +13,7 @@ const UserNav = (props) => {
                 <NavLink className="Username" href="#" style={{color: 'white', size: '5em'}} onClick={() => changeView('user-profile')}>{user.username || ""}</NavLink>
                 <NavLink className="Login" href="#" style={{color: 'white'}} onClick={() => changeView('login')}>Login</NavLink> 
                 <NavLink className="Sign-up" href="#" style={{color: 'white'}} onClick={() => changeView('sign-up')}>Sign-up</NavLink>
+                <NavLink className='Sign-Out' href='#' style={{color: 'white'}} onClick={() => alert('you have signed out')} >Sign-out</NavLink>
                 {/* <SearchTag /> */}
             </Nav>
             </section>
