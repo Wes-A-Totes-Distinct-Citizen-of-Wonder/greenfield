@@ -47,7 +47,7 @@ class CreatePost extends React.Component {
             })
             .catch((response) => {
                 if (response.response.status === 400) {
-                    lert(response.response.data);
+                    alert(response.response.data);
                 }
                 
                 if (response.response.status === 404) {
