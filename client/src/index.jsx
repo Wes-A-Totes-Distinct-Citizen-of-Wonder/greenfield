@@ -25,26 +25,26 @@ class App extends React.Component {
                 userId: 0,
             },
             posts: [
-                {
-                    img1: require('../images/Space Hand Painting.jpg'),
-                    text: "hey bro",
-                    tags: "/lumber/metal",
-                    // address: "yo mama",
-                    // city: "Kenner",
-                    // state: "LA",
-                    // zip: "70065",
-                    location: "5 charlene ct./Kenner/LA/70065"
-                },
-                {
-                    img1: require('../images/Drawing1.png'),
-                    text: "cat bro",
-                    tags: "/lumber/metal",
-                    // address: "yo mama",
-                    // city: "Kenner",
-                    // state: "LA",
-                    // zip: "70065",
-                    location: "5 charlene ct./Kenner/LA/70065"
-                }
+                // {
+                //     img1: require('../images/Space Hand Painting.jpg'),
+                //     text: "hey bro",
+                //     tags: "/lumber/metal",
+                //     // address: "yo mama",
+                //     // city: "Kenner",
+                //     // state: "LA",
+                //     // zip: "70065",
+                //     location: "5 charlene ct./Kenner/LA/70065"
+                // },
+                // {
+                //     img1: require('../images/Drawing1.png'),
+                //     text: "cat bro",
+                //     tags: "/lumber/metal",
+                //     // address: "yo mama",
+                //     // city: "Kenner",
+                //     // state: "LA",
+                //     // zip: "70065",
+                //     location: "5 charlene ct./Kenner/LA/70065"
+                // }
             ],
         }
         this.changePostView = this.changePostView.bind(this);
