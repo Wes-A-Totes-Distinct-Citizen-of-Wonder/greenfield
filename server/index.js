@@ -188,6 +188,8 @@ app.post('/login', (req, res) => {
       const result = authorize(response, user);
       req.session.isLoggedIn = true;
       req.session.username = result.username;
+      req.session.email = result.email;
+      req.session.business = result.business;
       res.cookie('session_id', req.session.id);
       res.json(result);
     })
@@ -199,9 +201,16 @@ app.post('/login', (req, res) => {
   // .catch((err) => {
   //   res.send(err)
   // })
-    .catch(() => {
-      console.log('no user found');
+    .catch((err) => {
+      res.status(404).send('incorrect username or password');
     });
+});
+
+app.delete('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) res.status(400).send('there was an error logging out');
+    else res.status(201).send('successfully logged out!')
+  });
 });
 
 const authorize = (signIn, user) => {

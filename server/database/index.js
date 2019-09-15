@@ -113,10 +113,6 @@ cloudinary.config(config);// config object for connecting to cloudinary
 
 const saveImage = (image) => cloudinary.uploader.upload(image.tempFilePath);
 
-const findSession = (sessionId) => {
-  const foundSession = `SELECT * FROM sessions where session_id= "${sessionId}"`;
-}
-
 
 module.exports = {
   findUser,
