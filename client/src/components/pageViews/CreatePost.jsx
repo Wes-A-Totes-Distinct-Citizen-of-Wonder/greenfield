@@ -28,7 +28,7 @@ class CreatePost extends React.Component {
     }
 
     onPostSubmit(event) {
-        event.preventDefault();
+        // event.preventDefault();
         // const userItem = JSON.parse(sessionStorage.getItem(user))
         const user = this.state;
         // alert(user.currUser.email);
