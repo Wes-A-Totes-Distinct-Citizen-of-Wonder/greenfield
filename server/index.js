@@ -120,19 +120,20 @@ app.post('/submitPost', (req, res) => {
     // const userId = 1;
 
     let tags = '';
-    if (req.body.lumber) {
+
+    if (req.body.lumber === 'true') {
       tags += 'lumber ';
-    }
-    if (req.body.metal) {
+    } 
+    if (req.body.metal === 'true') {
       tags += 'metal ';
     }
-    if (req.body.concrete) {
+    if (req.body.concrete === 'true') {
       tags += 'concrete ';
     }
-    if (req.body.glass) {
+    if (req.body.glass === 'true') {
       tags += 'glass ';
     }
-    if (req.body.piping) {
+    if (req.body.piping === 'true') {
       tags += 'piping ';
     }
 
