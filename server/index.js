@@ -22,28 +22,28 @@ const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 const {
   findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
 } = require('./database/index.js');
+
 const options = {
   host: 'localhost',
   user: 'root',
   password: '',
   database: 'trashPanda',
-}
+};
 const sessionStore = new MySQLStore(options);
 
 cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
 
-app.use(cookieParser());
-
 app.use(session({
-  
   secret: 'trashPanda secret',
   cookie: {
-    expires: 600000
+    expires: 6000000,
   },
   store: sessionStore,
   resave: false,
   saveUninitialized: false,
-}))
+}));
+
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
@@ -63,6 +63,9 @@ app.get('/posts', (req, res) => {
     });
 });
 
+app.get('/auth', (req, res) => {
+
+});
 
 app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
@@ -83,7 +86,7 @@ app.post('/signUp', (req, res) => {
     .then(() => {
       return saveUser(userInfo)
     })
-      // .then () start session with hashed sessionId and userId, etc
+  // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
@@ -106,63 +109,69 @@ app.post('/signUp', (req, res) => {
 app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
   // if not logged in, re-route to sign-up page
+  req.session.isLoggedIn = false;
+  if(!req.session.isLoggedIn) {
+    console.log(req.session.username);
+    res.status(400).send('log in or signup!');
+  } else {
   // then somehow pull their username out of the req.body, and use that in savePost() call below
+    console.log(req.session.username);
+    // TEMPORARY standin for userId. replace with actual data when it exists
+    // const { userId } = verifySession;
+    const image = req.files.photo;
+    const userId = 1;
+    const post = {
+      text: req.body.text,
+      img1: null,
+      title: req.body.title,
+      location: null,
+      tags: req.body.tags,
+    };
 
-  // TEMPORARY standin for userId. replace with actual data when it exists
-  // const { userId } = verifySession;
-  const image = req.files.photo;
-  const userId = 1;
-  const post = {
-    text: req.body.text,
-    img1: null,
-    title: req.body.title,
-    location: null,
-    tags: req.body.tags,
-  };
+    cloudinary.uploader.upload(image.tempFilePath)
+      .then((result) => {
+        post.img1 = result.secure_url;
+        const {
+          address, city, state, zip,
+        } = req.body;
+        const fullAddress = {
+          address, city, state, zip,
+        };
 
-  cloudinary.uploader.upload(image.tempFilePath)
-    .then((result) => {
-      post.img1 = result.secure_url;
-      const {
-        address, city, state, zip,
-      } = req.body;
-      const fullAddress = {
-        address, city, state, zip,
-      };
-
-      return convertToCoordinates(fullAddress);
-    })
-    .then((geoLocation) => {
-      const { location } = geoLocation.data.results[0].geometry;
-      post.location = `${location.lat}, ${location.lng}`;
-      return savePost(post);
-    })
-    .then(() => {
-      const userId = 1;
-      increasePostCount(userId)
-        .then(() => {
-          res.status(201).send('got your post!');
-        })
-        .catch((error) => {
-          console.log(error);
-          res.status(404).send('something went wrong with your post');
-        });
-    });
+        return convertToCoordinates(fullAddress);
+      })
+      .then((geoLocation) => {
+        const { location } = geoLocation.data.results[0].geometry;
+        post.location = `${location.lat}, ${location.lng}`;
+        return savePost(post);
+      })
+      .then(() => {
+        const userId = 1;
+        increasePostCount(userId)
+          .then(() => {
+            res.status(201).send('got your post!');
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(404).send('something went wrong with your post');
+          });
+      });
+  }
 });
 
-app.use(function (req, res, next) {
-  if (!req.session.views) {
-    req.session.views = {}
-  }
+// app.use(function (req, res, next) {
+//   if (!req.session.views) {
+//     req.session.views = {}
+//   }
  
-  // get the url pathname
-  var pathname = parseurl(req).pathname
+//   // get the url pathname
+//   var pathname = parseurl(req).pathname
  
-  // count the views
-  req.session.views[pathname] = (req.session.views[pathname] || 0) + 1
+//   // count the views
+//   req.session.views[pathname] = (req.session.views[pathname] || 0) + 1
  
-  next()
-})
+//   next()
+// })
  
 // app.get('/foo', function (req, res, next) {
 //   res.send('you viewed this page ' + req.session.views['/foo'] + ' times')
@@ -179,6 +188,7 @@ app.post('/login', (req, res) => {
       const result = authorize(response, user);
       req.session.isLoggedIn = true;
       req.session.username = result.username;
+      res.cookie('session_id', req.session.id);
       res.json(result);
     })
     // console.log('found User in DB')

@@ -35,12 +35,13 @@ class CreatePost extends React.Component {
         })
        
         axios.post('/submitPost', bodyFormData)
-            .then(function (response) {
-                //handle success
+            .then((response) => {
+               
                 console.log(response);
             })
-            .catch(function (response) {
-                //handle error
+            .catch((response) => {
+                
+                this.props.changeView('sign-up');
                 alert(response);
             });
         // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working

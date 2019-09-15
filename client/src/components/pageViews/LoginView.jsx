@@ -19,14 +19,7 @@ class LoginView extends React.Component {
         const user = this.state
         axios.post(`/login`, user)
         .then(newUser => {
-<<<<<<< HEAD
-            console.log(newUser.data)
-            alert(newUser.data);
-            this.props.changeUser(newUser.data);
-            event.preventDefault();
-=======
         return this.props.changeUser(newUser.data);
->>>>>>> b667462be9294575296a96269103aed5595f1661
         })
         .catch(err => {
             console.error(err);
