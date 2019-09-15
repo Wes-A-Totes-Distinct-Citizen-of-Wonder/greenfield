@@ -21,7 +21,7 @@ class App extends React.Component {
             selectedPost: {},
             user: {
                 username: (function(){
-                    if(sessionStorage.getItem('user'['isLoggedIn']) === 'true') {
+                    if(JSON.parse(sessionStorage.getItem('user')).isLoggedIn) {
                         const { username } = JSON.parse(sessionStorage.getItem('user'));
                         return username;
                     }
