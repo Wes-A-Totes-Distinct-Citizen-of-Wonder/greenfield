@@ -72,9 +72,9 @@ const savePost = (post) =>
   // connection.connect();I don't think we need this, but leaving it here for now??
   new Promise((resolve, reject) => {
     // attempt to avoid sql injection. Not sure if this is completely correct though
-    const postInsert = 'INSERT INTO posts(postId, text, img1, title, location, tags) VALUES (DEFAULT, ?)';
+    const postInsert = 'INSERT INTO posts(postId, text, img1, title, location, lumber, metal, concrete, glass, piping) VALUES (DEFAULT, ?)';
     // assuming <post> parameter is an object
-    const insertValues = [post.text, post.img1, post.title, post.location, post.tags];
+    const insertValues = [post.text, post.img1, post.title, post.location, post.lumber, post.metal, post.concrete, post.glass, post.piping];
 
     databaseConnection.query(postInsert, [insertValues], (err, results) => {
       if (err) {
@@ -113,6 +113,82 @@ cloudinary.config(config);// config object for connecting to cloudinary
 
 const saveImage = (image) => cloudinary.uploader.upload(image.tempFilePath);
 
+// const saveTags = (tags, postId) => new Promise((resolve, reject) => {
+//   // const formattedTags = { ...tags.split('/').splice(1) };
+//   const tagsInsert = 'INSERT INTO tags(tagId, tag1, tag2, tag3, tag4, tag5, postId) VALUES (DEFAULT, ?)';
+//   // const insertValues = [formattedTags[0], formattedTags[1] || null, formattedTags[2] || null, formattedTags[3] || null, formattedTags[4] || null, postId];
+//   databaseConnection.query(tagsInsert, [insertValues], (err, results) => {
+//     if (err) {
+//       return reject(err);
+//     }
+//     return resolve(results);
+//   });
+// });
+
+const searchTags = (tag) => new Promise((resolve, reject) => {
+//   // let currentTag;
+//   // if(tag === "Lumber") {
+//   //   currentTag = tag1
+//   // } else if(tag === 'Metal') {
+//   //   currentTag = tag2
+//   // } else if(tag === 'Concrete'){
+//   //   currentTag = tag3
+//   // } else if(tag === 'Glass') {
+//   //   currentTag = tag4
+//   // } else if(tag === 'Piping') {
+//   //   currentTag = tag5
+//   // }
+
+  const searchedTag = 'SELECT * FROM posts WHERE ?=TRUE';
+  // const searchedTag = 'SELECT * FROM posts WHERE lumber LIKE ? OR metal LIKE ? OR concrete LIKE ? OR glass LIKE ? OR piping LIKE ?';
+  // const insertValues = [tag.lumber, tag.metal, tag.concrete, tag.glass, tag.piping];
+  databaseConnection.query(searchedTag, [tag], (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+//  text,
+//  img1,
+//  title,
+//  location,
+//  tags,
+//  username,
+//  email,
+//  business
+//  FROM
+//  posts
+//  INNER JOIN
+//  tags USING (postId)
+
+//  order by posts.postId desc';
+
+
+
+//     SELECT
+//     orderNumber,
+//     orderDate,
+//     orderLineNumber,
+//     productName,
+//     quantityOrdered,
+//     priceEach
+// FROM
+//     orders
+// INNER JOIN
+//     orderdetails USING (orderNumber)
+// INNER JOIN
+//     products USING (productCode)
+// ORDER BY
+//     orderNumber,
+//     orderLineNumber;
+
+//   //when someone clicks the "search by tags" button, the server will need this function
+//   //to select * from posts and prob users.username/email/business inner join tags where posts.postId=tags.postId order by posts.postId desc
+//   //then display those on the screen
+//   //which means we'll need an app.get('/tagSearch') on server/index.js that calls this fn
+//   //and we'll need to call
+// })
 
 module.exports = {
   findUser,
@@ -124,6 +200,8 @@ module.exports = {
   saveImage,
   saveUsersPostCount,
   displayPosts,
+  searchTags,
+  // saveTags,
 };
 
 
