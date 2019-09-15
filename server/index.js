@@ -20,7 +20,7 @@ const cloudinaryConfig = require('./config.js');
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
-  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, saveTags, searchTags, displayPosts,
+  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, searchTags, displayPosts, getPostInfo,
 } = require('./database/index.js');
 
 const options = {
