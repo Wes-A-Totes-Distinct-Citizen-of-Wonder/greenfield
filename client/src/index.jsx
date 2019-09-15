@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
+import MapContainer from "./components/MapContainer.jsx";
 import SignUpView from "./components/pageViews/Sign-upView.jsx"
 import LoginView from "./components/pageViews/LoginView.jsx";
 import UserProfileView from "./components/pageViews/UserProfileView.jsx";
@@ -20,14 +21,14 @@ class App extends React.Component {
             view: 'default',
             selectedPost: {},
             user: {
+                username: "Wes",
+                email: "wtschmidt94@gmail.com",
+                business: "",
                 userId: '',
-                username: "",
-                email: "",
-                business: '',
-                // geolocation: {
-                //     lat: 'here',
-                //     lng: 'now'
-                // },
+                geolocation: {
+                    lat: 'here',
+                    lng: 'now'
+                },
             },
             posts: []
         }
@@ -75,10 +76,11 @@ class App extends React.Component {
     }
 
     changeUser(newUser) {
-        this.setState({
-            user: newUser
-        })
         event.preventDefault();
+        this.setState({
+            user: newUser,
+            view: 'default'
+        })
     }
 
     currentPage(page) {
@@ -88,7 +90,7 @@ class App extends React.Component {
         switch(page) {
             case 'sign-up':
                 return(
-                    <SignUpView changeView={this.changeView} />
+                    <SignUpView changeUser={this.changeUser} />
                 )
             case 'login':
                 return(
