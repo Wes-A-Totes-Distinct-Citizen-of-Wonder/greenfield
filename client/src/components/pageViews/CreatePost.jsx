@@ -73,19 +73,19 @@ class CreatePost extends React.Component {
                 </FormGroup>
                 <FormGroup check>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ lumber: this.state.lumber = (true)})}/>{'Lumber'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ lumber: !this.state.lumber })}/>{'Lumber'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ metal: this.state.metal = (true)})}/>{'Metal'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ metal: !this.state.metal })}/>{'Metal'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ concrete: this.state.concrete = (true)})}/>{'Concrete'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ concrete: !this.state.concrete })}/>{'Concrete'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ glass: this.state.glass = (true)})}/>{'Glass'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ glass: !this.state.glass })}/>{'Glass'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ piping: this.state.piping = (true)})}/>{'Piping'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ piping: !this.state.piping })}/>{'Piping'}</Col>
                     </Label>
                     <FormText color="muted">
                         Please select at least one related tag.

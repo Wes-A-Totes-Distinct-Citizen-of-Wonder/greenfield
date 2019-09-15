@@ -56,7 +56,7 @@ class App extends React.Component {
     // used for changeing the view of the page
 
     searchByTag(tag) {
-        return axios.post('/tagSearch', tag)
+        return axios.post('/tagSearch', {material:tag})
         .then(response => {
             this.setState({
                 posts: response.data
