@@ -104,64 +104,63 @@ app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
   // if not logged in, re-route to sign-up page
   
-  if(!req.session.isLoggedIn) {
+  if (!req.session.isLoggedIn) {
     console.log(req.session.username);
     res.status(400).send('log in or signup!');
   } else {
   // then somehow pull their username out of the req.body, and use that in savePost() call below
 
-  // TEMPORARY standin for userId. replace with actual data when it exists
-  // const { userId } = verifySession;
+    // TEMPORARY standin for userId. replace with actual data when it exists
+    // const { userId } = verifySession;
 
-  // const to preserve tags for call to saveTags(tags) below
-  // const { tags } = req.body;
-  const image = req.files.photo;
-  const userId = 1;
-  const post = {
-    text: req.body.text,
-    img1: null,
-    title: req.body.title,
-    location: null,
-    lumber: req.body.lumber,
-    metal: req.body.metal,
-    concrete: req.body.concrete,
-    glass: req.body.glass,
-    piping: req.body.piping,
-  };
-  
+    // const to preserve tags for call to saveTags(tags) below
+    // const { tags } = req.body;
+    const image = req.files.photo;
+    const post = {
+      text: req.body.text,
+      img1: null,
+      title: req.body.title,
+      location: null,
+      lumber: Boolean(req.body.lumber),
+      metal: Boolean(req.body.metal),
+      concrete: Boolean(req.body.concrete),
+      glass: Boolean(req.body.glass),
+      piping: Boolean(req.body.piping),
+    };
 
-  cloudinary.uploader.upload(image.tempFilePath)
-    .then((result) => {
-      post.img1 = result.secure_url;
-      const {
-        address, city, state, zip,
-      } = req.body;
-      const fullAddress = {
-        address, city, state, zip,
-      };
+    cloudinary.uploader.upload(image.tempFilePath)
+      .then((result) => {
+        post.img1 = result.secure_url;
+        const {
+          address, city, state, zip,
+        } = req.body;
+        const fullAddress = {
+          address, city, state, zip,
+        };
 
-      return convertToCoordinates(fullAddress);
-    })
-    .then((geoLocation) => {
-      const { location } = geoLocation.data.results[0].geometry;
-      post.location = `${location.lat}, ${location.lng}`;
-      return savePost(post);
-    })
-    .then(() => {
-      const userId = 1;
-      increasePostCount(userId);
-    })
+        return convertToCoordinates(fullAddress);
+      })
+      .then((geoLocation) => {
+        const { location } = geoLocation.data.results[0].geometry;
+        post.location = `${location.lat}, ${location.lng}`;
+        return savePost(post);
+      })
+      .then(() => {
+        const userId = 1;
+        increasePostCount(userId);
+      })
     // .then(() => {
     //   let postId = 2
     //   saveTags(tags, postId);
     // })
-    .then(() => {
-      res.status(201).send('got your post!');
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(404).send('something went wrong with your post');
-    });
+      .then(() => {
+        res.status(201).send('got your post!');
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(404).send('something went wrong with your post');
+      });
+  }
 });
 
 // app.use(function (req, res, next) {

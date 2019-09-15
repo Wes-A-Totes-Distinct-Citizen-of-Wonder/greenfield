@@ -46,9 +46,9 @@ class CreatePost extends React.Component {
                 this.props.changeView('default');
             })
             .catch((response) => {
-                
-                this.props.changeView('sign-up');
-                alert(response);
+                // debugger;
+                this.props.changeView('login');
+                alert(response.response.data);
             });
         // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
     }
