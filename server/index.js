@@ -55,6 +55,7 @@ app.use(fileUpload({
 app.get('/posts', (req, res) => {
   displayPosts()
     .then((posts) => {
+      // debugger;
       res.status(201).send(posts);
     })
     .catch((error) => {
@@ -81,9 +82,9 @@ app.post('/signUp', (req, res) => {
 
   return findUser(userInfo.username)
     .then(() => {
-      return saveUser(userInfo);
+      return saveUser(userInfo)
     })
-  // .then () start session with hashed sessionId and userId, etc
+    // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
@@ -198,13 +199,13 @@ app.post('/login', (req, res) => {
       res.json(result);
     })
     // console.log('found User in DB')
-  // })
-  // .then(returnUser => {
-  //   res.status(201).send(returnUser)
-  // })
-  // .catch((err) => {
-  //   res.send(err)
-  // })
+    // })
+    // .then(returnUser => {
+    //   res.status(201).send(returnUser)
+    // })
+    // .catch((err) => {
+    //   res.send(err)
+    // })
     .catch((err) => {
       res.status(404).send('incorrect username or password');
     });

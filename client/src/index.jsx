@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
-import MapContainer from "./components/MapContainer.jsx";
 import SignUpView from "./components/pageViews/Sign-upView.jsx"
 import LoginView from "./components/pageViews/LoginView.jsx";
 import UserProfileView from "./components/pageViews/UserProfileView.jsx";
@@ -23,9 +22,30 @@ class App extends React.Component {
             user: {
                 username: "guest",
                 email: "",
-                tester: 0,
+                userId: 0,
             },
-            posts: [],
+            posts: [
+                // {
+                //     img1: require('../images/Space Hand Painting.jpg'),
+                //     text: "hey bro",
+                //     tags: "/lumber/metal",
+                //     // address: "yo mama",
+                //     // city: "Kenner",
+                //     // state: "LA",
+                //     // zip: "70065",
+                //     location: "5 charlene ct./Kenner/LA/70065"
+                // },
+                // {
+                //     img1: require('../images/Drawing1.png'),
+                //     text: "cat bro",
+                //     tags: "/lumber/metal",
+                //     // address: "yo mama",
+                //     // city: "Kenner",
+                //     // state: "LA",
+                //     // zip: "70065",
+                //     location: "5 charlene ct./Kenner/LA/70065"
+                // }
+            ],
         }
         this.changePostView = this.changePostView.bind(this);
         this.currentPage = this.currentPage.bind(this);
@@ -99,23 +119,24 @@ class App extends React.Component {
             case 'sign-up':
                 return(
                     <SignUpView changeUser={this.changeUser} />
-                )
+                );
             case 'login':
                 return(
                     <LoginView changeUser={this.changeUser} />
-                )
+                );
             case 'create-post':
                 return(
-                    <CreatePost changeView={this.changeView} getNearbyPosts={this.getNearbyPosts} />
-                    );
+                    <CreatePost changeView={this.changeView} getNearbyPosts={this.getNearbyPosts} currUser={user}/>
+                );
             case 'post-view':
                 return(
                     <PostView post={selectedPost} changeView={this.changeView} />
                 );
             case 'user-profile':
+                // Not being used currently -> was gonna put active posts for users
                 return(
                     <UserProfileView user={user} />
-                )
+                );
             default :
                 return (
                     <PostCard posts={posts} changePostView={this.changePostView} searchByTag={this.searchByTag} />
@@ -128,17 +149,17 @@ class App extends React.Component {
         const { user } = this.state;
         const { tester } = this.state;
         return (
-            <div className="main">
+            <div className="main" style={{backgroundColor: "rgb(147, 174, 194)", height: '100vh', paddingRight: '15px'}}>
                 <Row>
                     <Col sm='12' style={{backgroundColor: "rgb(102, 136, 165)", padding: '25px', paddingBottom: '25px'}}>
                         <NavHead changeView={this.changeView}/>
                     </Col>
                 </Row>
-                <Row>
-                    <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px', paddingBottom: '0px'}}>
+                <Row style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px'}}>
+                    <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: 'auto'}}>
                         <UserNav changeView={this.changeView} user={user}/>
                     </Col>
-                    <Col sm='10' style={{padding: '25px', backgroundColor: "rgb(47, 74, 94)"}}>
+                    <Col sm='10' style={{padding: '25px', backgroundColor: "rgb(47, 74, 94)", paddingBottom: 'auto', borderRadius: '4px'}}>
                         {this.currentPage(view)}
                     </Col>
                 </Row>
