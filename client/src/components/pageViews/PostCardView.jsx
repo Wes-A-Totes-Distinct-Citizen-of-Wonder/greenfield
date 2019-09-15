@@ -18,7 +18,7 @@ const PostCard = (props) => {
     ));
     return (
         <div>
-        <SearchTag />
+        <SearchTag searchByTag={props.searchByTag} />
         <hr />
         <CardColumns>
             {cards}
