@@ -124,9 +124,10 @@ class App extends React.Component {
         }
     }
 
-    logout(){
+    logout(event){
+        event.preventDefault();
         return axios.delete('/logout')
-        .then(respone => response.data)
+        .then(response => response.data)
     }
 
     render() {

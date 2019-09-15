@@ -205,7 +205,7 @@ app.post('/login', (req, res) => {
   //   res.send(err)
   // })
     .catch((err) => {
-      res.status(404).send('incorrect username or password');
+      res.status(404);
     });
 });
 

@@ -14,7 +14,7 @@ const UserNav = (props) => {
                 <NavLink className="Username" style={{color: 'white', size: '5em'}}>{user.username || ""}</NavLink>
                 <NavLink className="Login" href="#" style={{color: 'white'}} onClick={() => changeView('login')}>Login</NavLink> 
                 <NavLink className="Sign-up" href="#" style={{color: 'white'}} onClick={() => changeView('sign-up')}>Sign-up</NavLink>
-                <NavLink className='Sign-Out' href='/' style={{color: 'white'}} onClick={() => logout()} >Sign-out</NavLink>
+                <NavLink className='Sign-Out' href='/' style={{color: 'white'}} onClick={(e) => logout(e)} >Sign-out</NavLink>
                 {/* <SearchTag /> */}
             </Nav>
             </section>
