@@ -18,7 +18,7 @@ const cloudinaryConfig = require('./config.js');
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
-  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
+  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, saveTags, searchTags, displayPosts,
 } = require('./database/index.js');
 
 cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
@@ -94,6 +94,9 @@ app.post('/submitPost', (req, res) => {
 
   // TEMPORARY standin for userId. replace with actual data when it exists
   // const { userId } = verifySession;
+
+  // const to preserve tags for call to saveTags(tags) below
+  // const { tags } = req.body;
   const image = req.files.photo;
   const userId = 1;
   const post = {
@@ -101,8 +104,13 @@ app.post('/submitPost', (req, res) => {
     img1: null,
     title: req.body.title,
     location: null,
-    tags: req.body.tags,
+    lumber: req.body.lumber,
+    metal: req.body.metal,
+    concrete: req.body.concrete,
+    glass: req.body.glass,
+    piping: req.body.piping,
   };
+  
 
   cloudinary.uploader.upload(image.tempFilePath)
     .then((result) => {
@@ -123,14 +131,18 @@ app.post('/submitPost', (req, res) => {
     })
     .then(() => {
       const userId = 1;
-      increasePostCount(userId)
-        .then(() => {
-          res.status(201).send('got your post!');
-        })
-        .catch((error) => {
-          console.log(error);
-          res.status(404).send('something went wrong with your post');
-        });
+      increasePostCount(userId);
+    })
+    // .then(() => {
+    //   let postId = 2
+    //   saveTags(tags, postId);
+    // })
+    .then(() => {
+      res.status(201).send('got your post!');
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(404).send('something went wrong with your post');
     });
 });
 
@@ -187,6 +199,16 @@ app.post('/test', (req, res) => {
       res.send({ great: 'job!, you did image stuff!' });
     });
 });
+
+app.post('/tagSearch', (req, res) => {
+  searchTags(req.body.tag)
+    .then((posts) => {
+      res.status(201).send(posts);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    })
+})
 
 app.listen(PORT, () => {
   console.log('Bitches be crazy on: 8080');
