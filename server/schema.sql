@@ -5,10 +5,9 @@ CREATE DATABASE trashPanda;
 USE trashPanda;
 
 CREATE TABLE users (
-  userId INT NOT NULL AUTO_INCREMENT,
+  userId INT AUTO_INCREMENT,
   username varchar(50) NOT NULL,
-  salt varchar(50) NOT NULL,
-  password varchar(50) NOT NULL,
+  password varchar(200) NOT NULL,
   email varchar(50) NOT NULL,
   business varchar(255),
   PRIMARY KEY (userId)
@@ -16,10 +15,15 @@ CREATE TABLE users (
 
 CREATE TABLE posts (
   postId INT NOT NULL AUTO_INCREMENT,
-  postText varchar (255), 
+  text varchar (255), 
   img1 varchar (255) NOT NULL,
-  img2 varchar(255),
-  img3 varchar(255),
+  title varchar (50),
+  location varchar (255),
+  lumber BOOLEAN,
+  metal BOOLEAN,
+  concrete BOOLEAN,
+  glass BOOLEAN,
+  piping BOOLEAN,
   postNum INT DEFAULT 0,
   userId INT,
   PRIMARY KEY (postId),
@@ -29,10 +33,22 @@ CREATE TABLE posts (
 CREATE TABLE postCount (
   count INT DEFAULT 0,
   userId INT,
-  PRIMARY KEY (count),
   FOREIGN KEY (userId)
   REFERENCES users(userId)
 );
+
+-- CREATE TABLE tags (
+--   tagId INT AUTO_INCREMENT,
+--   lumber BOOLEAN,
+--   metal BOOLEAN,
+--   concrete BOOLEAN,
+--   glass BOOLEAN,
+--   piping BOOLEAN,
+--   postId INT,
+--   PRIMARY KEY (tagId),
+--   FOREIGN KEY (postId)
+--   REFERENCES posts(postId)
+-- )
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql

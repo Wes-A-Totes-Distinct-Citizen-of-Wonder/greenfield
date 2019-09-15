@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
-import { convertToCoordinates } from './GeoLocation.js'
+import { convertToCoordinates } from '../helpers/geoLocation.js'
 import { API_KEY } from '../helpers/config.js'
 
 const mapStyles = {//sets map size
@@ -21,17 +21,25 @@ class MapContainer extends Component {
     }
 
     componentDidMount() {
-      const { address } = this.props;//sets map center and marker on load
-        if(address){
-            convertToCoordinates(address)
-            .then(response => {
-                this.setState({
-                    latLng: response.data.results[0].geometry.location,
-                })
-                console.log(this.state.latLng)
-            })
-            .catch(err => console.error(err))
-      }  
+      const { geoLocation } = this.props;
+      const coordinatesArray = geoLocation.split(', ');
+      this.setState({
+        latLng:{
+        lat: parseFloat(coordinatesArray[0]),
+        lng: parseFloat(coordinatesArray[1]),
+        }
+      })
+    //   const { address } = this.props;//sets map center and marker on load
+    //     if(address){
+    //         convertToCoordinates(address)
+    //         .then(response => {
+    //             this.setState({
+    //                 latLng: response.data.results[0].geometry.location,
+    //             })
+    //             console.log(this.state.latLng)
+    //         })
+    //         .catch(err => console.error(err))
+    //   }  
     }
   
     render() {
