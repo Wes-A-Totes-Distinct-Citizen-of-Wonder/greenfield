@@ -125,11 +125,11 @@ app.post('/submitPost', (req, res) => {
     img1: null,
     title: req.body.title,
     location: null,
-    lumber: req.body.lumber,
-    metal: req.body.metal,
-    concrete: req.body.concrete,
-    glass: req.body.glass,
-    piping: req.body.piping,
+    lumber: Boolean(req.body.lumber),
+    metal: Boolean(req.body.metal),
+    concrete: Boolean(req.body.concrete),
+    glass: Boolean(req.body.glass),
+    piping: Boolean(req.body.piping),
   };
   
 
