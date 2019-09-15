@@ -18,13 +18,23 @@ class SignUpView extends React.Component {
         this.onSignUpSubmit = this.onSignUpSubmit.bind(this);
     }
 
-    onSignUpSubmit() {
+    onSignUpSubmit(event) {
+        event.preventDefault();
         const user = this.state;
-        axios.post('/signUp', user)
-
+        // axios.post('/signUp', user)
         if (user.password === user.varifyPass) {
             return axios.post('/signUp', user)
+            .then((response) => {
+                const newUser = {
+                    username: user.username,
+                    email: user.email,
+                    business: user.business,
+                    userId: response.data.userId
+                }
+                this.props.changeUser(newUser);
+            })
         } else {
+            // props.changeView('sign-up');
             alert("Your passwords don't match!")
         }
     }
@@ -33,9 +43,8 @@ class SignUpView extends React.Component {
         const state = this.state;
         return (
             // <div>
-            <Form onSubmit={this.onSignUpSubmit}>
+            <Form onSubmit={(e) => {preventDefault(e)}}>
                 <FormGroup>
-                    <h1 style={{ color: 'white' }} >Sign-up HERE!!!</h1>
                     <Label style={{ color: 'white' }} >Create User Name</Label>
                     <Input type='text' name='username' id='user-registration' value={state.username} onChange={e => this.setState({ username: e.target.value })}></Input>
                 </FormGroup>
@@ -45,18 +54,18 @@ class SignUpView extends React.Component {
                     <FormText color="muted">password must be between 6 and 16 characters only using numbers and alphabetical characters</FormText>
                 </FormGroup>
                 <FormGroup>
-                    <Label style={{ color: 'white' }} >Re-Enter Password</Label>
+                    <Label style={{ color: 'white' }} >Varify Password</Label>
                     <Input type='password' name='password-verify' id='password-registration-verify' value={state.varifyPass} onChange={e => this.setState({ varifyPass: e.target.value })}></Input>
                 </FormGroup>
                 <FormGroup>
                     <Label style={{ color: 'white' }} >Enter Email</Label>
-                    <Input type='text' name='email' id='email-registration' value={state.email} onChange={e => this.setState({ email: e.target.value })}></Input>
+                    <Input type='email' name='email' id='email-registration' value={state.email} onChange={e => this.setState({ email: e.target.value })}></Input>
                 </FormGroup>
                 <FormGroup>
                     <Label style={{ color: 'white' }} >Enter Place of Business(Optional)</Label>
                     <Input type='text' name='business' id='business-registration' value={state.business} onChange={e => this.setState({ business: e.target.value })}></Input>
                 </FormGroup>
-                <Button type="submit" color="primary" block>Submit</Button>
+                <Button type="button" color="primary" block onClick={(e) => this.onSignUpSubmit(e)} block>Submit</Button>
             </Form>
             // </div>
         );

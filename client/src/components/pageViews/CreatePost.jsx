@@ -11,7 +11,11 @@ class CreatePost extends React.Component {
             img1: '',
             title: '',
             text: '',
-            tags: '',
+            lumber: false,
+            metal: false,
+            concrete: false,
+            glass: false,
+            piping: false,
             address: '',
             city: '',
             state: '',
@@ -20,7 +24,8 @@ class CreatePost extends React.Component {
         this.onPostSubmit = this.onPostSubmit.bind(this);
     }
 
-    onPostSubmit() {
+    onPostSubmit(event) {
+        event.preventDefault();
         const user = this.state;
         const bodyFormData = new FormData();
         
@@ -31,13 +36,14 @@ class CreatePost extends React.Component {
             else {
                 bodyFormData.set(postProp[0], postProp[1]);
             }
-           
+            
         })
-       
+        
         axios.post('/submitPost', bodyFormData)
             .then((response) => {
                
                 console.log(response);
+                this.props.changeView('default');
             })
             .catch((response) => {
                 
@@ -50,7 +56,7 @@ class CreatePost extends React.Component {
     render() {
         const { state } = this.state;
         return (
-            <Form onSubmit={this.onPostSubmit}>
+            <Form>
                 <FormGroup>
                     <Label for="post-img" style={{ color: 'white' }}>Image File</Label>
                     <Input type="file" name="photo" id="post-img" style={{ color: 'white' }} value={state.img1} onChange={e => this.setState({ img1: e.target.files[0] })}/>
@@ -67,19 +73,19 @@ class CreatePost extends React.Component {
                 </FormGroup>
                 <FormGroup check>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ tags: this.state.tags += ('/Lumber')})}/>{'Lumber'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ lumber: this.state.lumber = (true)})}/>{'Lumber'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ tags: this.state.tags += ('/Metal')})}/>{'Metal'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ metal: this.state.metal = (true)})}/>{'Metal'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ tags: this.state.tags += ('/Concrete')})}/>{'Concrete'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ concrete: this.state.concrete = (true)})}/>{'Concrete'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ tags: this.state.tags += ('/Glass')})}/>{'Glass'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ glass: this.state.glass = (true)})}/>{'Glass'}</Col>
                     </Label>
                     <Label check for="post-tags" style={{ color: 'white' }}>
-                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ tags: this.state.tags += ('/Piping')})}/>{'Piping'}</Col>
+                        <Col sm="1"><Input type="checkbox" value={state.tags} onChange={() => this.setState({ piping: this.state.piping = (true)})}/>{'Piping'}</Col>
                     </Label>
                     <FormText color="muted">
                         Please select at least one related tag.
@@ -97,7 +103,7 @@ class CreatePost extends React.Component {
                 </Row>
                 <hr />
                 <FormGroup>
-                    <Button type="submit" color="primary" block>Submit</Button>
+                    <Button type="button" color="primary" block onClick={(e) => this.onPostSubmit(e)}>Submit</Button>
                 </FormGroup>
             </Form>
         );

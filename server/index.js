@@ -20,7 +20,7 @@ const cloudinaryConfig = require('./config.js');
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
-  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, displayPosts,
+  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, saveTags, searchTags, displayPosts,
 } = require('./database/index.js');
 
 const options = {
@@ -63,17 +63,12 @@ app.get('/posts', (req, res) => {
     });
 });
 
-app.get('/auth', (req, res) => {
-
-});
-
 app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
   // if user already exists, redirect back to sign-in
   // if username already taken, redirect back to sign-up
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(req.body.password, salt);
-
   let userId;
   const userInfo = {
     username: req.body.username,
@@ -81,7 +76,7 @@ app.post('/signUp', (req, res) => {
     email: req.body.email,
     business: req.body.business,
   };
-
+  
   return findUser(userInfo.username)
     .then(() => {
       return saveUser(userInfo)
@@ -105,7 +100,6 @@ app.post('/signUp', (req, res) => {
     });
 });
 
-
 app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
   // if not logged in, re-route to sign-up page
@@ -115,48 +109,59 @@ app.post('/submitPost', (req, res) => {
     res.status(400).send('log in or signup!');
   } else {
   // then somehow pull their username out of the req.body, and use that in savePost() call below
-    console.log(req.session.username);
-    // TEMPORARY standin for userId. replace with actual data when it exists
-    // const { userId } = verifySession;
-    const image = req.files.photo;
-    const userId = 1;
-    const post = {
-      text: req.body.text,
-      img1: null,
-      title: req.body.title,
-      location: null,
-      tags: req.body.tags,
-    };
 
-    cloudinary.uploader.upload(image.tempFilePath)
-      .then((result) => {
-        post.img1 = result.secure_url;
-        const {
-          address, city, state, zip,
-        } = req.body;
-        const fullAddress = {
-          address, city, state, zip,
-        };
+  // TEMPORARY standin for userId. replace with actual data when it exists
+  // const { userId } = verifySession;
 
-        return convertToCoordinates(fullAddress);
-      })
-      .then((geoLocation) => {
-        const { location } = geoLocation.data.results[0].geometry;
-        post.location = `${location.lat}, ${location.lng}`;
-        return savePost(post);
-      })
-      .then(() => {
-        const userId = 1;
-        increasePostCount(userId)
-          .then(() => {
-            res.status(201).send('got your post!');
-          })
-          .catch((error) => {
-            console.log(error);
-            res.status(404).send('something went wrong with your post');
-          });
-      });
-  }
+  // const to preserve tags for call to saveTags(tags) below
+  // const { tags } = req.body;
+  const image = req.files.photo;
+  const userId = 1;
+  const post = {
+    text: req.body.text,
+    img1: null,
+    title: req.body.title,
+    location: null,
+    lumber: req.body.lumber,
+    metal: req.body.metal,
+    concrete: req.body.concrete,
+    glass: req.body.glass,
+    piping: req.body.piping,
+  };
+  
+
+  cloudinary.uploader.upload(image.tempFilePath)
+    .then((result) => {
+      post.img1 = result.secure_url;
+      const {
+        address, city, state, zip,
+      } = req.body;
+      const fullAddress = {
+        address, city, state, zip,
+      };
+
+      return convertToCoordinates(fullAddress);
+    })
+    .then((geoLocation) => {
+      const { location } = geoLocation.data.results[0].geometry;
+      post.location = `${location.lat}, ${location.lng}`;
+      return savePost(post);
+    })
+    .then(() => {
+      const userId = 1;
+      increasePostCount(userId);
+    })
+    // .then(() => {
+    //   let postId = 2
+    //   saveTags(tags, postId);
+    // })
+    .then(() => {
+      res.status(201).send('got your post!');
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(404).send('something went wrong with your post');
+    });
 });
 
 // app.use(function (req, res, next) {
@@ -229,6 +234,16 @@ const authorize = (signIn, user) => {
   return ("password doesn't match!");
 };
 
+
+app.post('/tagSearch', (req, res) => {
+  searchTags(req.body.tag)
+    .then((posts) => {
+      res.status(201).send(posts);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    })
+})
 
 app.listen(PORT, () => {
   console.log('Bitches be crazy on: 8080');

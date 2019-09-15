@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
+import MapContainer from "./components/MapContainer.jsx";
 import SignUpView from "./components/pageViews/Sign-upView.jsx"
 import LoginView from "./components/pageViews/LoginView.jsx";
 import UserProfileView from "./components/pageViews/UserProfileView.jsx";
@@ -17,7 +18,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            view: 'home',
+            view: 'default',
             selectedPost: {},
             user: {
                 username: "guest",
@@ -35,9 +36,14 @@ class App extends React.Component {
     componentDidMount() {
         this.getNearbyPosts()
         .then(nearPosts => {
+            if (nearPosts.length < 1) {
+                // return;
+            } else {
             this.setState({
                 posts: nearPosts
             })
+            event.preventDefault();
+        }
         })
         .then(() => {
             
@@ -45,15 +51,13 @@ class App extends React.Component {
     }
     // grabs all posts close to geolocation and puts them in the posts array inside this.state
     // need some instruction on how to actually sort by geolocation though....
-    // auth() {
-
-    // }
+    // used for changeing the view of the page
 
     getNearbyPosts() {
         return axios.get('/posts')
         .then(response => response.data);
     }
-    // used for changeing the view of the page
+
     changeView(newView) {
         this.setState({
             view: newView
@@ -83,7 +87,7 @@ class App extends React.Component {
         switch(page) {
             case 'sign-up':
                 return(
-                    <SignUpView />
+                    <SignUpView changeUser={this.changeUser} />
                 )
             case 'login':
                 return(
