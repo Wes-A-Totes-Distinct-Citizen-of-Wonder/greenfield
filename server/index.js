@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+const MySQLStore = require('express-mysql-session')(session);
+const parseurl = require('parseurl');
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
 const cloudinaryConfig = require('./config.js');
@@ -21,17 +23,28 @@ const {
   findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, saveTags, searchTags, displayPosts,
 } = require('./database/index.js');
 
-cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
+const options = {
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'trashPanda',
+};
+const sessionStore = new MySQLStore(options);
 
-app.use(cookieParser());
+cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinary
 
 app.use(session({
   secret: 'trashPanda secret',
   cookie: {
-    expires: 600000
+    expires: 6000000,
   },
-}))
+  store: sessionStore,
+  resave: false,
+  saveUninitialized: false,
+}));
 
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -68,12 +81,12 @@ app.post('/signUp', (req, res) => {
     .then(() => {
       return saveUser(userInfo)
     })
-      // .then () start session with hashed sessionId and userId, etc
+  // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
     .then(() => {
-    return saveUsersPostCount(userId)
+      return saveUsersPostCount(userId)
         .then(() => {
           res.status(201).send('user saved in db');
         })
@@ -90,6 +103,11 @@ app.post('/signUp', (req, res) => {
 app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
   // if not logged in, re-route to sign-up page
+  
+  if(!req.session.isLoggedIn) {
+    console.log(req.session.username);
+    res.status(400).send('log in or signup!');
+  } else {
   // then somehow pull their username out of the req.body, and use that in savePost() call below
 
   // TEMPORARY standin for userId. replace with actual data when it exists
@@ -146,59 +164,76 @@ app.post('/submitPost', (req, res) => {
     });
 });
 
-app.post(`/login`, (req, res) => {
+// app.use(function (req, res, next) {
+//   if (!req.session.views) {
+//     req.session.views = {}
+//   }
+ 
+//   // get the url pathname
+//   var pathname = parseurl(req).pathname
+ 
+//   // count the views
+//   req.session.views[pathname] = (req.session.views[pathname] || 0) + 1
+ 
+//   next()
+// })
+ 
+// app.get('/foo', function (req, res, next) {
+//   res.send('you viewed this page ' + req.session.views['/foo'] + ' times')
+// })
+
+app.post('/login', (req, res) => {
   // let authUser;
   const user = {
     username: req.body.username,
     password: req.body.password,
   };
   return getUser(user.username)
-  .then((response) => {
-    let result = authorize(response, user)
-    res.json(result);
-  })
+    .then((response) => {
+      const result = authorize(response, user);
+      req.session.isLoggedIn = true;
+      req.session.username = result.username;
+      req.session.email = result.email;
+      req.session.business = result.business;
+      res.cookie('session_id', req.session.id);
+      res.json(result);
+    })
     // console.log('found User in DB')
   // })
-      // .then(returnUser => {
-      //   res.status(201).send(returnUser)
-      // })
-      // .catch((err) => {
-      //   res.send(err)
-      // })
-  .catch(() => {
-    console.log('no user found');
+  // .then(returnUser => {
+  //   res.status(201).send(returnUser)
+  // })
+  // .catch((err) => {
+  //   res.send(err)
+  // })
+    .catch((err) => {
+      res.status(404).send('incorrect username or password');
+    });
+});
+
+app.delete('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) res.status(400).send('there was an error logging out');
+    else res.status(201).send('successfully logged out!')
   });
-})
+});
 
 const authorize = (signIn, user) => {
   // return new Promise ((resolve, reject) => {
-    const foundUser = signIn[0];
-    const eval = bcrypt.compareSync(user.password, foundUser.password);
-    if (eval) {
-      const returnUser = {
-        userId: foundUser.userId,
-        username: foundUser.username,
-        email: foundUser.email,
-        business: foundUser.business,
-      }
-      return (returnUser);
-    } else {
-      return ("password doesn't match!")
-    }
-  // })
-}
+  const foundUser = signIn[0];
+  const passwordCheck = bcrypt.compareSync(user.password, foundUser.password);
+  if (passwordCheck) {
+    const returnUser = {
+      userId: foundUser.userId,
+      username: foundUser.username,
+      email: foundUser.email,
+      business: foundUser.business,
+    };
+    return (returnUser);
+  }
+  return ("password doesn't match!");
+};
 
-app.post('/test', (req, res) => {
-  const image = req.files.photo;
-
-  // saveImage(image);
-  cloudinary.uploader.upload(image.tempFilePath)
-    .then((result) => {
-      console.log(result);
-      const hostedImageUrl = result.secure_url;
-      res.send({ great: 'job!, you did image stuff!' });
-    });
-});
 
 app.post('/tagSearch', (req, res) => {
   searchTags(req.body.tag)
