@@ -20,7 +20,7 @@ const UserNav = (props) => {
         <div>
             <section float="left" width="10%" margin="0 1.5%">
             <Nav vertical>
-                <NavLink className="Username" href="#" style={{color: 'white'}} onClick={() => changeView('user-profile')}><h2>{user.username || ""}</h2></NavLink>
+                <NavLink className="Username" href="#" style={{color: 'white', size: '5em'}} onClick={() => changeView('user-profile')}>{user.username || ""}</NavLink>
                 <NavLink className="Login" href="#" style={{color: 'white'}} onClick={() => changeView('login')}>Login</NavLink> 
                 <NavLink className="Sign-up" href="#" style={{color: 'white'}} onClick={() => changeView('sign-up')}>Sign-up</NavLink>
                 {/* <SearchTag /> */}
