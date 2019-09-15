@@ -229,7 +229,7 @@ const authorize = (signIn, user) => {
 
 
 app.post('/tagSearch', (req, res) => {
-  searchTags(req.body.tag)
+  searchTags(req.body)
     .then((posts) => {
       res.status(201).send(posts);
     })
