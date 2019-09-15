@@ -12,8 +12,8 @@ const databaseConnection = mysql.createConnection({
   insecureAuth: true,
 });
 
-//IF TRYING TO FIND A USER, LOOK AT GETUSER BELOW, decide which to use!!!!!!!!
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// IF TRYING TO FIND A USER, LOOK AT GETUSER BELOW, decide which to use!!!!!!!!
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 const findUser = (user) => new Promise((resolve, reject) => {
   // select user from database if exists
   const foundUser = `SELECT * FROM users where username= "${user}"`;
@@ -47,7 +47,7 @@ const saveUser = (user) =>
     const userInsert = 'INSERT INTO users(userId, username, password, email, business) VALUES (DEFAULT, ?)';
     // assuming <user> parameter is an object
     const insertValues = [user.username, user.password, user.email, user.business];
-    
+
     databaseConnection.query(userInsert, [insertValues], (err, results, fields) => {
       if (err) {
         console.log(err);
@@ -165,7 +165,6 @@ const searchTags = (tag) => new Promise((resolve, reject) => {
 //  tags USING (postId)
 
 //  order by posts.postId desc';
-
 
 
 //     SELECT

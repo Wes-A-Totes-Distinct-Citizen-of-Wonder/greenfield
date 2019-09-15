@@ -63,12 +63,14 @@ app.get('/posts', (req, res) => {
     });
 });
 
+
 app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
   // if user already exists, redirect back to sign-in
   // if username already taken, redirect back to sign-up
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(req.body.password, salt);
+
   let userId;
   const userInfo = {
     username: req.body.username,
@@ -76,7 +78,7 @@ app.post('/signUp', (req, res) => {
     email: req.body.email,
     business: req.body.business,
   };
-  
+
   return findUser(userInfo.username)
     .then(() => {
       return saveUser(userInfo)
@@ -99,6 +101,7 @@ app.post('/signUp', (req, res) => {
       res.status(409).send(user);
     });
 });
+
 
 app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
@@ -162,6 +165,7 @@ app.post('/submitPost', (req, res) => {
       console.log(error);
       res.status(404).send('something went wrong with your post');
     });
+  }
 });
 
 // app.use(function (req, res, next) {
