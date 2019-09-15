@@ -118,7 +118,7 @@ app.post('/submitPost', (req, res) => {
     // const to preserve tags for call to saveTags(tags) below
     // const { tags } = req.body;
     const image = req.files.photo;
-    const userId = 1;
+    // const userId = 1;
     const post = {
       text: req.body.text,
       img1: null,
