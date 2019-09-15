@@ -187,10 +187,6 @@ app.post('/submitPost', (req, res) => {
           res.status(501).send('Something went wrong with your post!');
         }
       });
-<<<<<<< HEAD
-
-=======
->>>>>>> 28e2bf2f7d2e9ffa35d516cfba56345a3f30b451
   }
 });
 
@@ -239,12 +235,7 @@ app.post('/login', (req, res) => {
     //   res.send(err)
     // })
     .catch((err) => {
-<<<<<<< HEAD
-      console.error(err);
-      res.status(404).send('incorrect username or password');
-=======
       res.status(404);
->>>>>>> 28e2bf2f7d2e9ffa35d516cfba56345a3f30b451
     });
 });
 

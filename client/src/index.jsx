@@ -178,15 +178,9 @@ class App extends React.Component {
                         <NavHead changeView={this.changeView}/>
                     </Col>
                 </Row>
-<<<<<<< HEAD
-                <Row>
-                    <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px', paddingBottom: '0px'}}>
-                        <UserNav changeView={this.changeView} logout={this.logout} user={user}/>
-=======
                 <Row style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px'}}>
                     <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: 'auto'}}>
                         <UserNav changeView={this.changeView} user={user}/>
->>>>>>> 7e0ff2bd99465ab8fd39096c21b50e5f39426ae5
                     </Col>
                     <Col sm='10' style={{padding: '25px', backgroundColor: "rgb(47, 74, 94)", paddingBottom: 'auto', borderRadius: '4px'}}>
                         {this.currentPage(view)}
