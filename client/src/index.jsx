@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
-import MapContainer from "./components/MapContainer.jsx";
 import SignUpView from "./components/pageViews/Sign-upView.jsx"
 import LoginView from "./components/pageViews/LoginView.jsx";
 import UserProfileView from "./components/pageViews/UserProfileView.jsx";
@@ -11,7 +10,7 @@ import PostView from "./components/pageViews/PostView.jsx";
 import CreatePost from "./components/pageViews/CreatePost.jsx";
 import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
-import { Col, Row } from 'reactstrap';
+import { Col, Row, NavLink } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends React.Component {
@@ -22,8 +21,8 @@ class App extends React.Component {
             selectedPost: {},
             user: {
                 username: "guest",
-                email: "HotStuff420@youreMom.com",
-                userId: "69",
+                email: "",
+                userId: 0,
             },
             posts: [
                 {
@@ -77,8 +76,7 @@ class App extends React.Component {
     // used for changeing the view of the page
 
     searchByTag(tag) {
-        // alert(tag);
-        return axios.get('/tagSearch', { material: tag })
+        return axios.post('/tagSearch', {material:tag})
         .then(response => {
             this.setState({
                 posts: response.data
@@ -149,7 +147,7 @@ class App extends React.Component {
     render() {
         const { view } = this.state;
         const { user } = this.state;
-        //style={{backgroundColor: "rgb(147, 174, 194)", height:'100%'}}
+        const { tester } = this.state;
         return (
             <div className="main" style={{backgroundColor: "rgb(147, 174, 194)", height: '100vh', paddingRight: '15px'}}>
                 <Row>

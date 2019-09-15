@@ -64,12 +64,14 @@ app.get('/posts', (req, res) => {
     });
 });
 
+
 app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
   // if user already exists, redirect back to sign-in
   // if username already taken, redirect back to sign-up
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(req.body.password, salt);
+
   let userId;
   const userInfo = {
     username: req.body.username,
@@ -86,20 +88,19 @@ app.post('/signUp', (req, res) => {
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
-    .then(() => {
-      return saveUsersPostCount(userId)
-        .then(() => {
-          res.status(201).send('user saved in db');
-        })
-        .catch((error) => {
-          console.log(error);
-          res.status(404).send('something went wrong and user was not saved in db');
-        });
-    })
+    .then(() => saveUsersPostCount(userId)
+      .then(() => {
+        res.status(201).send('user saved in db');
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(404).send('something went wrong and user was not saved in db');
+      }))
     .catch((user) => {
       res.status(409).send(user);
     });
 });
+
 
 app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
@@ -109,7 +110,7 @@ app.post('/submitPost', (req, res) => {
     console.log(req.session.username);
     res.status(400).send('log in or signup!');
   } else {
-    // then somehow pull their username out of the req.body, and use that in savePost() call below
+  // then somehow pull their username out of the req.body, and use that in savePost() call below
 
     // TEMPORARY standin for userId. replace with actual data when it exists
     // const { userId } = verifySession;
@@ -123,11 +124,11 @@ app.post('/submitPost', (req, res) => {
       img1: null,
       title: req.body.title,
       location: null,
-      lumber: req.body.lumber,
-      metal: req.body.metal,
-      concrete: req.body.concrete,
-      glass: req.body.glass,
-      piping: req.body.piping,
+      lumber: req.body.lumber === 'true',
+      metal: req.body.metal === 'true',
+      concrete: req.body.concrete === 'true',
+      glass: req.body.glass === 'true',
+      piping: req.body.piping === 'true',
     };
 
 
@@ -152,10 +153,6 @@ app.post('/submitPost', (req, res) => {
         const userId = 1;
         increasePostCount(userId);
       })
-      // .then(() => {
-      //   let postId = 2
-      //   saveTags(tags, postId);
-      // })
       .then(() => {
         res.status(201).send('got your post!');
       })
@@ -216,7 +213,7 @@ app.post('/login', (req, res) => {
 app.delete('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) res.status(400).send('there was an error logging out');
-    else res.status(201).send('successfully logged out!')
+    else res.status(201).send('successfully logged out!');
   });
 });
 
@@ -238,14 +235,14 @@ const authorize = (signIn, user) => {
 
 
 app.post('/tagSearch', (req, res) => {
-  searchTags(req.body.tag)
+  searchTags(req.body)
     .then((posts) => {
       res.status(201).send(posts);
     })
     .catch((error) => {
       res.status(500).send(error);
-    })
-})
+    });
+});
 
 app.listen(PORT, () => {
   console.log('Bitches be crazy on: 8080');
