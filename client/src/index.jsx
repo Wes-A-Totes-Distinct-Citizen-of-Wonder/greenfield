@@ -142,7 +142,7 @@ class App extends React.Component {
             this.setState({
                 selectedPost: {
                     postInfo: newPost,
-                    userInfo: response.data,
+                    userInfo: response.data[0],
                 },
                 view: 'post-view'
             })

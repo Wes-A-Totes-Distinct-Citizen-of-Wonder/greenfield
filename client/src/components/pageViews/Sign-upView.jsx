@@ -11,7 +11,7 @@ class SignUpView extends React.Component {
         this.state = {
             username: '',
             password: '',
-            varifyPass: '',
+            verifyPass: '',
             email: '',
             business: '',
         };
@@ -20,8 +20,7 @@ class SignUpView extends React.Component {
 
     onSignUpSubmit(event) {
         const user = this.state;
-        // axios.post('/signUp', user)
-        if (user.password === user.varifyPass) {
+        if (user.password === user.verifyPass) {
             return axios.post('/signUp', user)
             .then(() => {
                 return axios.post(`/login`, { username: user.username, password: user.password })
@@ -57,7 +56,7 @@ class SignUpView extends React.Component {
                     <FormText color="muted">password must be between 6 and 16 characters only using numbers and alphabetical characters</FormText>
                 </FormGroup>
                 <FormGroup>
-                    <Label style={{ color: 'white' }} >Varify Password</Label>
+                    <Label style={{ color: 'white' }} >Verify Password</Label>
                     <Input type='password' name='password-verify' id='password-registration-verify' value={state.varifyPass} onChange={e => this.setState({ varifyPass: e.target.value })}></Input>
                 </FormGroup>
                 <FormGroup>
