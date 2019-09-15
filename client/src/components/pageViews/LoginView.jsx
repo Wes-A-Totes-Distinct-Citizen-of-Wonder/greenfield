@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
+import { changeUser } from '../../index.jsx';
 
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
 
