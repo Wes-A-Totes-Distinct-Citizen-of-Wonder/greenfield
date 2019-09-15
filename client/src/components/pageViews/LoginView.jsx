@@ -22,9 +22,7 @@ class LoginView extends React.Component {
         .then(newUser => {
         return this.props.changeUser(newUser.data);
         })
-        .catch(err => {
-            console.error(err);
-        })
+        .catch(err => alert(err))
     }
 
     render() {

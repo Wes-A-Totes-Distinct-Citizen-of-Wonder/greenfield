@@ -28,7 +28,7 @@ class CreatePost extends React.Component {
         event.preventDefault();
         const user = this.state;
         const bodyFormData = new FormData();
-
+        
         Object.entries(user).forEach((postProp) => {
             if (postProp[0] === 'img1') {
                 bodyFormData.append('photo', user.img1);
@@ -40,15 +40,15 @@ class CreatePost extends React.Component {
         })
         
         axios.post('/submitPost', bodyFormData)
-            .then(function (response) {
-                //handle success
+            .then((response) => {
+               
                 console.log(response);
                 this.props.changeView('default');
             })
-            .catch(function (response) {
-                //handle error
-                alert('SOMETHING WENT WRONG!')
-                console.log(response);
+            .catch((response) => {
+                
+                this.props.changeView('sign-up');
+                alert(response);
             });
         // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
     }
