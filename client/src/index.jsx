@@ -33,6 +33,7 @@ class App extends React.Component {
         this.changeUser = this.changeUser.bind(this);
         this.getNearbyPosts = this.getNearbyPosts.bind(this);
         this.searchByTag= this.searchByTag.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     componentDidMount() {
@@ -123,6 +124,11 @@ class App extends React.Component {
         }
     }
 
+    logout(){
+        return axios.delete('/logout')
+        .then(respone => response.data)
+    }
+
     render() {
         const { view } = this.state;
         const { user } = this.state;
@@ -136,7 +142,7 @@ class App extends React.Component {
                 </Row>
                 <Row>
                     <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px', paddingBottom: '0px'}}>
-                        <UserNav changeView={this.changeView} user={user}/>
+                        <UserNav changeView={this.changeView} logout={this.logout} user={user}/>
                     </Col>
                     <Col sm='10' style={{padding: '25px', backgroundColor: "rgb(47, 74, 94)"}}>
                         {this.currentPage(view)}
