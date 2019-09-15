@@ -20,7 +20,7 @@ class LoginView extends React.Component {
         const user = this.state
         axios.post(`/login`, user)
         .then(newUser => {
-        return this.props.changeUser(newUser.data);
+        this.props.changeUser(newUser.data);
         })
         .catch(err => alert('incorrect username or password'))
     }
