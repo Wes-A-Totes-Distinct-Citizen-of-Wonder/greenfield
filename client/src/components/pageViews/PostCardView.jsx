@@ -11,8 +11,8 @@ const PostCard = (props) => {
             <CardImg src={post.img1} />
             <CardBody>
                 <CardTitle>{post.title}</CardTitle>
-                <CardSubtitle>{post.tags}</CardSubtitle>
                 <CardText>{post.text}</CardText>
+                <CardSubtitle>{post.tags}</CardSubtitle>
             </CardBody>
         </Card>
     ));
