@@ -58,7 +58,7 @@ class SignUpView extends React.Component {
                 </FormGroup>
                 <FormGroup>
                     <Label style={{ color: 'white' }} >Verify Password</Label>
-                    <Input type='password' name='password-verify' id='password-registration-verify' value={state.varifyPass} onChange={e => this.setState({ varifyPass: e.target.value })}></Input>
+                    <Input type='password' name='password-verify' id='password-registration-verify' value={state.verifyPass} onChange={e => this.setState({ varifyPass: e.target.value })}></Input>
                 </FormGroup>
                 <FormGroup>
                     <Label style={{ color: 'white' }} >Enter Email</Label>
