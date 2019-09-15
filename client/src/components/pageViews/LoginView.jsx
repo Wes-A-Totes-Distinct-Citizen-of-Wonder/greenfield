@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import axios from 'axios';
 import { changeUser } from '../../index.jsx';
 
-import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText, Col, Row, Jumbotron } from 'reactstrap';
 
 class LoginView extends React.Component {
     constructor(props) {
@@ -20,6 +20,7 @@ class LoginView extends React.Component {
         const user = this.state
         axios.post(`/login`, user)
         .then(newUser => {
+            debugger;
         return this.props.changeUser(newUser.data);
         })
         .then(() => {

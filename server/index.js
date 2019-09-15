@@ -44,7 +44,7 @@ app.use(session({
 }));
 
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, '../client/images')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -63,12 +63,14 @@ app.get('/posts', (req, res) => {
     });
 });
 
+
 app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
   // if user already exists, redirect back to sign-in
   // if username already taken, redirect back to sign-up
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(req.body.password, salt);
+
   let userId;
   const userInfo = {
     username: req.body.username,
@@ -76,36 +78,35 @@ app.post('/signUp', (req, res) => {
     email: req.body.email,
     business: req.body.business,
   };
-  
+
   return findUser(userInfo.username)
-    .then(() => {
-      return saveUser(userInfo)
-    })
+    .then(() => saveUser(userInfo))
   // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
-    .then(() => {
-      return saveUsersPostCount(userId)
-        .then(() => {
-          res.status(201).send('user saved in db');
-        })
-        .catch((error) => {
-          console.log(error);
-          res.status(404).send('something went wrong and user was not saved in db');
-        });
-    })
+    .then(() => saveUsersPostCount(userId)
+      .then(() => {
+        res.status(201).send('user saved in db');
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(404).send('something went wrong and user was not saved in db');
+      }))
     .catch((user) => {
       res.status(409).send(user);
     });
 });
 
+
 app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
   // if not logged in, re-route to sign-up page
-  
+
+
   if (!req.session.isLoggedIn) {
-    res.status(404).send('log in or signup!');
+    console.log(req.session.username);
+    res.status(400).send('log in or signup!');
   } else {
   // then somehow pull their username out of the req.body, and use that in savePost() call below
 
@@ -115,6 +116,7 @@ app.post('/submitPost', (req, res) => {
     // const to preserve tags for call to saveTags(tags) below
     // const { tags } = req.body;
     const image = req.files.photo;
+    const userId = 1;
     const post = {
       text: req.body.text,
       img1: null,
@@ -163,6 +165,7 @@ app.post('/submitPost', (req, res) => {
           res.status(501).send('Something went wrong with your post!');
         }
       });
+
   }
 });
 
@@ -170,16 +173,16 @@ app.post('/submitPost', (req, res) => {
 //   if (!req.session.views) {
 //     req.session.views = {}
 //   }
- 
+
 //   // get the url pathname
 //   var pathname = parseurl(req).pathname
- 
+
 //   // count the views
 //   req.session.views[pathname] = (req.session.views[pathname] || 0) + 1
- 
+
 //   next()
 // })
- 
+
 // app.get('/foo', function (req, res, next) {
 //   res.send('you viewed this page ' + req.session.views['/foo'] + ' times')
 // })
@@ -209,6 +212,7 @@ app.post('/login', (req, res) => {
   //   res.send(err)
   // })
     .catch((err) => {
+      console.error(err);
       res.status(404).send('incorrect username or password');
     });
 });
@@ -216,7 +220,7 @@ app.post('/login', (req, res) => {
 app.delete('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) res.status(400).send('there was an error logging out');
-    else res.status(201).send('successfully logged out!')
+    else res.status(201).send('successfully logged out!');
   });
 });
 
@@ -238,14 +242,14 @@ const authorize = (signIn, user) => {
 
 
 app.post('/tagSearch', (req, res) => {
-  searchTags(req.body.tag)
+  searchTags(req.body)
     .then((posts) => {
       res.status(201).send(posts);
     })
     .catch((error) => {
       res.status(500).send(error);
-    })
-})
+    });
+});
 
 app.listen(PORT, () => {
   console.log('Bitches be crazy on: 8080');

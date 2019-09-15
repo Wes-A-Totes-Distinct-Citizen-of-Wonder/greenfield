@@ -37,19 +37,6 @@ CREATE TABLE postCount (
   REFERENCES users(userId)
 );
 
--- CREATE TABLE tags (
---   tagId INT AUTO_INCREMENT,
---   lumber BOOLEAN,
---   metal BOOLEAN,
---   concrete BOOLEAN,
---   glass BOOLEAN,
---   piping BOOLEAN,
---   postId INT,
---   PRIMARY KEY (tagId),
---   FOREIGN KEY (postId)
---   REFERENCES posts(postId)
--- )
-
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql
  *  to create the database and the tables. */

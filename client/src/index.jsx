@@ -11,7 +11,7 @@ import PostView from "./components/pageViews/PostView.jsx";
 import CreatePost from "./components/pageViews/CreatePost.jsx";
 import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
-import { Col, Row } from 'reactstrap';
+import { Col, Row, NavLink } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends React.Component {
@@ -23,6 +23,7 @@ class App extends React.Component {
             user: {
                 username: "guest",
                 email: "",
+                tester: 0,
             },
             posts: [],
         }
@@ -59,7 +60,7 @@ class App extends React.Component {
     // used for changeing the view of the page
 
     searchByTag(tag) {
-        return axios.post('/tagSearch', tag)
+        return axios.post('/tagSearch', {material:tag})
         .then(response => {
             this.setState({
                 posts: response.data
@@ -129,6 +130,7 @@ class App extends React.Component {
     render() {
         const { view } = this.state;
         const { user } = this.state;
+        const { tester } = this.state;
         return (
             <div className="main">
                 <Row>
