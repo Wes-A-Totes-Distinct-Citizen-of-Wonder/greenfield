@@ -114,6 +114,18 @@ const searchTags = (tag) => new Promise((resolve, reject) => {
   });
 });
 
+const getPostInfo = (userId) => new Promise((resolve, reject) => {
+  const userIdInsert = 'SELECT users.username, users.email, users.business FROM users WHERE userId = ?';
+
+  databaseConnection.query(userIdInsert, [userId], (err, results) => {
+    if (err) {
+      console.log(err);
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
 module.exports = {
   findUser,
   getUser,
@@ -125,4 +137,5 @@ module.exports = {
   saveUsersPostCount,
   displayPosts,
   searchTags,
+  getPostInfo,
 };
