@@ -7,6 +7,7 @@ import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'react
 class CreatePost extends React.Component {
     constructor(props) {
         super(props);
+        const { currUser } = this.props;
         this.state = {
             img1: '',
             title: '',
@@ -19,7 +20,7 @@ class CreatePost extends React.Component {
             address: '',
             city: '',
             state: '',
-            zip: '',
+            currUser: currUser
         };
         this.onPostSubmit = this.onPostSubmit.bind(this);
     }
@@ -27,6 +28,7 @@ class CreatePost extends React.Component {
     onPostSubmit(event) {
         event.preventDefault();
         const user = this.state;
+        // alert(user.currUser.email);
         const bodyFormData = new FormData();
         
         Object.entries(user).forEach((postProp) => {
