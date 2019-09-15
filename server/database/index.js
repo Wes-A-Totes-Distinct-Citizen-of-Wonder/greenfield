@@ -141,10 +141,11 @@ const searchTags = (tag) => new Promise((resolve, reject) => {
 //   //   currentTag = tag5
 //   // }
 
-  const searchedTag = 'SELECT * FROM posts WHERE ?=TRUE';
+  // const searchedTag = `SELECT * FROM posts WHERE '${tag.material}' IS TRUE`;
+  const searchedTag = `SELECT * FROM posts WHERE ${tag.material} IS TRUE`;
   // const searchedTag = 'SELECT * FROM posts WHERE lumber LIKE ? OR metal LIKE ? OR concrete LIKE ? OR glass LIKE ? OR piping LIKE ?';
   // const insertValues = [tag.lumber, tag.metal, tag.concrete, tag.glass, tag.piping];
-  databaseConnection.query(searchedTag, [tag.material], (err, results) => {
+  databaseConnection.query(searchedTag, (err, results) => {
     if (err) {
       return reject(err);
     }
