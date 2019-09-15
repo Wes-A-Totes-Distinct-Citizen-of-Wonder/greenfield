@@ -244,7 +244,7 @@ app.post('/tagSearch', (req, res) => {
 });
 
 app.post('/postInfo', (req, res) => {
-  getPostInfo()
+  getPostInfo(req.body.userId)
     .then((onePostInfo) => {
       res.status(201).send(onePostInfo);
     })
