@@ -28,11 +28,11 @@ class SearchTag extends React.Component {
                     Search by:
                 </DropdownToggle>
                 <DropdownMenu>
-                    <DropdownItem>Lumber</DropdownItem>
-                    <DropdownItem>Metal</DropdownItem>
-                    <DropdownItem>Concrete</DropdownItem>
-                    <DropdownItem>Plumbing</DropdownItem>
-                    <DropdownItem>Glass</DropdownItem>
+                    <DropdownItem onClick={() => this.props.searchByTag('lumber')}>Lumber</DropdownItem>
+                    <DropdownItem onClick={() => this.props.searchByTag('metal')}>Metal</DropdownItem>
+                    <DropdownItem onClick={() => this.props.searchByTag('concrete')}>Concrete</DropdownItem>
+                    <DropdownItem onClick={() => this.props.searchByTag('plumbing')}>Plumbing</DropdownItem>
+                    <DropdownItem onClick={() => this.props.searchByTag('glass')}>Glass</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
             </div>
