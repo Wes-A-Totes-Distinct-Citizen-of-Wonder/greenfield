@@ -124,7 +124,7 @@ app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
   // if not logged in, re-route to sign-up page
 
-
+  // req.session.isLoggedIn = false;
   if (!req.session.isLoggedIn) {
     console.log(req.session.username);
     res.status(400).send('log in or signup!');
@@ -239,9 +239,9 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.delete('/logout', (req, res) => {
+app.post('/logout', (req, res) => {
   req.session.isLoggedIn = false;
-  res.status(201);
+  res.status(201).send('great job');
 });
 
 const authorize = (signIn, user) => {

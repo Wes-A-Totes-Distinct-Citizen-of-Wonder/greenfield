@@ -21,7 +21,7 @@ class CreatePost extends React.Component {
             city: '',
             state: '',
             zip: '',
-            currUser: currUser
+            // currUser: currUser
         };
         this.onPostSubmit = this.onPostSubmit.bind(this);
     }
