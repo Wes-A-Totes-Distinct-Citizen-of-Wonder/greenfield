@@ -11,7 +11,6 @@ const mapStyles = {//sets map size
 class MapContainer extends Component {
     constructor(props) {
       super(props);
-  
       this.state = {
         latLng: {//coordinates for map center and marker placement
           lat: 30,
