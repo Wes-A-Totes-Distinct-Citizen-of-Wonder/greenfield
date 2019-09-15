@@ -38,17 +38,10 @@ app.use(session({
   cookie: {
     expires: 6000000,
   },
-<<<<<<< HEAD
-  store: sessionStorage, /////////
-  reasve: false,
-  saveUninitialized: false,
-}))
-=======
   store: sessionStore,
   resave: false,
   saveUninitialized: false,
 }));
->>>>>>> 82d8691adc9e81935c895649a31838c1bb264167
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended : true}));
@@ -172,6 +165,7 @@ app.post('/submitPost', (req, res) => {
       console.log(error);
       res.status(404).send('something went wrong with your post');
     });
+  }
 });
 
 // app.use(function (req, res, next) {
