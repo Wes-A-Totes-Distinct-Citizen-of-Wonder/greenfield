@@ -19,6 +19,7 @@ CREATE TABLE posts (
   img1 varchar (255) NOT NULL,
   title varchar (50),
   location varchar (255),
+  tagList varchar (150),
   lumber BOOLEAN,
   metal BOOLEAN,
   concrete BOOLEAN,
