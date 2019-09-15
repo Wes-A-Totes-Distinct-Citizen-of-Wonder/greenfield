@@ -20,6 +20,7 @@ class CreatePost extends React.Component {
             address: '',
             city: '',
             state: '',
+            zip: '',
             currUser: currUser
         };
         this.onPostSubmit = this.onPostSubmit.bind(this);
