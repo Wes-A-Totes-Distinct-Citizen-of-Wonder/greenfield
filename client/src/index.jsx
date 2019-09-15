@@ -40,8 +40,12 @@ class App extends React.Component {
             if (nearPosts.length < 1) {
                 // return;
             } else {
+            const username = sessionStorage.getItem('username');
             this.setState({
-                posts: nearPosts
+                posts: nearPosts,
+                user: {
+                    username: username || 'guest',
+                }
             })
             event.preventDefault();
         }

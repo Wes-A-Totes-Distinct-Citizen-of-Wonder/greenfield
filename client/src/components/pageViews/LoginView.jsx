@@ -22,6 +22,9 @@ class LoginView extends React.Component {
         .then(newUser => {
         return this.props.changeUser(newUser.data);
         })
+        .then(() => {
+            sessionStorage.setItem('username', user.username);
+        })
         .catch(err => alert(err))
     }
 

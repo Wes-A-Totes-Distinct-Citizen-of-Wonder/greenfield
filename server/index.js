@@ -105,8 +105,7 @@ app.post('/submitPost', (req, res) => {
   // if not logged in, re-route to sign-up page
   
   if (!req.session.isLoggedIn) {
-    console.log(req.session.username);
-    res.status(400).send('log in or signup!');
+    res.status(404).send('log in or signup!');
   } else {
   // then somehow pull their username out of the req.body, and use that in savePost() call below
 
@@ -121,11 +120,11 @@ app.post('/submitPost', (req, res) => {
       img1: null,
       title: req.body.title,
       location: null,
-      lumber: Boolean(req.body.lumber),
-      metal: Boolean(req.body.metal),
-      concrete: Boolean(req.body.concrete),
-      glass: Boolean(req.body.glass),
-      piping: Boolean(req.body.piping),
+      lumber: req.body.lumber === 'true',
+      metal: req.body.metal === 'true',
+      concrete: req.body.concrete === 'true',
+      glass: req.body.glass === 'true',
+      piping: req.body.piping === 'true',
     };
 
     cloudinary.uploader.upload(image.tempFilePath)
@@ -158,7 +157,11 @@ app.post('/submitPost', (req, res) => {
       })
       .catch((error) => {
         console.log(error);
-        res.status(404).send('something went wrong with your post');
+        if (!image) {
+          res.status(400).send('You must include a picture with your post.');
+        } else {
+          res.status(501).send('Something went wrong with your post!');
+        }
       });
   }
 });
