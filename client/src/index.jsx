@@ -21,10 +21,8 @@ class App extends React.Component {
             view: 'default',
             selectedPost: {},
             user: {
-                username: "Guestly",
+                username: "guest",
                 email: "",
-                business: "",
-                userId: '',
             },
             posts: []
         }
