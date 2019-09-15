@@ -44,23 +44,11 @@ class CreatePost extends React.Component {
             .then(function (response) {
                 //handle success
                 console.log(response);
-                this.setState({
-                    img1: '',
-                    title: '',
-                    text: '',
-                    lumber: false,
-                    metal: false,
-                    concrete: false,
-                    glass: false,
-                    piping: false,
-                    address: '',
-                    city: '',
-                    state: '',
-                    zip: '',
-                })
+                this.props.changeView('default');
             })
             .catch(function (response) {
                 //handle error
+                alert('SOMETHING WENT WRONG!')
                 console.log(response);
             });
         // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
