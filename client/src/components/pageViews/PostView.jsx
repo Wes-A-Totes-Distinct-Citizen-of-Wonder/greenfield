@@ -18,7 +18,7 @@ const PostView = (props) => {
                 <CardText>Contact information: {user.email}</CardText>
                 <CardTitle>Title: {post.title}</CardTitle>
                 <CardText>Description: {post.text}</CardText>
-                <CardSubtitle>{post.tags}</CardSubtitle>
+                <CardSubtitle>Material(s): {post.tagList}</CardSubtitle>
             </CardBody>
             </Card>
         </Col>
