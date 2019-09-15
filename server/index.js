@@ -109,7 +109,7 @@ app.post('/signUp', (req, res) => {
 app.post('/submitPost', (req, res) => {
   // need to authenticate user's credentials here.
   // if not logged in, re-route to sign-up page
-  req.session.isLoggedIn = false;
+  
   if(!req.session.isLoggedIn) {
     console.log(req.session.username);
     res.status(400).send('log in or signup!');
