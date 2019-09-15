@@ -20,7 +20,7 @@ const cloudinaryConfig = require('./config.js');
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
-  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, saveTags, searchTags, displayPosts,
+  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, searchTags, displayPosts, getPostInfo,
 } = require('./database/index.js');
 
 const options = {
@@ -99,9 +99,7 @@ app.post('/signUp', (req, res) => {
   };
 
   return findUser(userInfo.username)
-    .then(() => {
-      return saveUser(userInfo)
-    })
+    .then(() => saveUser(userInfo))
     // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
@@ -169,8 +167,7 @@ app.post('/submitPost', (req, res) => {
         return savePost(post);
       })
       .then(() => {
-        const userId = 1;
-        increasePostCount(userId);
+        increasePostCount(post.userId);
       })
     // .then(() => {
     //   let postId = 2
@@ -267,6 +264,17 @@ app.post('/tagSearch', (req, res) => {
       res.status(201).send(posts);
     })
     .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post('/postInfo', (req, res) => {
+  getPostInfo(req.body.userId)
+    .then((onePostInfo) => {
+      res.status(201).send(onePostInfo);
+    })
+    .catch((error) => {
+      console.log(error);
       res.status(500).send(error);
     });
 });

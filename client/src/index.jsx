@@ -187,7 +187,11 @@ class App extends React.Component {
                 </Row>
                 <Row style={{backgroundColor: "rgb(147, 174, 194)", padding: '25px'}}>
                     <Col sm='2' className="side-bar" style={{backgroundColor: "rgb(147, 174, 194)", padding: 'auto'}}>
+<<<<<<< HEAD
                         <UserNav changeView={this.changeView} user={user} logout={this.logout}/>
+=======
+                        <UserNav changeView={this.changeView} user={user}/>
+>>>>>>> cf6fefff19ec4b606deb794d44ed7020491eb9a4
                     </Col>
                     <Col sm='10' style={{padding: '25px', backgroundColor: "rgb(47, 74, 94)", paddingBottom: 'auto', borderRadius: '4px'}}>
                         {this.currentPage(view)}
