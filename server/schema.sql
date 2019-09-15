@@ -24,8 +24,8 @@ CREATE TABLE posts (
   concrete BOOLEAN,
   glass BOOLEAN,
   piping BOOLEAN,
-  postNum INT DEFAULT 0,
   userId INT,
+  postNum INT DEFAULT 0,
   PRIMARY KEY (postId),
   FOREIGN KEY (userId) REFERENCES users(userId)
 );

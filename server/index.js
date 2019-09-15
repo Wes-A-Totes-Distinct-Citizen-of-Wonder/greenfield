@@ -151,8 +151,7 @@ app.post('/submitPost', (req, res) => {
         return savePost(post);
       })
       .then(() => {
-        const userId = 1;
-        increasePostCount(userId);
+        increasePostCount(post.userId);
       })
       .then(() => {
         res.status(201).send('got your post!');
