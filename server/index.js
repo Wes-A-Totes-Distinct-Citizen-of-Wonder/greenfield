@@ -116,12 +116,32 @@ app.post('/submitPost', (req, res) => {
     // const to preserve tags for call to saveTags(tags) below
     // const { tags } = req.body;
     const image = req.files.photo;
+
     // const userId = 1;
+
+    let tags = '';
+    if (req.body.lumber) {
+      tags += 'lumber ';
+    }
+    if (req.body.metal) {
+      tags += 'metal ';
+    }
+    if (req.body.concrete) {
+      tags += 'concrete ';
+    }
+    if (req.body.glass) {
+      tags += 'glass ';
+    }
+    if (req.body.piping) {
+      tags += 'piping ';
+    }
+
     const post = {
       text: req.body.text,
       img1: null,
       title: req.body.title,
       location: null,
+      tagList: tags,
       lumber: req.body.lumber === 'true',
       metal: req.body.metal === 'true',
       concrete: req.body.concrete === 'true',
