@@ -19,11 +19,7 @@ CREATE TABLE posts (
   img1 varchar (255) NOT NULL,
   title varchar (50),
   location varchar (255),
-  lumber BOOLEAN,
-  metal BOOLEAN,
-  concrete BOOLEAN,
-  glass BOOLEAN,
-  piping BOOLEAN,
+  tags varchar (300),
   postNum INT DEFAULT 0,
   userId INT,
   PRIMARY KEY (postId),
@@ -36,19 +32,6 @@ CREATE TABLE postCount (
   FOREIGN KEY (userId)
   REFERENCES users(userId)
 );
-
--- CREATE TABLE tags (
---   tagId INT AUTO_INCREMENT,
---   lumber BOOLEAN,
---   metal BOOLEAN,
---   concrete BOOLEAN,
---   glass BOOLEAN,
---   piping BOOLEAN,
---   postId INT,
---   PRIMARY KEY (tagId),
---   FOREIGN KEY (postId)
---   REFERENCES posts(postId)
--- )
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql
