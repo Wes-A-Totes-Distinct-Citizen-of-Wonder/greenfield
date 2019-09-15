@@ -211,7 +211,7 @@ app.post('/login', (req, res) => {
 
 app.delete('/logout', (req, res) => {
   req.session.isLoggedIn = false;
-  res.status(201).send('successfully logged out!');
+  res.status(201);
 });
 
 const authorize = (signIn, user) => {
