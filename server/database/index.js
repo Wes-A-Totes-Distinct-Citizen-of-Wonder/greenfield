@@ -144,7 +144,7 @@ const searchTags = (tag) => new Promise((resolve, reject) => {
   const searchedTag = 'SELECT * FROM posts WHERE ?=TRUE';
   // const searchedTag = 'SELECT * FROM posts WHERE lumber LIKE ? OR metal LIKE ? OR concrete LIKE ? OR glass LIKE ? OR piping LIKE ?';
   // const insertValues = [tag.lumber, tag.metal, tag.concrete, tag.glass, tag.piping];
-  databaseConnection.query(searchedTag, [tag], (err, results) => {
+  databaseConnection.query(searchedTag, [tag.material], (err, results) => {
     if (err) {
       return reject(err);
     }
