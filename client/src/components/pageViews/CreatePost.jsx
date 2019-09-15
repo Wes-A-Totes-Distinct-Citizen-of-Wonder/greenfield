@@ -27,7 +27,7 @@ class CreatePost extends React.Component {
     }
 
     onPostSubmit(event) {
-        event.preventDefault();
+        // event.preventDefault();
         const user = this.state;
         // alert(user.currUser.email);
         const bodyFormData = new FormData();
