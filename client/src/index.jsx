@@ -41,18 +41,25 @@ class App extends React.Component {
             if (nearPosts.length < 1) {
                 // return;
             } else {
-            const username = sessionStorage.getItem('username');
-            this.setState({
-                posts: nearPosts,
-                user: {
-                    username: username || 'guest',
-                }
-            })
-            event.preventDefault();
-        }
+                this.setState({
+                    posts: nearPosts,
+                })
+                // event.preventDefault();
+            }
         })
-        .then(() => {
+        .then(() => axios.get('/userSession'))
+        .then((response) => {
+            const userInfo = response.data;
+            sessionStorage.setItem("user", JSON.stringify(userInfo));
             
+            if (userInfo.isLoggedIn){
+                this.setState({
+                    user: {
+                        username: userInfo.username,
+                        email: userInfo.email,
+                    }
+                });
+            }
         })
     }
     // grabs all posts close to geolocation and puts them in the posts array inside this.state

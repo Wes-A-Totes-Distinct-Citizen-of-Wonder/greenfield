@@ -63,6 +63,24 @@ app.get('/posts', (req, res) => {
     });
 });
 
+app.get('/userSession', (req, res) => {
+  const {
+    userId,
+    isLoggedIn,
+    username,
+    email,
+    buisness,
+  } = req.session;
+
+  const userInfo = {
+    userId,
+    isLoggedIn,
+    username,
+    email,
+    buisness,
+  };
+  res.status(200).send(userInfo);
+});
 
 app.post('/signUp', (req, res) => {
   // need to verify that password matches, required fields submitted, etc
@@ -127,6 +145,7 @@ app.post('/submitPost', (req, res) => {
       concrete: req.body.concrete === 'true',
       glass: req.body.glass === 'true',
       piping: req.body.piping === 'true',
+      userId: req.session.userId,
     };
 
     cloudinary.uploader.upload(image.tempFilePath)
@@ -196,6 +215,7 @@ app.post('/login', (req, res) => {
   return getUser(user.username)
     .then((response) => {
       const result = authorize(response, user);
+      req.session.userId = result.userId;
       req.session.isLoggedIn = true;
       req.session.username = result.username;
       req.session.email = result.email;
