@@ -118,7 +118,7 @@ app.post('/submitPost', (req, res) => {
     // const to preserve tags for call to saveTags(tags) below
     // const { tags } = req.body;
     const image = req.files.photo;
-    const userId = 1;
+    // const userId = 1;
     const post = {
       text: req.body.text,
       img1: null,
@@ -129,6 +129,7 @@ app.post('/submitPost', (req, res) => {
       concrete: req.body.concrete === 'true',
       glass: req.body.glass === 'true',
       piping: req.body.piping === 'true',
+      userId: req.session.userId,
     };
 
 
@@ -194,6 +195,7 @@ app.post('/login', (req, res) => {
       req.session.username = result.username;
       req.session.email = result.email;
       req.session.business = result.business;
+      req.session.userId = result.userId;
       res.cookie('session_id', req.session.id);
       res.json(result);
     })
@@ -206,15 +208,13 @@ app.post('/login', (req, res) => {
     //   res.send(err)
     // })
     .catch((err) => {
-      res.status(404).send('incorrect username or password');
+      res.status(404);
     });
 });
 
 app.delete('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) res.status(400).send('there was an error logging out');
-    else res.status(201).send('successfully logged out!');
-  });
+  req.session.isLoggedIn = false;
+  res.status(201);
 });
 
 const authorize = (signIn, user) => {
