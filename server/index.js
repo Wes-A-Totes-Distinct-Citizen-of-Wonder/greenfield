@@ -205,15 +205,13 @@ app.post('/login', (req, res) => {
     //   res.send(err)
     // })
     .catch((err) => {
-      res.status(404).send('incorrect username or password');
+      res.status(404);
     });
 });
 
 app.delete('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) res.status(400).send('there was an error logging out');
-    else res.status(201).send('successfully logged out!');
-  });
+  req.session.isLoggedIn = false;
+  res.status(201);
 });
 
 const authorize = (signIn, user) => {
