@@ -21,16 +21,10 @@ class App extends React.Component {
             view: 'default',
             selectedPost: {},
             user: {
-                username: "Wes",
-                email: "wtschmidt94@gmail.com",
-                business: "",
-                userId: '',
-                geolocation: {
-                    lat: 'here',
-                    lng: 'now'
-                },
+                username: "guest",
+                email: "",
             },
-            posts: []
+            posts: [],
         }
         this.changePostView = this.changePostView.bind(this);
         this.currentPage = this.currentPage.bind(this);
@@ -50,6 +44,9 @@ class App extends React.Component {
             })
             event.preventDefault();
         }
+        })
+        .then(() => {
+            
         })
     }
     // grabs all posts close to geolocation and puts them in the posts array inside this.state
