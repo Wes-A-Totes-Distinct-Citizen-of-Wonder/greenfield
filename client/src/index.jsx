@@ -56,6 +56,7 @@ class App extends React.Component {
         this.changeUser = this.changeUser.bind(this);
         this.getNearbyPosts = this.getNearbyPosts.bind(this);
         this.searchByTag= this.searchByTag.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     componentDidMount() {
@@ -151,6 +152,11 @@ class App extends React.Component {
                     <PostCard posts={posts} changePostView={this.changePostView} searchByTag={this.searchByTag} />
                 );
         }
+    }
+
+    logout(event){
+        return axios.delete('/logout')
+        .then(() => alert('You have been logged out'))
     }
 
     render() {

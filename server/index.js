@@ -20,7 +20,7 @@ const cloudinaryConfig = require('./config.js');
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
-  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, saveTags, searchTags, displayPosts,
+  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, searchTags, displayPosts, getPostInfo,
 } = require('./database/index.js');
 
 const options = {
@@ -81,9 +81,7 @@ app.post('/signUp', (req, res) => {
   };
 
   return findUser(userInfo.username)
-    .then(() => {
-      return saveUser(userInfo)
-    })
+    .then(() => saveUser(userInfo))
     // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
@@ -129,6 +127,7 @@ app.post('/submitPost', (req, res) => {
       concrete: req.body.concrete === 'true',
       glass: req.body.glass === 'true',
       piping: req.body.piping === 'true',
+      userId: req.session.userId,
     };
 
 
@@ -150,8 +149,7 @@ app.post('/submitPost', (req, res) => {
         return savePost(post);
       })
       .then(() => {
-        const userId = 1;
-        increasePostCount(userId);
+        increasePostCount(post.userId);
       })
       .then(() => {
         res.status(201).send('got your post!');
@@ -194,6 +192,7 @@ app.post('/login', (req, res) => {
       req.session.username = result.username;
       req.session.email = result.email;
       req.session.business = result.business;
+      req.session.userId = result.userId;
       res.cookie('session_id', req.session.id);
       res.json(result);
     })
@@ -206,15 +205,13 @@ app.post('/login', (req, res) => {
     //   res.send(err)
     // })
     .catch((err) => {
-      res.status(404).send('incorrect username or password');
+      res.status(404);
     });
 });
 
 app.delete('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) res.status(400).send('there was an error logging out');
-    else res.status(201).send('successfully logged out!');
-  });
+  req.session.isLoggedIn = false;
+  res.status(201);
 });
 
 const authorize = (signIn, user) => {
@@ -240,6 +237,17 @@ app.post('/tagSearch', (req, res) => {
       res.status(201).send(posts);
     })
     .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post('/postInfo', (req, res) => {
+  getPostInfo(req.body.userId)
+    .then((onePostInfo) => {
+      res.status(201).send(onePostInfo);
+    })
+    .catch((error) => {
+      console.log(error);
       res.status(500).send(error);
     });
 });
