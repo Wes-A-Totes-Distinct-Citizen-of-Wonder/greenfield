@@ -3,12 +3,9 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-// const users = require('../server/database');
 
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
-// const passport = require('passport');//for User authentication
-// const flash = require('connect-flash');//for User authentication pop up notifications
 
 const app = express();
 
@@ -16,13 +13,14 @@ const MySQLStore = require('express-mysql-session')(session);
 const parseurl = require('parseurl');
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
-const cloudinaryConfig = require('./config.js');
+const cloudinaryConfig = require('./config.js');//config file is gitignored b/c it holds API key. Won't appear in forked versions.
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
   findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, searchTags, displayPosts, getPostInfo,
 } = require('./database/index.js');
 
+//options used in sessionStore below
 const options = {
   host: 'localhost',
   user: 'root',
@@ -46,16 +44,15 @@ app.use(session({
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// app.use(express.static(path.join(__dirname, '../client/images')));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(fileUpload({
   useTempFiles: true,
 }));
 
+//for reqs from endpoint /posts on frontend. Fetches posts from db and passes them to client to display on page
 app.get('/posts', (req, res) => {
   displayPosts()
     .then((posts) => {
-      // debugger;
       res.status(201).send(posts);
     })
     .catch((error) => {
@@ -64,6 +61,9 @@ app.get('/posts', (req, res) => {
     });
 });
 
+//for reqs from endpoint /userSession on frontend. Gets all info from the sessions table in the db
+//(created by middleware; table can't be viewed in schema and isn't technically in schema in server/schema.sql,
+//but data can be pulled from the table) and send it to frontend to save all session info there.
 app.get('/userSession', (req, res) => {
   const {
     userId,
@@ -83,14 +83,14 @@ app.get('/userSession', (req, res) => {
   res.status(200).send(userInfo);
 });
 
+//for reqs from endpoint /signUp on frontend. Takes in user's info, makes sure that username doesn't
+//already exist in the db. If not, it makes the user in the db table users, and creates a row in postCount table for that user
 app.post('/signUp', (req, res) => {
-  // need to verify that password matches, required fields submitted, etc
-  // if user already exists, redirect back to sign-in
-  // if username already taken, redirect back to sign-up
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(req.body.password, salt);
 
   let userId;
+
   const userInfo = {
     username: req.body.username,
     password: hash,
@@ -100,7 +100,6 @@ app.post('/signUp', (req, res) => {
 
   return findUser(userInfo.username)
     .then(() => saveUser(userInfo))
-    // .then () start session with hashed sessionId and userId, etc
     .then((savedUser) => {
       userId = savedUser.insertId;
     })
@@ -117,27 +116,16 @@ app.post('/signUp', (req, res) => {
     });
 });
 
-
+//for reqs from endpoint /submitPost on frontend. Checks if user is logged in, and if not, tells them to sign up or log in.
+//If they are logged in, makes tags string out of tags that the user clicked, makes post obj with all needed data from
+//the req, uses cloudinary to host the image and return a url of the image's location to us, converts location to geolocation
+//coordinates, save the post in the posts table in DB, increases user's postCount in table postCount in DB
 app.post('/submitPost', (req, res) => {
-  // need to authenticate user's credentials here.
-  // if not logged in, re-route to sign-up page
-
-  // req.session.isLoggedIn = false;
   if (!req.session.isLoggedIn) {
     console.log(req.session.username);
     res.status(400).send('log in or signup!');
   } else {
-  // then somehow pull their username out of the req.body, and use that in savePost() call below
-
-    // TEMPORARY standin for userId. replace with actual data when it exists
-    // const { userId } = verifySession;
-
-    // const to preserve tags for call to saveTags(tags) below
-    // const { tags } = req.body;
     const image = req.files.photo;
-
-    // const userId = 1;
-
     let tags = '';
 
     if (req.body.lumber === 'true') {
@@ -190,10 +178,6 @@ app.post('/submitPost', (req, res) => {
       .then(() => {
         increasePostCount(post.userId);
       })
-    // .then(() => {
-    //   let postId = 2
-    //   saveTags(tags, postId);
-    // })
       .then(() => {
         res.status(201).send('got your post!');
       })
@@ -208,26 +192,8 @@ app.post('/submitPost', (req, res) => {
   }
 });
 
-// app.use(function (req, res, next) {
-//   if (!req.session.views) {
-//     req.session.views = {}
-//   }
-
-//   // get the url pathname
-//   var pathname = parseurl(req).pathname
-
-//   // count the views
-//   req.session.views[pathname] = (req.session.views[pathname] || 0) + 1
-
-//   next()
-// })
-
-// app.get('/foo', function (req, res, next) {
-//   res.send('you viewed this page ' + req.session.views['/foo'] + ' times')
-// })
 
 app.post('/login', (req, res) => {
-  // let authUser;
   const user = {
     username: req.body.username,
     password: req.body.password,
@@ -244,26 +210,13 @@ app.post('/login', (req, res) => {
       res.cookie('session_id', req.session.id);
       res.json(result);
     })
-    // console.log('found User in DB')
-    // })
-    // .then(returnUser => {
-    //   res.status(201).send(returnUser)
-    // })
-    // .catch((err) => {
-    //   res.send(err)
-    // })
     .catch((err) => {
       res.status(404);
     });
 });
 
-app.post('/logout', (req, res) => {
-  req.session.isLoggedIn = false;
-  res.status(201).send('great job');
-});
-
+//used in app.post('/login') above. Takes the user's info from login, checks it against user info in DB.
 const authorize = (signIn, user) => {
-  // return new Promise ((resolve, reject) => {
   const foundUser = signIn[0];
   const passwordCheck = bcrypt.compareSync(user.password, foundUser.password);
   if (passwordCheck) {
@@ -278,7 +231,13 @@ const authorize = (signIn, user) => {
   return ("password doesn't match!");
 };
 
+app.post('/logout', (req, res) => {
+  req.session.isLoggedIn = false;
+  res.status(201).send('great job');
+});
 
+//when a user clicks on button to search by a specific tag on the page, this grabs the clicked tag 
+//from front end, and searches the db for posts with that tag.
 app.post('/tagSearch', (req, res) => {
   searchTags(req.body)
     .then((posts) => {
@@ -289,6 +248,8 @@ app.post('/tagSearch', (req, res) => {
     });
 });
 
+//when logged-in user clicks on a post, this fetches the data they want to see: the post's user's
+//username, email, business name, the location of the materials, and the map for the location.
 app.post('/postInfo', (req, res) => {
   getPostInfo(req.body.userId)
     .then((onePostInfo) => {
@@ -301,5 +262,5 @@ app.post('/postInfo', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Bitches be crazy on: 8080');
+  console.log('Contractors be listening on: 8080');
 });
