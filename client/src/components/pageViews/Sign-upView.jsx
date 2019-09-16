@@ -17,27 +17,28 @@ class SignUpView extends React.Component {
         };
         this.onSignUpSubmit = this.onSignUpSubmit.bind(this);
     }
-
+    // called when clicking "submit" button
     onSignUpSubmit(event) {
         event.preventDefault();
         const user = this.state;
         if (user.password === user.verifyPass) {
+            // makes sure passwords are the same
             return axios.post('/signUp', user)
             .then(() => {
+                // if successful logs user in automatically
                 return axios.post(`/login`, { username: user.username, password: user.password })
             })
             .then((response) => {
+                // takes userId from response
                 const newUser = {
                     username: user.username,
                     email: user.email,
                     business: user.business,
                     userId: response.data.userId
                 }
-                // alert(newUser.userId)
                 this.props.changeUser(newUser);
             })
         } else {
-            // props.changeView('sign-up');
             alert("Your passwords don't match!")
         }
     }
@@ -45,7 +46,7 @@ class SignUpView extends React.Component {
     render() {
         const state = this.state;
         return (
-            // <div>
+            // Keeps track of all input info and stores it in the state, then upon submit, sends the state object to the server
             <Form onSubmit={(e) => {preventDefault(e)}}>
                 <FormGroup>
                     <Label style={{ color: 'white' }} >Create User Name</Label>
