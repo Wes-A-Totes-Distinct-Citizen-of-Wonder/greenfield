@@ -17,7 +17,7 @@ class SignUpView extends React.Component {
         };
         this.onSignUpSubmit = this.onSignUpSubmit.bind(this);
     }
-
+        // handles the information from the form upon clicking on the submit
     onSignUpSubmit(event) {
         const user = this.state;
         if (user.password === user.verifyPass) {
@@ -32,7 +32,7 @@ class SignUpView extends React.Component {
                     business: user.business,
                     userId: response.data.userId
                 }
-                // alert(newUser.userId)
+                // sets the signed in user info
                 this.props.changeUser(newUser);
             })
         } else {
