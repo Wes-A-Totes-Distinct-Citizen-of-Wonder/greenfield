@@ -3,11 +3,10 @@ const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cl
 const config = require('../config.js');
 
 const databaseConnection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'trashPanda',
-  insecureAuth: true,
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
 });
 
 // IF TRYING TO FIND A USER, LOOK AT GETUSER BELOW, decide which to use!!!!!!!!
@@ -39,19 +38,18 @@ const getUser = (user) => new Promise((resolve, reject) => {
 });
 
 // saves the user into the DB
-const saveUser = (user) =>
-  new Promise((resolve, reject) => {
-    const userInsert = 'INSERT INTO users(userId, username, password, email, business) VALUES (DEFAULT, ?)';
-    const insertValues = [user.username, user.password, user.email, user.business];
+const saveUser = (user) => new Promise((resolve, reject) => {
+  const userInsert = 'INSERT INTO users(userId, username, password, email, business) VALUES (DEFAULT, ?)';
+  const insertValues = [user.username, user.password, user.email, user.business];
 
-    databaseConnection.query(userInsert, [insertValues], (err, results, fields) => {
-      if (err) {
-        console.log(err);
-        return reject(err);
-      }
-      return resolve(results, fields);
-    });
+  databaseConnection.query(userInsert, [insertValues], (err, results, fields) => {
+    if (err) {
+      console.log(err);
+      return reject(err);
+    }
+    return resolve(results, fields);
   });
+});
 
 // creates a running psts count into the DB
 const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
@@ -66,19 +64,18 @@ const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
   });
 });
 // saves posts to the DB
-const savePost = (post) =>
-  new Promise((resolve, reject) => {
-    const postInsert = 'INSERT INTO posts(postId, text, img1, title, location, tagList, lumber, metal, concrete, glass, piping, userId) VALUES (DEFAULT, ?)';
-    const insertValues = [post.text, post.img1, post.title, post.location, post.tagList, post.lumber, post.metal, post.concrete, post.glass, post.piping, post.userId];
+const savePost = (post) => new Promise((resolve, reject) => {
+  const postInsert = 'INSERT INTO posts(postId, text, img1, title, location, tagList, lumber, metal, concrete, glass, piping, userId) VALUES (DEFAULT, ?)';
+  const insertValues = [post.text, post.img1, post.title, post.location, post.tagList, post.lumber, post.metal, post.concrete, post.glass, post.piping, post.userId];
 
-    databaseConnection.query(postInsert, [insertValues], (err, results) => {
-      if (err) {
-        console.log(err);
-        return reject(err);
-      }
-      return resolve(results);
-    });
+  databaseConnection.query(postInsert, [insertValues], (err, results) => {
+    if (err) {
+      console.log(err);
+      return reject(err);
+    }
+    return resolve(results);
   });
+});
 // increasts the coiunt of posts in the DB
 const increasePostCount = (userId) => new Promise((resolve, reject) => {
   const increaseInsert = 'UPDATE postCount SET count = count + 1 WHERE userId = ?';
