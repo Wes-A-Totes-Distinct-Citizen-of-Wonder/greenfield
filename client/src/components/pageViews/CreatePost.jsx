@@ -10,6 +10,8 @@ class CreatePost extends React.Component {
         const { currUser } = this.props;
         this.state = {
             img1: '',
+            img2: '',
+            img3: '',
             title: '',
             text: '',
             lumber: false,
@@ -28,6 +30,7 @@ class CreatePost extends React.Component {
     // gets called upon clicking "submit" button
     onPostSubmit(event) {
         const user = this.state;
+        debugger;
         const bodyFormData = new FormData();
         // formatting for cloudinary
         Object.entries(user).forEach((postProp) => {
@@ -56,7 +59,7 @@ class CreatePost extends React.Component {
                     this.props.changeView('login');
                 }
                 if (response.response.status === 500) {
-                    alert('You must include an image with your post');
+                    alert('You must include at least one image with your post');
                 }
             });
         // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
@@ -68,7 +71,10 @@ class CreatePost extends React.Component {
             <Form>
                 <FormGroup>
                     <Label for="post-img" style={{ color: 'white' }}>Image File</Label>
-                    <Input type="file" name="photo" id="post-img" style={{ color: 'white' }} value={state.img1} onChange={e => this.setState({ img1: e.target.files[0] })}/>
+                    <Input type="file" name="photo" style={{ color: 'white' }} value={state.img1} onChange={e => this.setState({ img1: e.target.files[0] })}/>
+                    <div style={{color: 'white'}}>optional</div>
+                    <Input type="file" name="photo" style={{ color: 'white' }} value={state.img2} onChange={e => this.setState({ img2: e.target.files[0] })} />
+                    <Input type="file" name="photo" style={{ color: 'white' }} value={state.img3} onChange={e => this.setState({ img3: e.target.files[0] })} />
                     <FormText color="muted">
                         Please include an image(s) of the materials you wish to share.
                     </FormText>
