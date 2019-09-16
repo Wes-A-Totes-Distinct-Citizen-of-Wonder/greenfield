@@ -13,7 +13,7 @@ class SearchTag extends React.Component {
         };
         this.toggle = this.toggle.bind(this);
     }
-
+    // controls the drop down menu on tags
     toggle() {
         this.setState(lastState => ({
             open: !lastState.open

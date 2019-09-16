@@ -23,36 +23,19 @@ class App extends React.Component {
                 userInfo: {}
             },
             user: {
+                // this will decide if guest shows up or the username that is logged in
+                //upon logging in the guest name will go away and the user name will show up
                 username: (function(){
-                    if(sessionStorage.getItem('user') && JSON.parse(sessionStorage.getItem('user')).isLoggedIn) {
-                        const { username } = JSON.parse(sessionStorage.getItem('user'));
-                        return username;
-                    }
-                })() || "guest",
-                email: "",
-                userId: 0,
-            },
+                            if(sessionStorage.getItem('user') && JSON.parse(sessionStorage.getItem('user')).isLoggedIn) {
+                                const { username } = JSON.parse(sessionStorage.getItem('user'));
+                                return username;
+                            }
+                          })() || "guest",
+                            email: "",
+                            userId: 0,
+                  },
             posts: [
-                // {
-                //     img1: require('../images/Space Hand Painting.jpg'),
-                //     text: "hey bro",
-                //     tags: "/lumber/metal",
-                //     // address: "yo mama",
-                //     // city: "Kenner",
-                //     // state: "LA",
-                //     // zip: "70065",
-                //     location: "5 charlene ct./Kenner/LA/70065"
-                // },
-                // {
-                //     img1: require('../images/Drawing1.png'),
-                //     text: "cat bro",
-                //     tags: "/lumber/metal",
-                //     // address: "yo mama",
-                //     // city: "Kenner",
-                //     // state: "LA",
-                //     // zip: "70065",
-                //     location: "5 charlene ct./Kenner/LA/70065"
-                // }
+                //will hold all posts
             ],
         }
         this.changePostView = this.changePostView.bind(this);
@@ -65,22 +48,21 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        // attatches the posts to the post array in the state
         this.getNearbyPosts()
         .then(nearPosts => {
             if (nearPosts.length < 1) {
-                // return;
             } else {
                 this.setState({
                     posts: nearPosts,
                 })
-                // event.preventDefault();
             }
         })
         .then(() => axios.get('/userSession'))
         .then((response) => {
             const userInfo = response.data;
             sessionStorage.setItem("user", JSON.stringify(userInfo));
-            
+            //sets username and email into state as long as a user in loggend in
             if (userInfo.isLoggedIn){
                 this.setState({
                     user: {
@@ -103,6 +85,7 @@ class App extends React.Component {
     // need some instruction on how to actually sort by geolocation though....
     // used for changeing the view of the page
 
+    //allows you to search by a material and allows posts to be sorted by their tag
     searchByTag(tag) {
         return axios.post('/tagSearch', {material:tag})
         .then(response => {
@@ -111,12 +94,14 @@ class App extends React.Component {
             })
         })
     }
-
+     
+    // gets all posts from DB
     getNearbyPosts() {
         return axios.get('/posts')
         .then(response => response.data);
     }
 
+    // assists in swaping from page to page
     changeView(newView) {
         this.setState({
             view: newView
@@ -134,8 +119,9 @@ class App extends React.Component {
         })
         .catch(err => console.error(err))
     }
+
     // used when clicking on a post to show more detail
-    // may not need this if we're looking for post id in DB
+    // shows user info on each post
     changePostView(newPost) {
         return axios.post('/postInfo', { userId: newPost.userId })
         .then(response => {
@@ -149,6 +135,7 @@ class App extends React.Component {
         })
     }
 
+    //handles the user sign in being set to state
     changeUser(newUser) {
         event.preventDefault();
         this.setState({
@@ -157,6 +144,7 @@ class App extends React.Component {
         })
     }
 
+    // handles the back and forth of what page will be viewed by the user
     currentPage(page) {
         const { posts } = this.state;
         const { selectedPost } = this.state;
@@ -190,6 +178,7 @@ class App extends React.Component {
         }
     }
 
+    //allows user to sign out
     logout(event){
         axios.post('/logout')
         .catch((err) => console.error(err))

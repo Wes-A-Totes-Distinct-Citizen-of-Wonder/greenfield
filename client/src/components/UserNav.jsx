@@ -2,7 +2,7 @@ import React from 'react';
 import SearchTag from './SearchTag.jsx';
 import { Nav, NavItem, NavLink, NavbarBrand } from 'reactstrap';
 
-
+// the navigation on the left side of the page, handles the positioning og login, logout, signup and user that is logged in
 const UserNav = (props) => {
     const { changeView } = props;
     const { user } = props;

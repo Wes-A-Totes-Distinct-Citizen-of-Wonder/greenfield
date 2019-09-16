@@ -17,9 +17,9 @@ class SignUpView extends React.Component {
         };
         this.onSignUpSubmit = this.onSignUpSubmit.bind(this);
     }
+        // handles the information from the form upon clicking on the submit
     // called when clicking "submit" button
     onSignUpSubmit(event) {
-        event.preventDefault();
         const user = this.state;
         if (user.password === user.verifyPass) {
             // makes sure passwords are the same
@@ -36,6 +36,10 @@ class SignUpView extends React.Component {
                     business: user.business,
                     userId: response.data.userId
                 }
+<<<<<<< HEAD
+                // sets the signed in user info
+=======
+>>>>>>> ad009bff0f965ee65c75a9a25a17207cad4aaf06
                 this.props.changeUser(newUser);
             })
         } else {
