@@ -9,9 +9,9 @@ class CreatePost extends React.Component {
         super(props);
         const { currUser } = this.props;
         this.state = {
-            img1: '',
-            img2: '',
-            img3: '',
+            img1: null,
+            img2: null,
+            img3: null,
             title: '',
             text: '',
             lumber: false,
@@ -30,18 +30,19 @@ class CreatePost extends React.Component {
     // gets called upon clicking "submit" button
     onPostSubmit(event) {
         const user = this.state;
-        debugger;
         const bodyFormData = new FormData();
         // formatting for cloudinary
-        Object.entries(user).forEach((postProp) => {
-            if (postProp[0] === 'img1') {
-                bodyFormData.append('photo', user.img1);
-            }
-            else {
-                bodyFormData.set(postProp[0], postProp[1]);
-            }
-            
-        })
+        for (let key in user) {
+          if (key === 'title') {
+            break;
+          }
+          if (user[key] !== null && (key === 'img1' || key === 'img2' || key === 'img3')) {
+            bodyFormData.append('photo', user[key]);
+          }
+          else if (user[key] !== null) {
+            bodyFormData.set(key, user[key]);
+          }
+        }
         // sends post information from client to post table in DB
         axios.post('/submitPost', bodyFormData)
             .then((response) => {
