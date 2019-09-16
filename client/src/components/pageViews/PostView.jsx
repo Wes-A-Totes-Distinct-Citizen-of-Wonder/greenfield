@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import MapContainer from "./../MapContainer.jsx";
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col, Row, CardColumns } from 'reactstrap';
 
-
+// the view for when selected a specific post
 const PostView = (props) => {
     const { post } = props;
     const { user } = props;
