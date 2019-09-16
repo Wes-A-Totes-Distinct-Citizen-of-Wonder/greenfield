@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS trashPanda;
+-- DROP DATABASE IF EXISTS trashPanda;
 
 CREATE DATABASE trashPanda;
 

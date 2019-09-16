@@ -1,6 +1,5 @@
-
 const axios = require('axios');
-const { API_KEY } = require('./config.js')
+const { API_KEY } = require('./config');
 // Api request information, formatted to accept a string
 const convertToCoordinates = (address) => {
   const formattedAddress = Object.values(address)
