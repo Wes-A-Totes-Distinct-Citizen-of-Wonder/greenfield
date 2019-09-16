@@ -36,10 +36,7 @@ class SignUpView extends React.Component {
                     business: user.business,
                     userId: response.data.userId
                 }
-<<<<<<< HEAD
                 // sets the signed in user info
-=======
->>>>>>> ad009bff0f965ee65c75a9a25a17207cad4aaf06
                 this.props.changeUser(newUser);
             })
         } else {
