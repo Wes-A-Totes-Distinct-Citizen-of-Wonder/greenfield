@@ -14,13 +14,14 @@ class LoginView extends React.Component {
         };
         this.onLoginSubmit = this.onLoginSubmit.bind(this);
     }
-
+    // triggers when "submit" button is clicked
     onLoginSubmit() {
         event.preventDefault()
+        // prevents the refresh of the page
         const user = this.state
         axios.post(`/login`, user)
         .then(newUser => {
-            // sessionStorage.setItem('user', JSON.stringify(newUser.data));
+            // changes user state in idex.jsx
             return this.props.changeUser(newUser.data);
         })
         .then(() => {

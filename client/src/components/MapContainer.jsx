@@ -19,6 +19,7 @@ class MapContainer extends Component {
       }
     }
 
+
     componentDidMount() {
       const { geoLocation } = this.props;
       const coordinatesArray = geoLocation.split(', ');
@@ -27,18 +28,7 @@ class MapContainer extends Component {
         lat: parseFloat(coordinatesArray[0]),
         lng: parseFloat(coordinatesArray[1]),
         }
-      })
-    //   const { address } = this.props;//sets map center and marker on load
-    //     if(address){
-    //         convertToCoordinates(address)
-    //         .then(response => {
-    //             this.setState({
-    //                 latLng: response.data.results[0].geometry.location,
-    //             })
-    //             console.log(this.state.latLng)
-    //         })
-    //         .catch(err => console.error(err))
-    //   }  
+      }) 
     }
   
     render() {
@@ -48,7 +38,7 @@ class MapContainer extends Component {
 
           <Map
             google={this.props.google}
-            zoom={15}
+            zoom={15}  //setting for how zoomed in the map is upon rendering
             style={mapStyles}
             center={latLng}
           >

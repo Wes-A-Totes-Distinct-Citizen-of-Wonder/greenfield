@@ -22,18 +22,14 @@ class CreatePost extends React.Component {
             state: '',
             zip: '',
             currUser: currUser 
-            //may not need ^^^^^ this is req.sessions can aquire current user info
         };
         this.onPostSubmit = this.onPostSubmit.bind(this);
     }
-
+    // gets called upon clicking "submit" button
     onPostSubmit(event) {
-        // event.preventDefault();
-        // const userItem = JSON.parse(sessionStorage.getItem(user))
         const user = this.state;
-        // alert(user.currUser.email);
         const bodyFormData = new FormData();
-        
+        // formatting for cloudinary
         Object.entries(user).forEach((postProp) => {
             if (postProp[0] === 'img1') {
                 bodyFormData.append('photo', user.img1);
@@ -43,10 +39,11 @@ class CreatePost extends React.Component {
             }
             
         })
-        
+        // sends post information from client to post table in DB
         axios.post('/submitPost', bodyFormData)
             .then((response) => {
                 console.log(response);
+                // after success sends user back to home page
                 this.props.changeView('default');
             })
             .catch((response) => {
