@@ -11,6 +11,7 @@ const databaseConnection = mysql.createConnection({
 });
 
 // IF TRYING TO FIND A USER, LOOK AT GETUSER BELOW, decide which to use!!!!!!!!
+// Both find users, from the DB and take all the info from them, find users actually passes the info in the .catch, while get users from the .then
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 const findUser = (user) => new Promise((resolve, reject) => {
   // select user from database if exists
@@ -37,6 +38,7 @@ const getUser = (user) => new Promise((resolve, reject) => {
   });
 });
 
+// saves the user into the DB
 const saveUser = (user) =>
   new Promise((resolve, reject) => {
     const userInsert = 'INSERT INTO users(userId, username, password, email, business) VALUES (DEFAULT, ?)';
@@ -51,6 +53,7 @@ const saveUser = (user) =>
     });
   });
 
+// creates a running psts count into the DB
 const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
   const countInsert = 'INSERT INTO postCount(count, userId) VALUES (DEFAULT, ?)';
 
@@ -62,7 +65,7 @@ const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
     return resolve(results);
   });
 });
-
+// saves posts to the DB
 const savePost = (post) =>
   new Promise((resolve, reject) => {
     const postInsert = 'INSERT INTO posts(postId, text, img1, title, location, tagList, lumber, metal, concrete, glass, piping, userId) VALUES (DEFAULT, ?)';
@@ -76,7 +79,7 @@ const savePost = (post) =>
       return resolve(results);
     });
   });
-
+// increasts the coiunt of posts in the DB
 const increasePostCount = (userId) => new Promise((resolve, reject) => {
   const increaseInsert = 'UPDATE postCount SET count = count + 1 WHERE userId = ?';
 
@@ -104,6 +107,7 @@ cloudinary.config(config);// config object for connecting to cloudinary
 
 const saveImage = (image) => cloudinary.uploader.upload(image.tempFilePath);
 
+// allows you to select all the posts based upon hat type of material you wish
 const searchTags = (tag) => new Promise((resolve, reject) => {
   const searchedTag = `SELECT * FROM posts WHERE ${tag.material} IS TRUE`;
   databaseConnection.query(searchedTag, (err, results) => {
@@ -113,7 +117,7 @@ const searchTags = (tag) => new Promise((resolve, reject) => {
     return resolve(results);
   });
 });
-
+// grabs all the user info for each individual post
 const getPostInfo = (userId) => new Promise((resolve, reject) => {
   const userIdInsert = 'SELECT users.username, users.email, users.business FROM users WHERE userId = ?';
 
