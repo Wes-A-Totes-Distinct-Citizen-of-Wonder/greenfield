@@ -34,9 +34,9 @@ cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinar
 
 app.use(session({
   secret: 'trashPanda secret',
-  cookie: {
-    expires: 6000000,
-  },
+  // cookie: {
+  //   expires: 6000000,
+  // },
   store: sessionStore,
   resave: false,
   saveUninitialized: false,
