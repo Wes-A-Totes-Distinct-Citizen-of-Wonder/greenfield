@@ -9,6 +9,7 @@ class SearchTag extends React.Component {
         super(props);
         this.state = {
             open: false,
+            zip: '',
         };
         this.toggle = this.toggle.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -25,9 +26,9 @@ class SearchTag extends React.Component {
       console.log('hey');
     }
 
-    handleChange(){
-
-    }
+  handleChange(event) {
+    this.setState({ [event.target.id]: event.target.value });
+  }
 
     render() {
         return (
@@ -36,7 +37,7 @@ class SearchTag extends React.Component {
 
               <Col md={2}>
                   <InputGroup>
-                    <Input placeholder='Zipcode'/>
+                    <Input id='zip' placeholder='Zip' />
                     <InputGroupAddon addonType="append"><Button onClick={this.handleClick}>Search</Button></InputGroupAddon>
                   </InputGroup>
               </Col>
