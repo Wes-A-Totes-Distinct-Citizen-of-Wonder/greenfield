@@ -126,9 +126,9 @@ app.post('/submitPost', (req, res) => {
     console.log(req.session.username);
     res.status(400).send('log in or signup!');
   } else {
-    const image1 = req.files.photo[0];
-    const image2 = req.files.photo[1];
-    const image3 = req.files.photo[2];
+    const image1 = req.files.photos[0];
+    const image2 = req.files.photos[1];
+    const image3 = req.files.photos[2];
     let tags = '';
 
     if (req.body.lumber === 'true') {
