@@ -180,23 +180,23 @@ app.post('/submitPost', (req, res) => {
         const fullAddress = {
           address, city, state, zip,
         };
-        // return convertToCoordinates(fullAddress);
+        return convertToCoordinates(fullAddress);
       })
-      // .then((geoLocation) => {
-      //   const { location } = geoLocation.data.results[0].geometry;
-      //   post.location = `${location.lat}, ${location.lng}`;
-      //   return savePost(post);
-      // })
-      // .then(() => {
-      //   increasePostCount(post.userId);
-      // })
+      .then((geoLocation) => {
+        const { location } = geoLocation.data.results[0].geometry;
+        post.location = `${location.lat}, ${location.lng}`;
+        return savePost(post);
+      })
+      .then(() => {
+        increasePostCount(post.userId);
+      })
       .then(() => {
         res.status(201).send('got your post!');
       })
       .catch((error) => {
         console.log(error);
         if (!image1 || !image2 || !image3) {
-          res.status(400).send('You must include a picture with your post.');
+          res.status(400).send('You must include 3 pictures with your post.');
         } else {
           res.status(501).send('Something went wrong with your post!');
         }
