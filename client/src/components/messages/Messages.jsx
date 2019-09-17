@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React from "react";
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class Messages extends React.Component {
   constructor(props) {
@@ -21,21 +21,25 @@ class Messages extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Subject
-          <input
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-        </label>
-        <label>
-          Message
-        <textarea>Type your message here</textarea>
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <div>
+        <Form onSubmit={this.onLoginSubmit}>
+          <FormGroup>
+            <Label style={{ color: "white" }}>Subject</Label>
+            <Input
+              type="text"
+              name="subject"
+              id="subject"
+              value={this.state.subject}
+              // onChange={e => this.setState({ subject: e.target.value })}
+            ></Input>
+          </FormGroup>
+          <FormGroup>
+            <Label style={{ color: "white" }}>Message</Label>
+              <Input type="textarea" name="text" id="body" />
+            </FormGroup>
+          <Button color="primary">Submit</Button>{' '}
+        </Form>
+      </div>
     );
   }
 }
