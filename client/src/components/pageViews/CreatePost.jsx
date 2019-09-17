@@ -32,17 +32,15 @@ class CreatePost extends React.Component {
         const user = this.state;
         const bodyFormData = new FormData();
         // formatting for cloudinary
-        for (let key in user) {
-          if (key === 'title') {
-            break;
-          }
-          if (key === 'img1' || key === 'img2' || key === 'img3') {
-            bodyFormData.append('photo', user[key]);
+        Object.entries(user).forEach((post) => {
+          if (post[0] === 'img1' || post[0] === 'img2' || post[0] === 'img3') {
+            bodyFormData.append('photos', post[1]);
           }
           else {
-            bodyFormData.set(key, user[key]);
+            bodyFormData.append(post[0], post[1]);
           }
-        }
+        });
+
         // sends post information from client to post table in DB
         axios.post('/submitPost', bodyFormData)
             .then((response) => {
