@@ -126,7 +126,9 @@ app.post('/submitPost', (req, res) => {
     console.log(req.session.username);
     res.status(400).send('log in or signup!');
   } else {
-    const image = req.files.photo;
+    const image1 = req.files.photo[0];
+    const image2 = req.files.photo[1];
+    const image3 = req.files.photo[2];
     let tags = '';
 
     if (req.body.lumber === 'true') {
@@ -148,6 +150,8 @@ app.post('/submitPost', (req, res) => {
     const post = {
       text: req.body.text,
       img1: null,
+      img2: null,
+      img3: null,
       title: req.body.title,
       location: null,
       tagList: tags,
@@ -159,16 +163,23 @@ app.post('/submitPost', (req, res) => {
       userId: req.session.userId,
     };
 
-    cloudinary.uploader.upload(image.tempFilePath)
-      .then((result) => {
-        post.img1 = result.secure_url;
+    const apiImg1 = cloudinary.uploader.upload(image1.tempFilePath);
+    const apiImg2 = cloudinary.uploader.upload(image2.tempFilePath);
+    const apiImg3 = cloudinary.uploader.upload(image3.tempFilePath);
+
+    Promise.all([apiImg1, apiImg2, apiImg3])
+      .then(([apiResult0, apiResult1, apiResult2]) => {
+        post.img1 = apiResult0.secure_url;
+        post.img2 = apiResult1.secure_url;
+        post.img3 = apiResult2.secure_url;
+      })
+      .then(() => {
         const {
           address, city, state, zip,
         } = req.body;
         const fullAddress = {
           address, city, state, zip,
         };
-
         return convertToCoordinates(fullAddress);
       })
       .then((geoLocation) => {
@@ -187,8 +198,8 @@ app.post('/submitPost', (req, res) => {
       })
       .catch((error) => {
         console.log(error);
-        if (!image) {
-          res.status(400).send('You must include a picture with your post.');
+        if (!image1 || !image2 || !image3) {
+          res.status(400).send('You must include 3 pictures with your post.');
         } else {
           res.status(501).send('Something went wrong with your post!');
         }
