@@ -1,11 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import axios from 'axios';
 
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, InputGroupAddon, InputGroup, Button, Col, Row } from 'reactstrap';
-import Axios from "axios";
-
-
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, 
+  Input, InputGroupAddon, InputGroup, Button, Col, Row } from 'reactstrap';
 
 class SearchTag extends React.Component {
     constructor(props) {
@@ -56,7 +53,7 @@ class SearchTag extends React.Component {
                   </DropdownMenu>
                 </Dropdown>
               </Col>
-              
+
               </Row>
             </div>
         )
