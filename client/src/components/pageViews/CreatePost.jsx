@@ -9,9 +9,9 @@ class CreatePost extends React.Component {
         super(props);
         const { currUser } = this.props;
         this.state = {
-            img1: null,
-            img2: null,
-            img3: null,
+            img1: '',
+            img2: '',
+            img3: '',
             title: '',
             text: '',
             lumber: false,
