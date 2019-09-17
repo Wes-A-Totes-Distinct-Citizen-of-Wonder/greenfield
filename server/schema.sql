@@ -1,6 +1,6 @@
 -- DROP DATABASE IF EXISTS trashPanda;
 
-CREATE DATABASE trashPanda;
+-- CREATE DATABASE trashPanda;
 
 USE trashPanda;
 
@@ -17,6 +17,8 @@ CREATE TABLE posts (
   postId INT NOT NULL AUTO_INCREMENT,
   text varchar (255), 
   img1 varchar (255) NOT NULL,
+  img2 varchar (255) NOT NULL,
+  img3 varchar (255) NOT NULL,
   title varchar (50),
   location varchar (255),
   tagList varchar (150),
@@ -27,6 +29,7 @@ CREATE TABLE posts (
   piping BOOLEAN,
   userId INT,
   postNum INT DEFAULT 0,
+  zip INT,
   PRIMARY KEY (postId),
   FOREIGN KEY (userId) REFERENCES users(userId)
 );
