@@ -10,6 +10,8 @@ class CreatePost extends React.Component {
         const { currUser } = this.props;
         this.state = {
             img1: '',
+            img2: '',
+            img3: '',
             title: '',
             text: '',
             lumber: false,
@@ -30,15 +32,17 @@ class CreatePost extends React.Component {
         const user = this.state;
         const bodyFormData = new FormData();
         // formatting for cloudinary
-        Object.entries(user).forEach((postProp) => {
-            if (postProp[0] === 'img1') {
-                bodyFormData.append('photo', user.img1);
-            }
-            else {
-                bodyFormData.set(postProp[0], postProp[1]);
-            }
-            
-        })
+        for (let key in user) {
+          if (key === 'title') {
+            break;
+          }
+          if (key === 'img1' || key === 'img2' || key === 'img3') {
+            bodyFormData.append('photo', user[key]);
+          }
+          else {
+            bodyFormData.set(key, user[key]);
+          }
+        }
         // sends post information from client to post table in DB
         axios.post('/submitPost', bodyFormData)
             .then((response) => {
@@ -56,7 +60,7 @@ class CreatePost extends React.Component {
                     this.props.changeView('login');
                 }
                 if (response.response.status === 500) {
-                    alert('You must include an image with your post');
+                    alert('You must include at 3 images with your post');
                 }
             });
         // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
@@ -68,9 +72,11 @@ class CreatePost extends React.Component {
             <Form>
                 <FormGroup>
                     <Label for="post-img" style={{ color: 'white' }}>Image File</Label>
-                    <Input type="file" name="photo" id="post-img" style={{ color: 'white' }} value={state.img1} onChange={e => this.setState({ img1: e.target.files[0] })}/>
+                    <Input type="file" name="photo" style={{ color: 'white' }} value={state.img1} onChange={e => this.setState({ img1: e.target.files[0] })}/>
+                    <Input type="file" name="photo" style={{ color: 'white' }} value={state.img2} onChange={e => this.setState({ img2: e.target.files[0] })} />
+                    <Input type="file" name="photo" style={{ color: 'white' }} value={state.img3} onChange={e => this.setState({ img3: e.target.files[0] })} />
                     <FormText color="muted">
-                        Please include an image(s) of the materials you wish to share.
+                        Please include 3 images of the materials you wish to share.
                     </FormText>
                 </FormGroup>
                 <FormGroup>
