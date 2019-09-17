@@ -15,7 +15,7 @@ const parseurl = require('parseurl');
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
 const cloudinaryConfig = require('./config.js');// config file is gitignored b/c it holds API key. Won't appear in forked versions.
-const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
+const { convertToCoordinates, convertToAddress } = require('../client/src/helpers/geoLocation');
 
 const {
   findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, searchTags, displayPosts, getPostInfo,
@@ -172,8 +172,11 @@ app.post('/submitPost', (req, res) => {
         return convertToCoordinates(fullAddress);
       })
       .then((geoLocation) => {
+        console.log(geoLocation, 'GEOLOCATION');
         const { location } = geoLocation.data.results[0].geometry;
         post.location = `${location.lat}, ${location.lng}`;
+        let zipcode = convertToAddress(post.location);
+        console.log(zipcode);
         return savePost(post);
       })
       .then(() => {
@@ -193,6 +196,7 @@ app.post('/submitPost', (req, res) => {
   }
 });
 
+// app.get('/getZip')
 
 app.post('/login', (req, res) => {
   const user = {
