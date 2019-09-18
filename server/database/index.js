@@ -152,9 +152,9 @@ const getPostInfo = (user_id) => new Promise((resolve, reject) => {
   });
 });
 
-const myPost = (tag) => new Promise((resolve, reject) => {
-  const searchedTag = `SELECT * FROM posts WHERE  IS TRUE`;
-  databaseConnection.query(searchedTag, (err, results) => {
+const getMyPosts = () => new Promise((resolve, reject) => {
+  const fetchedPosts = 'select * from posts INNER JOIN users WHERE posts.user_id = users.user_id';
+  databaseConnection.query(fetchedPosts, (err, results) => {
     if (err) {
       return reject(err);
     }
@@ -175,5 +175,6 @@ module.exports = {
   displayPosts,
   searchTags,
   searchZip,
+  getMyPosts,
   getPostInfo,
 };
