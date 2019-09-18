@@ -29,12 +29,12 @@ class SignUpView extends React.Component {
                 return axios.post(`/login`, { username: user.username, password: user.password })
             })
             .then((response) => {
-                // takes userId from response
+                // takes user_id from response
                 const newUser = {
                     username: user.username,
                     email: user.email,
                     business: user.business,
-                    userId: response.data.userId
+                    user_id: response.data.user_id
                 }
                 // sets the signed in user info
                 this.props.changeUser(newUser);

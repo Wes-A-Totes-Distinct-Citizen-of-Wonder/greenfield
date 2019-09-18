@@ -38,7 +38,7 @@ class App extends React.Component {
             }
           })() || "guest",
         email: "",
-        userId: 0
+        user_id: 0
       },
       posts: [
         //will hold all posts
@@ -137,7 +137,7 @@ class App extends React.Component {
   // shows user info on each post
   changePostView(newPost) {
     return axios
-      .post("/postInfo", { userId: newPost.userId })
+      .post("/postInfo", { user_id: newPost.user_id })
       .then(response => {
         this.setState({
           selectedPost: {

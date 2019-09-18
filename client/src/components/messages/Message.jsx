@@ -9,24 +9,22 @@ class Message extends React.Component {
     this.state = {
       subject: '',
       content: '',
-      sender: currUser,
-      recepient: ''
+      sender_id: currUser,
+      recepient_id: ''
     };
     // this.handleChange = this.handleChange.bind(this);
     this.onMessageSubmit = this.onMessageSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
+  // handleChange(event) {
+  //   this.setState({ value: event.target.value });
+  // }
   
   onMessageSubmit(event) {
-    // const message = this.state;
-    debugger;
-    console.log(this.state, 'state');
-    const bodyFormData = new FormData();
+    const message = this.state;
+    
     axios
-      .post('/submitMessage', bodyFormData)
+      .post('/submitMessage', message)
       .then(response => {
         console.log(response);
         // after success sends user back to home page
@@ -47,10 +45,11 @@ class Message extends React.Component {
             <Label style={{ color: "white" }}>Subject</Label>
             <Input
               type="text"
-              name="subject"
+              name="text"
               id="subject"
               value={this.state.subject}
               onChange={e => this.setState({ subject: e.target.value })}
+              placeholder="subject"
             ></Input>
           </FormGroup>
           <FormGroup>
@@ -59,11 +58,11 @@ class Message extends React.Component {
             </Label>
             <Input
               type="textarea"
-              name="content"
+              name="text"
               id="content"
               value={this.state.content}
               onChange={e => this.setState({ content: e.target.value })}
-              placeholder="type message here..."
+              placeholder="message"
             />
           </FormGroup>
           <Button color="primary">Send</Button>{" "}
