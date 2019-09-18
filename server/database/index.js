@@ -63,10 +63,25 @@ const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
     return resolve(results);
   });
 });
+
+// saves messages to the DB
+const saveMessage = (message) => new Promise((resolve, reject) => {
+  const messageInsert = 'INSERT INTO messages(id, subject, content, sender, recepient) VALUES (DEFAULT, ?)';
+  const insertValues = [message.subject, message.content, message.sender, message.recepient];
+
+  databaseConnection.query(messageInsert, [insertValues], (err, results) => {
+    if (err) {
+      console.log(err);
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
 // saves posts to the DB
 const savePost = (post) => new Promise((resolve, reject) => {
-  const postInsert = 'INSERT INTO posts(postId, text, img1, img2, img3, title, location, tagList, lumber, metal, concrete, glass, piping, userId) VALUES (DEFAULT, ?)';
-  const insertValues = [post.text, post.img1, post.img2, post.img3, post.title, post.location, post.tagList, post.lumber, post.metal, post.concrete, post.glass, post.piping, post.userId];
+  const postInsert = 'INSERT INTO posts(postId, text, img1, img2, img3, title, location, tagList, lumber, metal, concrete, glass, piping, userId, zip) VALUES (DEFAULT, ?)';
+  const insertValues = [post.text, post.img1, post.img2, post.img3, post.title, post.location, post.tagList, post.lumber, post.metal, post.concrete, post.glass, post.piping, post.userId, post.zip];
 
   databaseConnection.query(postInsert, [insertValues], (err, results) => {
     if (err) {
@@ -114,6 +129,16 @@ const searchTags = (tag) => new Promise((resolve, reject) => {
     return resolve(results);
   });
 });
+
+const searchZip = (tag) => new Promise((resolve, reject) => {
+  const searchedZip = `SELECT * FROM posts WHERE zip=${tag.material}`;
+  databaseConnection.query(searchedZip, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
 // grabs all the user info for each individual post
 const getPostInfo = (userId) => new Promise((resolve, reject) => {
   const userIdInsert = 'SELECT users.username, users.email, users.business FROM users WHERE userId = ?';
@@ -136,7 +161,9 @@ module.exports = {
   increasePostCount,
   saveImage,
   saveUsersPostCount,
+  saveMessage,
   displayPosts,
   searchTags,
+  searchZip,
   getPostInfo,
 };

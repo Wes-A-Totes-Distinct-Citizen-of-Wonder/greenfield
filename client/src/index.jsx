@@ -49,6 +49,7 @@ class App extends React.Component {
     this.changeUser = this.changeUser.bind(this);
     this.getNearbyPosts = this.getNearbyPosts.bind(this);
     this.searchByTag = this.searchByTag.bind(this);
+    this.searchByZip = this.searchByZip.bind(this);
     this.logout = this.logout.bind(this);
   }
 
@@ -92,6 +93,15 @@ class App extends React.Component {
   //allows you to search by a material and allows posts to be sorted by their tag
   searchByTag(tag) {
     return axios.post("/tagSearch", { material: tag }).then(response => {
+      this.setState({
+        posts: response.data
+      });
+    });
+  }
+
+  searchByZip(zip) {
+    console.log(zip, 'ZIP (INDEX.JSX)');
+    return axios.post("/searchZip", { material: zip }).then(response => {
       this.setState({
         posts: response.data
       });
@@ -184,6 +194,7 @@ class App extends React.Component {
             posts={posts}
             changePostView={this.changePostView}
             searchByTag={this.searchByTag}
+            searchByZip={this.searchByZip}
           />
         );
     }
