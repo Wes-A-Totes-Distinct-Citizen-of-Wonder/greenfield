@@ -212,8 +212,8 @@ app.post('/submitMessage', (req, res) => {
   const message = {
     subject: req.body.subject,
     content: req.body.content,
-    sender: req.body.sender,
-    recepient: req.body.recepient,
+    sender: req.body.sender_id,
+    recepient: req.body.recepient_id,
   };
 
   return saveMessage(message)
