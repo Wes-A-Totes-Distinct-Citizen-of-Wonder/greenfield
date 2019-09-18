@@ -1,30 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Axios from 'axios';
+import { DropdownToggle, DropdownMenu, DropdownItem, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col, Row, CardColumns } from 'reactstrap';
 
-import {  DropdownToggle, DropdownMenu, DropdownItem, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col, Row, CardColumns } from 'reactstrap';
-// basically the home view, takes the array of objects, "posts", from state on index.jsx and maps them into the card format
-const PostCard = (props) => {
-    const { posts } = props;
-    const { changePostView } = props;
-    const cards = posts.map(post => (
-        // allows each post to be clicked on and change to the view
-        <Card onClick={() => { changePostView(post) }}>
-            <CardImg src={post.img1} />
-            <CardBody>
-                <CardTitle>{post.title}</CardTitle>
-                <CardText>{post.text}</CardText>
-                <CardSubtitle>{post.tags}</CardSubtitle>
-                <CardSubtitle><button>Delete</button></CardSubtitle>
-            </CardBody>
-        </Card>
-    ));
+class MyPosts extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+
+    };
+
+    this.setMyPosts = this.getMyPosts.bind(this);
+    
+  }
+
+  componentDidMount() {
+    this.setMyPosts();
+  }
+
+  setMyPosts() {
+    const { getNearbyPosts} = this.props;
+    this.setState({posts: getNearbyPosts });
+    console.log(getNearbyPosts);
+  }
+
+  render(){
     return (
-        <div>
-        <CardColumns>
-            {cards}
-        </CardColumns>
-        </div>
+      <Card>
+
+      </Card>
     );
+  }
 }
 
-export default PostCard;
+export default MyPosts;
