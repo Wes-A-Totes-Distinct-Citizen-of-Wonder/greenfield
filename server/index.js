@@ -15,11 +15,11 @@ const parseurl = require('parseurl');
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
 const cloudinaryConfig = require('./config.js');// config file is gitignored b/c it holds API key. Won't appear in forked versions.
-const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
+const { convertToCoordinates, convertToAddress } = require('../client/src/helpers/geoLocation');
 
 const {
   saveMessage, findUser, getUser, saveUser, savePost, getPostInfo,
-  increasePostCount, saveUsersPostCount, searchTags, displayPosts,
+  increasePostCount, saveUsersPostCount, searchTags, displayPosts, searchZip,
 } = require('./database/index.js');
 
 // options used in sessionStore below
@@ -162,6 +162,7 @@ app.post('/submitPost', (req, res) => {
       glass: req.body.glass === 'true',
       piping: req.body.piping === 'true',
       userId: req.session.userId,
+      zip: req.body.zip,
     };
 
     const apiImg1 = cloudinary.uploader.upload(image1.tempFilePath);
@@ -181,11 +182,13 @@ app.post('/submitPost', (req, res) => {
         const fullAddress = {
           address, city, state, zip,
         };
+
         return convertToCoordinates(fullAddress);
       })
       .then((geoLocation) => {
         const { location } = geoLocation.data.results[0].geometry;
         post.location = `${location.lat}, ${location.lng}`;
+
         return savePost(post);
       })
       .then(() => {
@@ -272,6 +275,16 @@ app.post('/logout', (req, res) => {
 // from front end, and searches the db for posts with that tag.
 app.post('/tagSearch', (req, res) => {
   searchTags(req.body)
+    .then((posts) => {
+      res.status(201).send(posts);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post('/searchZip', (req, res) => {
+  searchZip(req.body)
     .then((posts) => {
       res.status(201).send(posts);
     })
