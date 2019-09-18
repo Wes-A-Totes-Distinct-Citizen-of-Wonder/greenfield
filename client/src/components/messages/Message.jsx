@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-class Messages extends React.Component {
+class Message extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: "" };
@@ -44,4 +44,4 @@ class Messages extends React.Component {
   }
 }
 
-export default Messages;
+export default Message;
