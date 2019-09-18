@@ -1,10 +1,10 @@
--- DROP DATABASE IF EXISTS trashPanda;
+DROP DATABASE IF EXISTS trashPanda;
 
--- CREATE DATABASE trashPanda;
+CREATE DATABASE IF NOT EXISTS trashPanda;
 
 USE trashPanda;
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   userId INT AUTO_INCREMENT,
   username varchar(50) NOT NULL,
   password varchar(200) NOT NULL,
@@ -13,12 +13,10 @@ CREATE TABLE users (
   PRIMARY KEY (userId)
 );
 
-CREATE TABLE posts (
-  postId INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS posts (
+  postId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   text varchar (255), 
   img1 varchar (255) NOT NULL,
-  img2 varchar (255) NOT NULL,
-  img3 varchar (255) NOT NULL,
   title varchar (50),
   location varchar (255),
   tagList varchar (150),
@@ -29,16 +27,24 @@ CREATE TABLE posts (
   piping BOOLEAN,
   userId INT,
   postNum INT DEFAULT 0,
-  zip INT,
-  PRIMARY KEY (postId),
   FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
-CREATE TABLE postCount (
+CREATE TABLE IF NOT EXISTS postCount (
   count INT DEFAULT 0,
   userId INT,
-  FOREIGN KEY (userId)
-  REFERENCES users(userId)
+  FOREIGN KEY (userId) REFERENCES users(userId)
+);
+
+CREATE TABLE IF NOT EXISTS messages (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  subject varchar(200) NOT NULL,
+  content varchar(255) NOT NULL,
+  recepient_id INT NOT NULL,
+  sender_id INT NOT NULL,
+  date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (recepient_id) REFERENCES users(userId),
+  FOREIGN KEY (sender_id) REFERENCES users(userId)
 );
 
 /*  Execute this file from the command line by typing:
