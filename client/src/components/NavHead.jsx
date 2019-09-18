@@ -14,8 +14,8 @@ import {
 const NavHead = (props) => {
     const { changeView } = props;
     return (
-      <Navbar backgroundcolor="#00CC00">
-        <NavbarBrand href="#" style={{ color: "white" }} onClick={() => { changeView('home') }}>Home</NavbarBrand>
+      <Navbar>
+        <Button href="#" onClick={() => { changeView('home') }}>Home</Button>
         <img src={require('./../../images/reConstructIcon.png')} width='20%' />
         <Nav navbar>
           <NavItem>

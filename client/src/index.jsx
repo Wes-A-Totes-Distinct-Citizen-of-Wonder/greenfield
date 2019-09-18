@@ -11,6 +11,7 @@ import CreatePost from "./components/pageViews/CreatePost.jsx";
 import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
 import MessagesList from "./components/messages/MessagesList.jsx"
+import MyPosts from './components/MyPosts.jsx';
 import { Col, Row, NavLink } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -73,7 +74,8 @@ class App extends React.Component {
           this.setState({
             user: {
               username: userInfo.username,
-              email: userInfo.email
+              email: userInfo.email,
+              user_id: userInfo.user_id,
             }
           });
         } else
@@ -169,6 +171,8 @@ class App extends React.Component {
         return <SignUpView changeUser={this.changeUser} />;
       case "login":
         return <LoginView changeUser={this.changeUser} />;
+      case "myPosts":
+        return <MyPosts changeUser={this.changeUser} getNearbyPosts={this.getNearbyPosts} currUser={user} />;
       case "create-post":
         return (
           <CreatePost
@@ -183,6 +187,7 @@ class App extends React.Component {
             post={selectedPost.postInfo}
             user={selectedPost.userInfo}
             changeView={this.changeView}
+            currUser={user}
           />
         );
       case "user-profile":
