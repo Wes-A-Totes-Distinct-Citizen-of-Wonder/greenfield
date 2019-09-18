@@ -14,6 +14,7 @@ const UserNav = (props) => {
             <section float="left" width="10%" margin="0 1.5%">
             <Nav vertical>
                 <h2><NavLink className="Username" href="#" style={{color: 'white', size: '10em'}}>{user.username || ""}</NavLink></h2>
+                <NavLink className="Home" href="#" style={{ color: 'white' }} onClick={() => changeView('PostView')}>Home</NavLink>
                 <NavLink className="MyPosts" href="#" style={{ color: 'white' }} onClick={() => changeView('myposts')}>My Posts</NavLink>
                 <NavLink className="Messages" href="#" style={{color: 'white'}} onClick={() => changeView('messages')}>Messages</NavLink>
                 <NavLink className="Login" href="#" style={{color: 'white'}} onClick={() => changeView('login')}>Login</NavLink> 
