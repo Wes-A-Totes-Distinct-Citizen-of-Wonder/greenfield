@@ -10,7 +10,7 @@ import PostView from "./components/pageViews/PostView.jsx";
 import CreatePost from "./components/pageViews/CreatePost.jsx";
 import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
-import Messages from "./components/messages/Messages.jsx"
+import MessagesList from "./components/messages/MessagesList.jsx"
 import { Col, Row, NavLink } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -153,8 +153,8 @@ class App extends React.Component {
     const { selectedPost } = this.state;
     const { user } = this.state;
     switch (page) {
-			case "messages":
-				return <Messages changeView={this.changeView} />;
+			case "messagesList":
+				return <MessagesList changeView={this.changeView} />;
       case "sign-up":
         return <SignUpView changeUser={this.changeUser} />;
       case "login":
@@ -198,7 +198,6 @@ class App extends React.Component {
     const { view } = this.state;
 		const { user } = this.state;
 		const { messages } = this.state;
-    const { tester } = this.state;
     return (
       <div
         className="main"
