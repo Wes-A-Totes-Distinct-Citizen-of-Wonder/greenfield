@@ -19,7 +19,7 @@ const { convertToCoordinates, convertToAddress } = require('../client/src/helper
 
 const {
   saveMessage, findUser, getUser, saveUser, savePost, getPostInfo,
-  increasePostCount, saveUsersPostCount, searchTags, displayPosts, searchZip,
+  increasePostCount, saveUsersPostCount, searchTags, displayPosts, searchZip, getMyPosts,
 } = require('./database/index.js');
 
 // options used in sessionStore below
@@ -304,6 +304,10 @@ app.post('/postInfo', (req, res) => {
       console.log(error);
       res.status(500).send(error);
     });
+});
+
+app.get('/myposts', (req, res) => {
+
 });
 
 app.listen(PORT, () => {
