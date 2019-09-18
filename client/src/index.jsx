@@ -74,7 +74,8 @@ class App extends React.Component {
           this.setState({
             user: {
               username: userInfo.username,
-              email: userInfo.email
+              email: userInfo.email,
+              user_id: userInfo.user_id,
             }
           });
         } else
@@ -171,7 +172,7 @@ class App extends React.Component {
       case "login":
         return <LoginView changeUser={this.changeUser} />;
       case "myPosts":
-        return <MyPosts changeUser={this.changeUser} getNearbyPosts={this.getNearbyPosts} />;
+        return <MyPosts changeUser={this.changeUser} getNearbyPosts={this.getNearbyPosts} currUser={user} />;
       case "create-post":
         return (
           <CreatePost
@@ -186,6 +187,7 @@ class App extends React.Component {
             post={selectedPost.postInfo}
             user={selectedPost.userInfo}
             changeView={this.changeView}
+            currUser={user}
           />
         );
       case "user-profile":
