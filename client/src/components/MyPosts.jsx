@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SearchTag from '../SearchTag.jsx';
+
 import {  DropdownToggle, DropdownMenu, DropdownItem, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col, Row, CardColumns } from 'reactstrap';
 // basically the home view, takes the array of objects, "posts", from state on index.jsx and maps them into the card format
 const PostCard = (props) => {
@@ -14,13 +14,12 @@ const PostCard = (props) => {
                 <CardTitle>{post.title}</CardTitle>
                 <CardText>{post.text}</CardText>
                 <CardSubtitle>{post.tags}</CardSubtitle>
+                <CardSubtitle><button>Delete</button></CardSubtitle>
             </CardBody>
         </Card>
     ));
     return (
         <div>
-        <SearchTag searchByTag={props.searchByTag} searchByZip={props.searchByZip} />
-        <hr />
         <CardColumns>
             {cards}
         </CardColumns>
