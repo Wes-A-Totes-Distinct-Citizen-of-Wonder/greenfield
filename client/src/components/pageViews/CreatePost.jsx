@@ -58,7 +58,7 @@ class CreatePost extends React.Component {
 					this.props.changeView('login');
 				}
 				if (response.response.status === 500) {
-					alert('You must include at 3 images with your post');
+					alert('You must include at least one image with your post');
 				}
 			});
 		// axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
@@ -102,7 +102,7 @@ class CreatePost extends React.Component {
                       this.setState({ preview3: URL.createObjectURL(e.target.files[0]) })
                     }} />
                     <FormText color="muted">
-                        Please include 3 images of the materials you wish to share.
+                        Please include at least one image of the materials you wish to share.
                     </FormText>
                 </FormGroup>
                 <FormGroup>
