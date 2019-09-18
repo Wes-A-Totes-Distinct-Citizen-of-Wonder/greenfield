@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MapContainer from "./../MapContainer.jsx";
+import ImgCarousel from "./ImgCarousel.jsx";
 import Message from "../messages/Message.jsx"
 import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Col, Row, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
@@ -27,7 +28,7 @@ class PostView extends React.Component {
       <Row>
         <Col sm="6">
           <Card>
-            <CardImg src={post.img1} />
+            <ImgCarousel src={post} />
             <CardBody>
               <CardText>Posted by: {user.username}</CardText>
               <CardText>Business: {user.business}</CardText>
