@@ -12,6 +12,9 @@ class CreatePost extends React.Component {
             img1: '',
             img2: '',
             img3: '',
+            preview1: null,
+            preview2: null,
+            preview3: null,
             title: '',
             text: '',
             lumber: false,
@@ -70,9 +73,37 @@ class CreatePost extends React.Component {
             <Form>
                 <FormGroup>
                     <Label for="post-img" style={{ color: 'white' }}>Image File</Label>
-                    <Input type="file" name="photo" style={{ color: 'white' }} value={state.img1} onChange={e => this.setState({ img1: e.target.files[0] })}/>
-                    <Input type="file" name="photo" style={{ color: 'white' }} value={state.img2} onChange={e => this.setState({ img2: e.target.files[0] })} />
-                    <Input type="file" name="photo" style={{ color: 'white' }} value={state.img3} onChange={e => this.setState({ img3: e.target.files[0] })} />
+                    <br/>
+                    <img style={{
+                      height: '100px',
+                      width: '150px',
+                      overflow: 'hidden',
+                      float: 'left'
+                    }} src={this.state.preview1} />
+                    <img style={{
+                      height: '100px',
+                      width: '150px',
+                      overflow: 'hidden',
+                      float: 'left'
+                    }} src={this.state.preview2} />
+                    <img style={{
+                      height: '100px',
+                      width: '150px',
+                      overflow: 'hidden',
+                      float: 'left'
+                    }} src={this.state.preview3} />
+                    <Input type="file" name="photo" style={{ color: 'white'}} value={state.img1} onChange={e => {
+                      this.setState({ img1: e.target.files[0] });
+                      this.setState({ preview1: URL.createObjectURL(e.target.files[0])})
+                    }}/>
+                    <Input type="file" name="photo" style={{ color: 'white' }} value={state.img2} onChange={e => {
+                      this.setState({ img2: e.target.files[0] });
+                      this.setState({ preview2: URL.createObjectURL(e.target.files[0]) })
+                    }} />
+                    <Input type="file" name="photo" style={{ color: 'white' }} value={state.img3} onChange={e => {
+                      this.setState({ img3: e.target.files[0] });
+                      this.setState({ preview3: URL.createObjectURL(e.target.files[0]) })
+                    }} />
                     <FormText color="muted">
                         Please include 3 images of the materials you wish to share.
                     </FormText>
