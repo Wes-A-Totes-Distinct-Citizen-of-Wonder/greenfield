@@ -126,7 +126,7 @@ app.post('/submitPost', (req, res) => {
     console.log(req.session.username);
     res.status(400).send('log in or signup!');
   } else {
-    const image1 = req.files.photos[0];
+    const image1 = req.files.photos[0] || req.files;
     const image2 = req.files.photos[1];
     const image3 = req.files.photos[2];
     let tags = '';
@@ -163,15 +163,23 @@ app.post('/submitPost', (req, res) => {
       userId: req.session.userId,
     };
 
-    const apiImg1 = cloudinary.uploader.upload(image1.tempFilePath);
-    const apiImg2 = cloudinary.uploader.upload(image2.tempFilePath);
-    const apiImg3 = cloudinary.uploader.upload(image3.tempFilePath);
+    const apiImgs = [];
+    if (image1) {
+      apiImgs.push(cloudinary.uploader.upload(image1.tempFilePath || image1.photos.tempFilePath));
+    }
+    if (image2) {
+      apiImgs.push(cloudinary.uploader.upload(image2.tempFilePath));
+    }
+    if (image3) {
+      apiImgs.push(cloudinary.uploader.upload(image3.tempFilePath));
+    }
 
-    Promise.all([apiImg1, apiImg2, apiImg3])
-      .then(([apiResult0, apiResult1, apiResult2]) => {
-        post.img1 = apiResult0.secure_url;
-        post.img2 = apiResult1.secure_url;
-        post.img3 = apiResult2.secure_url;
+    Promise.all(apiImgs)
+      .then((...apiResults) => {
+        apiResults[0].forEach((result, index) => {
+          let path = `img${index + 1}`;
+          post[path] = result.secure_url;
+        });
       })
       .then(() => {
         const {
@@ -195,8 +203,8 @@ app.post('/submitPost', (req, res) => {
       })
       .catch((error) => {
         console.log(error);
-        if (!image1 || !image2 || !image3) {
-          res.status(400).send('You must include 3 pictures with your post.');
+        if (!image1) {
+          res.status(400).send('You must include at least 1 picture with your post.');
         } else {
           res.status(501).send('Something went wrong with your post!');
         }
