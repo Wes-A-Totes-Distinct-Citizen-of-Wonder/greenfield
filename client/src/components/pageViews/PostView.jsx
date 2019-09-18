@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MapContainer from "./../MapContainer.jsx";
+import Message from "../messages/Message.jsx"
 import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Col, Row, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 // the view for when selected a specific post
@@ -42,7 +43,8 @@ class PostView extends React.Component {
                 toggle={this.toggle}
                 className={this.props.className}
               >
-                <ModalHeader toggle={this.toggle}>Subject</ModalHeader>
+							<Message />
+                {/* <ModalHeader toggle={this.toggle}>Send Message</ModalHeader>
                 <ModalBody>Insert Message Here</ModalBody>
                 <ModalFooter>
                   <Button color="primary" onClick={this.toggle}>
@@ -51,7 +53,7 @@ class PostView extends React.Component {
                   <Button color="secondary" onClick={this.toggle}>
                     Cancel
                   </Button>
-                </ModalFooter>
+                </ModalFooter> */}
               </Modal>
             </CardBody>
           </Card>
