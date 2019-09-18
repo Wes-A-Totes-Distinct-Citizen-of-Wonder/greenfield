@@ -114,6 +114,16 @@ const searchTags = (tag) => new Promise((resolve, reject) => {
     return resolve(results);
   });
 });
+
+const searchZip = (tag) => new Promise((resolve, reject) => {
+  const searchedZip = `SELECT * FROM posts WHERE zip=${tag.material}`;
+  databaseConnection.query(searchedZip, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
 // grabs all the user info for each individual post
 const getPostInfo = (userId) => new Promise((resolve, reject) => {
   const userIdInsert = 'SELECT users.username, users.email, users.business FROM users WHERE userId = ?';
@@ -138,5 +148,6 @@ module.exports = {
   saveUsersPostCount,
   displayPosts,
   searchTags,
+  searchZip,
   getPostInfo,
 };
