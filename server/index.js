@@ -209,7 +209,7 @@ app.post('/submitPost', (req, res) => {
 });
 
 app.post('/submitMessage', (req, res) => {
-  const sender = getUser(message.sender);
+  // const sender = getUser(message.sender);
   const message = {
     subject: req.body.subject,
     content: req.body.content,
