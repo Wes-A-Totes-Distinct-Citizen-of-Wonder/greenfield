@@ -18,7 +18,8 @@ const cloudinaryConfig = require('./config.js');// config file is gitignored b/c
 const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
 
 const {
-  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, searchTags, displayPosts, getPostInfo,
+  submitMessage, findUser, getUser, saveUser, savePost, getPostInfo,
+  increasePostCount, saveUsersPostCount, searchTags, displayPosts,
 } = require('./database/index.js');
 
 // options used in sessionStore below
@@ -204,6 +205,30 @@ app.post('/submitPost', (req, res) => {
   }
 });
 
+app.post('/submitMessage', (req, res) => {
+  console.log(req.body);
+
+  const message = {
+    subject: req.body.subject,
+    content: req.body.content,
+    sender: req.body.sender,
+    recepient: req.body.recepient,
+  };
+
+  return submitMessage(message)
+    .then(() => {
+      res.status(201).send('message saved in db');
+    })
+    .catch((error) => {
+      console.log(error);
+      res
+        .status(404)
+        .send('something went wrong and message was not saved in db');
+    })
+    .catch((err) => {
+      res.status(409).send(err);
+    });
+});
 
 app.post('/login', (req, res) => {
   const user = {
