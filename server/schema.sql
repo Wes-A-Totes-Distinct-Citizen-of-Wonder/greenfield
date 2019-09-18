@@ -40,11 +40,11 @@ CREATE TABLE IF NOT EXISTS messages (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   subject varchar(200) NOT NULL,
   content varchar(255) NOT NULL,
-  recepient INT NOT NULL,
-  sender INT NOT NULL,
+  recepient_id INT NOT NULL,
+  sender_id INT NOT NULL,
   date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (recepient) REFERENCES users(userId),
-  FOREIGN KEY (sender) REFERENCES users(userId)
+  FOREIGN KEY (recepient_id) REFERENCES users(userId),
+  FOREIGN KEY (sender_id) REFERENCES users(userId)
 );
 
 /*  Execute this file from the command line by typing:
