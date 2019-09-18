@@ -5,67 +5,64 @@ import axios from 'axios';
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
 
 class CreatePost extends React.Component {
-    constructor(props) {
-        super(props);
-        const { currUser } = this.props;
-        this.state = {
-            img1: '',
-            img2: '',
-            img3: '',
-            preview1: null,
-            preview2: null,
-            preview3: null,
-            title: '',
-            text: '',
-            lumber: false,
-            metal: false,
-            concrete: false,
-            glass: false,
-            piping: false,
-            address: '',
-            city: '',
-            state: '',
-            zip: '',
-            currUser: currUser 
-        };
-        this.onPostSubmit = this.onPostSubmit.bind(this);
-    }
-    // gets called upon clicking "submit" button
-    onPostSubmit(event) {
-        const user = this.state;
-        const bodyFormData = new FormData();
-        // formatting for cloudinary
-        Object.entries(user).forEach((post) => {
-          if (post[0] === 'img1' || post[0] === 'img2' || post[0] === 'img3') {
-            bodyFormData.append('photos', post[1]);
-          }
-          else {
-            bodyFormData.append(post[0], post[1]);
-          }
-        });
 
-        // sends post information from client to post table in DB
-        axios.post('/submitPost', bodyFormData)
-            .then((response) => {
-                console.log(response);
-                // after success sends user back to home page
-                this.props.changeView('default');
-            })
-            .catch((response) => {
-                if (response.response.status === 400) {
-                    alert(response.response.data);
-                }
-                
-                if (response.response.status === 404) {
-                    alert(response.response.data);
-                    this.props.changeView('login');
-                }
-                if (response.response.status === 500) {
-                    alert('You must include at 3 images with your post');
-                }
-            });
-        // axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
-    }
+	constructor(props) {
+		super(props);
+		const { currUser } = this.props;
+		this.state = {
+			img1: '',
+			img2: '',
+			img3: '',
+			title: '',
+			text: '',
+			lumber: false,
+			metal: false,
+			concrete: false,
+			glass: false,
+			piping: false,
+			address: '',
+			city: '',
+			state: '',
+			zip: '',
+			currUser: currUser 
+		};
+		this.onPostSubmit = this.onPostSubmit.bind(this);
+	}
+	// gets called upon clicking "submit" button
+	onPostSubmit(event) {
+		const user = this.state;
+		const bodyFormData = new FormData();
+		// formatting for cloudinary
+		Object.entries(user).forEach((post) => {
+			if (post[0] === 'img1' || post[0] === 'img2' || post[0] === 'img3') {
+				bodyFormData.append('photos', post[1]);
+			} else {
+			bodyFormData.append(post[0], post[1]);
+			}
+		});
+
+		// sends post information from client to post table in DB
+		axios.post('/submitPost', bodyFormData)
+			.then((response) => {
+				console.log(response);
+				// after success sends user back to home page
+				this.props.changeView('default');
+			})
+			.catch((response) => {
+				if (response.response.status === 400) {
+					alert(response.response.data);
+				}
+				
+				if (response.response.status === 404) {
+					alert(response.response.data);
+					this.props.changeView('login');
+				}
+				if (response.response.status === 500) {
+					alert('You must include at 3 images with your post');
+				}
+			});
+		// axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
+	}
 
     render() {
         const { state } = this.state;

@@ -63,6 +63,21 @@ const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
     return resolve(results);
   });
 });
+
+// saves messages to the DB
+const saveMessage = (message) => new Promise((resolve, reject) => {
+  const messageInsert = 'INSERT INTO messages(id, subject, content, sender, recepient) VALUES (DEFAULT, ?)';
+  const insertValues = [message.subject, message.content, message.sender, message.recepient];
+
+  databaseConnection.query(messageInsert, [insertValues], (err, results) => {
+    if (err) {
+      console.log(err);
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
 // saves posts to the DB
 const savePost = (post) => new Promise((resolve, reject) => {
   const postInsert = 'INSERT INTO posts(postId, text, img1, img2, img3, title, location, tagList, lumber, metal, concrete, glass, piping, userId, zip) VALUES (DEFAULT, ?)';
@@ -146,6 +161,7 @@ module.exports = {
   increasePostCount,
   saveImage,
   saveUsersPostCount,
+  saveMessage,
   displayPosts,
   searchTags,
   searchZip,
