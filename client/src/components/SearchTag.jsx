@@ -35,7 +35,7 @@ class SearchTag extends React.Component {
             <div>
               <Row form>
 
-              <Col md={2}>
+              <Col md={3}>
                   <InputGroup>
                     <Input id='zip' placeholder='Zip' />
                     <InputGroupAddon addonType="append"><Button onClick={this.handleClick}>Search</Button></InputGroupAddon>
