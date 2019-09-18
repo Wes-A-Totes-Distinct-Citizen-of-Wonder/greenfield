@@ -68,7 +68,7 @@ app.get('/posts', (req, res) => {
 // but data can be pulled from the table) and send it to frontend to save all session info there.
 app.get('/userSession', (req, res) => {
   const {
-    userId,
+    user_id,
     isLoggedIn,
     username,
     email,
@@ -76,7 +76,7 @@ app.get('/userSession', (req, res) => {
   } = req.session;
 
   const userInfo = {
-    userId,
+    user_id,
     isLoggedIn,
     username,
     email,
@@ -91,7 +91,7 @@ app.post('/signUp', (req, res) => {
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(req.body.password, salt);
 
-  let userId;
+  let user_id;
 
   const userInfo = {
     username: req.body.username,
@@ -103,9 +103,9 @@ app.post('/signUp', (req, res) => {
   return findUser(userInfo.username)
     .then(() => saveUser(userInfo))
     .then((savedUser) => {
-      userId = savedUser.insertId;
+      user_id = savedUser.insertId;
     })
-    .then(() => saveUsersPostCount(userId)
+    .then(() => saveUsersPostCount(user_id)
       .then(() => {
         res.status(201).send('user saved in db');
       })
@@ -161,7 +161,7 @@ app.post('/submitPost', (req, res) => {
       concrete: req.body.concrete === 'true',
       glass: req.body.glass === 'true',
       piping: req.body.piping === 'true',
-      userId: req.session.userId,
+      user_id: req.session.user_id,
       zip: req.body.zip,
     };
 
@@ -192,7 +192,7 @@ app.post('/submitPost', (req, res) => {
         return savePost(post);
       })
       .then(() => {
-        increasePostCount(post.userId);
+        increasePostCount(post.user_id);
       })
       .then(() => {
         res.status(201).send('got your post!');
@@ -209,13 +209,13 @@ app.post('/submitPost', (req, res) => {
 });
 
 app.post('/submitMessage', (req, res) => {
+  const sender = getUser(message.sender);
   const message = {
     subject: req.body.subject,
     content: req.body.content,
-    sender: req.body.sender_id,
-    recepient: req.body.recepient_id,
+    sender: req.body.user,
+    recepient: req.body.user,
   };
-
   return saveMessage(message)
     .then(() => {
       res.status(201).send('message saved in db');
@@ -236,12 +236,12 @@ app.post('/login', (req, res) => {
   return getUser(user.username)
     .then((response) => {
       const result = authorize(response, user);
-      req.session.userId = result.userId;
+      req.session.user_id = result.user_id;
       req.session.isLoggedIn = true;
       req.session.username = result.username;
       req.session.email = result.email;
       req.session.business = result.business;
-      req.session.userId = result.userId;
+      req.session.user_id = result.user_id;
       res.cookie('session_id', req.session.id);
       res.json(result);
     })
@@ -256,7 +256,7 @@ const authorize = (signIn, user) => {
   const passwordCheck = bcrypt.compareSync(user.password, foundUser.password);
   if (passwordCheck) {
     const returnUser = {
-      userId: foundUser.userId,
+      user_id: foundUser.user_id,
       username: foundUser.username,
       email: foundUser.email,
       business: foundUser.business,
@@ -296,7 +296,7 @@ app.post('/searchZip', (req, res) => {
 // when logged-in user clicks on a post, this fetches the data they want to see: the post's user's
 // username, email, business name, the location of the materials, and the map for the location.
 app.post('/postInfo', (req, res) => {
-  getPostInfo(req.body.userId)
+  getPostInfo(req.body.user_id)
     .then((onePostInfo) => {
       res.status(201).send(onePostInfo);
     })
