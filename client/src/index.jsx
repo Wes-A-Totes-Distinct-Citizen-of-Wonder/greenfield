@@ -11,6 +11,7 @@ import CreatePost from "./components/pageViews/CreatePost.jsx";
 import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
 import MessagesList from "./components/messages/MessagesList.jsx"
+import MyPosts from './components/MyPosts.jsx';
 import { Col, Row, NavLink } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -169,6 +170,8 @@ class App extends React.Component {
         return <SignUpView changeUser={this.changeUser} />;
       case "login":
         return <LoginView changeUser={this.changeUser} />;
+      case "myPosts":
+        return <MyPosts changeUser={this.changeUser} getNearbyPosts={this.getNearbyPosts} />;
       case "create-post":
         return (
           <CreatePost

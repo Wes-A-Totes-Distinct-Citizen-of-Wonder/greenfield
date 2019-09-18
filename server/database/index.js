@@ -152,6 +152,16 @@ const getPostInfo = (userId) => new Promise((resolve, reject) => {
   });
 });
 
+const myPost = (tag) => new Promise((resolve, reject) => {
+  const searchedTag = `SELECT * FROM posts WHERE  IS TRUE`;
+  databaseConnection.query(searchedTag, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
 module.exports = {
   findUser,
   getUser,
