@@ -12,7 +12,7 @@ const PostView = (props) => {
         <Row>
         <Col sm='6'>
             <Card>
-            <ImgCarousel />
+            <ImgCarousel src={post}/>
             {/* <CardImg src={post.img2} /> */}
             <CardBody>
                 <CardText>Posted by: {user.username}</CardText>
