@@ -65,8 +65,8 @@ const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
 });
 // saves posts to the DB
 const savePost = (post) => new Promise((resolve, reject) => {
-  const postInsert = 'INSERT INTO posts(postId, text, img1, img2, img3, title, location, tagList, lumber, metal, concrete, glass, piping, userId) VALUES (DEFAULT, ?)';
-  const insertValues = [post.text, post.img1, post.img2, post.img3, post.title, post.location, post.tagList, post.lumber, post.metal, post.concrete, post.glass, post.piping, post.userId];
+  const postInsert = 'INSERT INTO posts(postId, text, img1, img2, img3, title, location, tagList, lumber, metal, concrete, glass, piping, userId, zip) VALUES (DEFAULT, ?)';
+  const insertValues = [post.text, post.img1, post.img2, post.img3, post.title, post.location, post.tagList, post.lumber, post.metal, post.concrete, post.glass, post.piping, post.userId, post.zip];
 
   databaseConnection.query(postInsert, [insertValues], (err, results) => {
     if (err) {
