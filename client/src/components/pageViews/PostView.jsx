@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MapContainer from "./../MapContainer.jsx";
 import ImgCarousel from "./ImgCarousel.jsx";
-import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col, Row, CardColumns } from 'reactstrap';
 import Message from "../messages/Message.jsx"
 import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Col, Row, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
@@ -26,18 +25,10 @@ class PostView extends React.Component {
     const { post } = this.props;
     const { user } = this.props;
     return (
-<<<<<<< HEAD
-        <Row>
-        <Col sm='6'>
-            <Card>
-            <ImgCarousel src={post}/>
-            {/* <CardImg src={post.img2} /> */}
-=======
       <Row>
         <Col sm="6">
           <Card>
-            <CardImg src={post.img1} />
->>>>>>> master
+            <ImgCarousel src={post} />
             <CardBody>
               <CardText>Posted by: {user.username}</CardText>
               <CardText>Business: {user.business}</CardText>
