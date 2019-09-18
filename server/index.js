@@ -161,6 +161,7 @@ app.post('/submitPost', (req, res) => {
       glass: req.body.glass === 'true',
       piping: req.body.piping === 'true',
       userId: req.session.userId,
+      zip: req.body.zip,
     };
 
     const apiImg1 = cloudinary.uploader.upload(image1.tempFilePath);
@@ -183,11 +184,15 @@ app.post('/submitPost', (req, res) => {
         return convertToCoordinates(fullAddress);
       })
       .then((geoLocation) => {
-        console.log(geoLocation, 'GEOLOCATION');
         const { location } = geoLocation.data.results[0].geometry;
         post.location = `${location.lat}, ${location.lng}`;
-        let zipcode = convertToAddress(post.location);
-        console.log(zipcode);
+
+        // if (!post.zip) {
+        //   console.log(post.zip, 'zip prior to convert to address');
+        //   post.zip = convertToAddress(`${location.lat},${location.lng}`);
+        //   console.log(post.zip, 'zip after convert to address after');
+        // }
+
         return savePost(post);
       })
       .then(() => {
