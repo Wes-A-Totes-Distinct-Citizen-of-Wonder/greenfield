@@ -22,6 +22,8 @@ class Message extends React.Component {
   
   onMessageSubmit(event) {
     // const message = this.state;
+    debugger;
+    console.log(this.state, 'state');
     const bodyFormData = new FormData();
     axios
       .post('/submitMessage', bodyFormData)
