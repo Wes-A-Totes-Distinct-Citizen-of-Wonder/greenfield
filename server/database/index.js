@@ -39,7 +39,7 @@ const getUser = (user) => new Promise((resolve, reject) => {
 
 // saves the user into the DB
 const saveUser = (user) => new Promise((resolve, reject) => {
-  const userInsert = 'INSERT INTO users(userId, username, password, email, business) VALUES (DEFAULT, ?)';
+  const userInsert = 'INSERT INTO users(user_id, username, password, email, business) VALUES (DEFAULT, ?)';
   const insertValues = [user.username, user.password, user.email, user.business];
 
   databaseConnection.query(userInsert, [insertValues], (err, results, fields) => {
@@ -52,10 +52,10 @@ const saveUser = (user) => new Promise((resolve, reject) => {
 });
 
 // creates a running psts count into the DB
-const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
-  const countInsert = 'INSERT INTO postCount(count, userId) VALUES (DEFAULT, ?)';
+const saveUsersPostCount = (user_id) => new Promise((resolve, reject) => {
+  const countInsert = 'INSERT INTO postCount(count, user_id) VALUES (DEFAULT, ?)';
 
-  databaseConnection.query(countInsert, [userId], (err, results) => {
+  databaseConnection.query(countInsert, [user_id], (err, results) => {
     if (err) {
       console.log(err);
       return reject(err);
@@ -66,7 +66,7 @@ const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
 
 // saves messages to the DB
 const saveMessage = (message) => new Promise((resolve, reject) => {
-  const messageInsert = 'INSERT INTO messages(id, subject, content, sender, recepient) VALUES (DEFAULT, ?)';
+  const messageInsert = 'INSERT INTO messages(id, subject, content, sender_id, recepient_id) VALUES (DEFAULT, ?)';
   const insertValues = [message.subject, message.content, message.sender, message.recepient];
 
   databaseConnection.query(messageInsert, [insertValues], (err, results) => {
@@ -80,8 +80,8 @@ const saveMessage = (message) => new Promise((resolve, reject) => {
 
 // saves posts to the DB
 const savePost = (post) => new Promise((resolve, reject) => {
-  const postInsert = 'INSERT INTO posts(postId, text, img1, img2, img3, title, location, tagList, lumber, metal, concrete, glass, piping, userId, zip) VALUES (DEFAULT, ?)';
-  const insertValues = [post.text, post.img1, post.img2, post.img3, post.title, post.location, post.tagList, post.lumber, post.metal, post.concrete, post.glass, post.piping, post.userId, post.zip];
+  const postInsert = 'INSERT INTO posts(postId, text, img1, img2, img3, title, location, tagList, lumber, metal, concrete, glass, piping, user_id, zip) VALUES (DEFAULT, ?)';
+  const insertValues = [post.text, post.img1, post.img2, post.img3, post.title, post.location, post.tagList, post.lumber, post.metal, post.concrete, post.glass, post.piping, post.user_id, post.zip];
 
   databaseConnection.query(postInsert, [insertValues], (err, results) => {
     if (err) {
@@ -92,10 +92,10 @@ const savePost = (post) => new Promise((resolve, reject) => {
   });
 });
 // increasts the coiunt of posts in the DB
-const increasePostCount = (userId) => new Promise((resolve, reject) => {
-  const increaseInsert = 'UPDATE postCount SET count = count + 1 WHERE userId = ?';
+const increasePostCount = (user_id) => new Promise((resolve, reject) => {
+  const increaseInsert = 'UPDATE postCount SET count = count + 1 WHERE user_id = ?';
 
-  databaseConnection.query(increaseInsert, [userId], (err, results) => {
+  databaseConnection.query(increaseInsert, [user_id], (err, results) => {
     if (err) {
       console.log(err);
       return reject(err);
@@ -105,7 +105,7 @@ const increasePostCount = (userId) => new Promise((resolve, reject) => {
 });
 
 const displayPosts = () => new Promise((resolve, reject) => {
-  const fetchedPosts = 'select posts.*, users.userId from posts INNER JOIN users WHERE posts.userId = users.userId';
+  const fetchedPosts = 'select posts.*, users.user_id from posts INNER JOIN users WHERE posts.user_id = users.user_id';
   databaseConnection.query(fetchedPosts, (err, results) => {
     if (err) {
       return reject(err);
@@ -140,10 +140,10 @@ const searchZip = (tag) => new Promise((resolve, reject) => {
   });
 });
 // grabs all the user info for each individual post
-const getPostInfo = (userId) => new Promise((resolve, reject) => {
-  const userIdInsert = 'SELECT users.username, users.email, users.business FROM users WHERE userId = ?';
+const getPostInfo = (user_id) => new Promise((resolve, reject) => {
+  const user_idInsert = 'SELECT users.username, users.email, users.business FROM users WHERE user_id = ?';
 
-  databaseConnection.query(userIdInsert, [userId], (err, results) => {
+  databaseConnection.query(user_idInsert, [user_id], (err, results) => {
     if (err) {
       console.log(err);
       return reject(err);
