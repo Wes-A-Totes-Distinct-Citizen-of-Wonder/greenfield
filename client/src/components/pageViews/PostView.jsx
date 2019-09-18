@@ -34,6 +34,7 @@ class PostView extends React.Component {
               <CardText>Contact information: {user.email}</CardText>
               <CardTitle>Title: {post.title}</CardTitle>
               <CardText>Description: {post.text}</CardText>
+              <CardText>Location: {post.zip}</CardText>
               <CardSubtitle>Material(s): {post.tagList}</CardSubtitle>{" "}
               <Button outline color="primary" onClick={this.toggle}>
                 Send Message
