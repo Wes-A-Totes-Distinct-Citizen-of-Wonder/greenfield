@@ -37,8 +37,8 @@ class SearchTag extends React.Component {
 
               <Col md={3}>
                   <InputGroup>
-                    <Input id='zip' placeholder='Zip' />
-                    <InputGroupAddon addonType="append"><Button onClick={this.handleClick}>Search</Button></InputGroupAddon>
+                    <Input id='zip' placeholder='Zip' onChange={this.handleChange} />
+                    <InputGroupAddon addonType="append"><Button onClick={() => this.props.searchByZip(this.state.zip)}>Search</Button></InputGroupAddon>
                   </InputGroup>
               </Col>
 
