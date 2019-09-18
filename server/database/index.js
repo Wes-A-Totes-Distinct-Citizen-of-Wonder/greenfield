@@ -66,7 +66,7 @@ const saveUsersPostCount = (userId) => new Promise((resolve, reject) => {
 
 // saves messages to the DB
 const saveMessage = (message) => new Promise((resolve, reject) => {
-  const messageInsert = 'INSERT INTO messages(id, subject, content, sender, recepient) VALUES (DEFAULT, ?)';
+  const messageInsert = 'INSERT INTO messages(id, subject, content, sender_id, recepient_id) VALUES (DEFAULT, ?)';
   const insertValues = [message.subject, message.content, message.sender, message.recepient];
 
   databaseConnection.query(messageInsert, [insertValues], (err, results) => {
