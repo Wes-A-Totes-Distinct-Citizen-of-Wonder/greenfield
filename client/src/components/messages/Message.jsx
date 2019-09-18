@@ -37,7 +37,7 @@ class Message extends React.Component {
             <Label style={{ color: "white" }}>Message</Label>
               <Input type="textarea" name="text" id="body" />
             </FormGroup>
-          <Button color="primary">Submit</Button>{' '}
+          <Button color="primary">Send</Button>{' '}
         </Form>
       </div>
     );
