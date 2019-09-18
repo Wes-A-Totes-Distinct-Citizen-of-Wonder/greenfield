@@ -18,7 +18,7 @@ const cloudinaryConfig = require('./config.js');// config file is gitignored b/c
 const { convertToCoordinates, convertToAddress } = require('../client/src/helpers/geoLocation');
 
 const {
-  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, searchTags, displayPosts, getPostInfo,
+  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, searchTags, searchZip, displayPosts, getPostInfo,
 } = require('./database/index.js');
 
 // options used in sessionStore below
@@ -181,17 +181,12 @@ app.post('/submitPost', (req, res) => {
         const fullAddress = {
           address, city, state, zip,
         };
+
         return convertToCoordinates(fullAddress);
       })
       .then((geoLocation) => {
         const { location } = geoLocation.data.results[0].geometry;
         post.location = `${location.lat}, ${location.lng}`;
-
-        // if (!post.zip) {
-        //   console.log(post.zip, 'zip prior to convert to address');
-        //   post.zip = convertToAddress(`${location.lat},${location.lng}`);
-        //   console.log(post.zip, 'zip after convert to address after');
-        // }
 
         return savePost(post);
       })
@@ -261,6 +256,16 @@ app.post('/logout', (req, res) => {
 // from front end, and searches the db for posts with that tag.
 app.post('/tagSearch', (req, res) => {
   searchTags(req.body)
+    .then((posts) => {
+      res.status(201).send(posts);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post('/searchZip', (req, res) => {
+  searchZip(req.body)
     .then((posts) => {
       res.status(201).send(posts);
     })
