@@ -24,9 +24,6 @@ class LoginView extends React.Component {
             // changes user state in idex.jsx
             return this.props.changeUser(newUser.data);
         })
-        .then(() => {
-            
-        })
         .catch(err => alert('incorrect username or password'))
     }
 

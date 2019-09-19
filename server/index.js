@@ -35,9 +35,9 @@ cloudinary.config(cloudinaryConfig);// config object for connecting to cloudinar
 
 app.use(session({
   secret: 'trashPanda secret',
-  // cookie: {
-  //   expires: 6000000,
-  // },
+  cookie: {
+    expires: 6000000,
+  },
   store: sessionStore,
   resave: false,
   saveUninitialized: false,
@@ -275,6 +275,9 @@ const authorize = (signIn, user) => {
 
 app.post('/logout', (req, res) => {
   req.session.isLoggedIn = false;
+  req.session.id = null;
+  req.session.email = null;
+  req.session.user_id = null;
   res.status(201).send('great job');
 });
 
