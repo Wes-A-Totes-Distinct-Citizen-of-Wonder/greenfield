@@ -40,8 +40,8 @@ const pageHeader = {
 };
 
 const title = {
-  width: '200px',
-  height: '35px',
+  width: '250px',
+  height: '40px',
   padding: '0px',
 };
 
@@ -50,7 +50,11 @@ const navbar = {
 };
 
 const logOrSign = {
-  width: '50%',
+  padding: '35px',
+  width: '40%',
+  height: '100%',
+  border: 'solid gray',
+  'border-radius': '5px',
 };
 
 module.exports = {
