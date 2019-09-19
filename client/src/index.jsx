@@ -224,26 +224,22 @@ class App extends React.Component {
       >
         <Row>
           <Col>
-            <NavHead changeView={this.changeView} />
+            <NavHead 
+              changeView={this.changeView} 
+              user={user}
+              logout={this.logout} />
           </Col>
         </Row>
         <br /><br />
         <Row style={content}>
           <Col
-            sm="2"
-            className="side-bar"
-            style={ whiteBackGround }
-          >
-            <UserNav
-              changeView={this.changeView}
-							messages={messages}
-              user={user}
-              logout={this.logout}
-            />
-          </Col>
-          <Col
-            sm="10"
-            style={pageViews}
+            sm="12"
+            style={{
+              padding: "25px",
+              backgroundColor: "rgb(47, 74, 94)",
+              paddingBottom: "auto",
+              borderRadius: "4px"
+            }}
           >
             {this.currentPage(view)}
           </Col>
