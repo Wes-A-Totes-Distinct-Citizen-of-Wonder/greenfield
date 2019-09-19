@@ -1,10 +1,17 @@
-const UserNavStyle = {
+const whiteBackGround = {
   background: '#FFFFFF',
 };
 
 const content = {
   backgroundColor: '#FFFFFF',
   padding: '25px',
+};
+
+const pageViews = {
+  padding: '25px',
+  backgroundColor: '#FFFFFF',
+  paddingBottom: 'auto',
+  borderRadius: '4px',
 };
 
 const imgPreview = {
@@ -27,17 +34,39 @@ const label = {
 };
 
 const pageHeader = {
-  color: '#FFFFFF',
+  color: 'black',
   'border-radius': '5px',
   'text-align': 'center',
 };
 
+const title = {
+  width: '250px',
+  height: '40px',
+  padding: '0px',
+};
+
+const navbar = {
+  background: '#2F4A5E',
+};
+
+const logOrSign = {
+  padding: '35px',
+  width: '40%',
+  height: '100%',
+  border: 'solid gray',
+  'border-radius': '5px',
+};
+
 module.exports = {
-  UserNavStyle,
+  whiteBackGround,
   content,
+  pageViews,
   imgPreview,
   white,
   black,
   label,
   pageHeader,
+  title,
+  navbar,
+  logOrSign,
 };

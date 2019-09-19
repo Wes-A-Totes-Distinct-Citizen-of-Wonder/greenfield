@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
 import { changeUser } from '../../index.jsx';
+import { black, logOrSign } from './../Style.jsx';
 
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row, Jumbotron } from 'reactstrap';
 
@@ -29,19 +30,26 @@ class LoginView extends React.Component {
 
     render() {
         return (
-            <div>
-                <Form onSubmit={this.onLoginSubmit}>
-                    <FormGroup>
-                        <Label  style={{ color: 'white' }}>Username</Label>
-                        <Input type='text' name='username' id='user-login' value={this.state.username} onChange={e => this.setState({ username: e.target.value })}></Input>
+        <center>
+          <br />
+            <Form style={logOrSign} onSubmit={this.onLoginSubmit}>
+                    <FormGroup row>
+                        <Label style={black}>Username</Label>
+                        <Col>
+                          <Input type='text' name='username' id='user-login' value={this.state.username} onChange={e => this.setState({ username: e.target.value })}></Input>
+                        </Col>
                     </FormGroup>
-                    <FormGroup>
-                        <Label  style={{ color: 'white' }}>Password</Label>
-                        <Input type='password' name='password' id='password' value={this.state.password} onChange={e => this.setState({ password: e.target.value })}></Input>
+                    <FormGroup row>
+                        <Label style={black}>Password</Label>
+                        <Col>
+                          <Input type='password' name='password' id='password' value={this.state.password} onChange={e => this.setState({ password: e.target.value })}></Input>
+                        </Col>
                     </FormGroup>
-                    <Button type="submit" color="primary" block>Submit</Button>
+                    <Col>
+                      <Button type="submit" color="primary" block>Submit</Button>
+                    </Col>
                 </Form>
-            </div>
+            </center>
             
         );
     }

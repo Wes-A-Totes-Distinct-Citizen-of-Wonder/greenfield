@@ -4,6 +4,7 @@ import axios from 'axios';
 import { imgPreview, white, pageHeader, label } from '../Style.jsx';
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
 import PopupAlert from './../PopupAlert.jsx';
+import { black } from './../Style.jsx';
 
 class CreatePost extends React.Component {
 	constructor(props) {
@@ -77,15 +78,15 @@ class CreatePost extends React.Component {
                     <img style={imgPreview} src={this.state.preview2} />
                     <img style={imgPreview} src={this.state.preview3} />
                     
-                    <Input type="file" name="photo" style={{ color: 'white'}} value={state.img1} onChange={e => {
+                    <Input type="file" name="photo" style={black} value={state.img1} onChange={e => {
                       this.setState({ img1: e.target.files[0] });
                       this.setState({ preview1: URL.createObjectURL(e.target.files[0])})
                     }}/>
-                    <Input type="file" name="photo" style={white} value={state.img2} onChange={e => {
+                    <Input type="file" name="photo" style={black} value={state.img2} onChange={e => {
                       this.setState({ img2: e.target.files[0] });
                       this.setState({ preview2: URL.createObjectURL(e.target.files[0]) })
                     }} />
-                    <Input type="file" name="photo" style={white} value={state.img3} onChange={e => {
+                    <Input type="file" name="photo" style={black} value={state.img3} onChange={e => {
                       this.setState({ img3: e.target.files[0] });
                       this.setState({ preview3: URL.createObjectURL(e.target.files[0]) })
                     }} />
@@ -104,19 +105,19 @@ class CreatePost extends React.Component {
 
                 <center>
                 <FormGroup check>
-                    <Label check for="post-tags" style={white}>
+                    <Label check for="post-tags" style={black}>
                         <Col><Input type="checkbox" value={state.lumber} onChange={() => this.setState({ lumber: !this.state.lumber })}/>{'Lumber'}</Col>
                     </Label>
-                    <Label check for="post-tags" style={white}>
+                    <Label check for="post-tags" style={black}>
                         <Col><Input type="checkbox" value={state.metal} onChange={() => this.setState({ metal: !this.state.metal })}/>{'Metal'}</Col>
                     </Label>
-                    <Label check for="post-tags" style={white}>
+                    <Label check for="post-tags" style={black}>
                         <Col><Input type="checkbox" value={state.concrete} onChange={() => this.setState({ concrete: !this.state.concrete })}/>{'Concrete'}</Col>
                     </Label>
-                    <Label check for="post-tags" style={white}>
+                    <Label check for="post-tags" style={black}>
                         <Col><Input type="checkbox" value={state.glass} onChange={() => this.setState({ glass: !this.state.glass })}/>{'Glass'}</Col>
                     </Label>
-                    <Label check for="post-tags" style={white}>
+                    <Label check for="post-tags" style={black}>
                         <Col><Input type="checkbox" value={state.piping} onChange={() => this.setState({ piping: !this.state.piping })}/>{'Piping'}</Col>
                     </Label>
                     <FormText color="muted">

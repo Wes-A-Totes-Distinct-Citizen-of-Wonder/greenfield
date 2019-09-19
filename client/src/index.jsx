@@ -14,7 +14,9 @@ import MessagesList from "./components/messages/MessagesList.jsx"
 import MyPosts from './components/MyPosts.jsx';
 import { Col, Row, NavLink } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { UserNavStyle, content } from './components/Style.jsx';
+import { whiteBackGround, content, pageViews } from './components/Style.jsx';
+
+import {navbar} from './components/Style.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -165,23 +167,21 @@ class App extends React.Component {
     const { posts } = this.state;
     const { selectedPost } = this.state;
     const { user } = this.state;
-    const { messages } = this.state;
+
     switch (page) {
-      case 'messagesList':
-        return <MessagesList changeView={this.changeView} messages={messages} />;
-      case 'sign-up':
+			case "messagesList":
+        return <MessagesList changeView={this.changeView} />;
+        
+      case "sign-up":
         return <SignUpView changeUser={this.changeUser} />;
-      case 'login':
+
+      case "login":
         return <LoginView changeUser={this.changeUser} />;
-      case 'myPosts':
-        return (
-          <MyPosts
-            changeUser={this.changeUser}
-            getNearbyPosts={this.getNearbyPosts}
-            currUser={user}
-          />
-        );
-      case 'create-post':
+
+      case "myPosts":
+        return <MyPosts changeUser={this.changeUser} getNearbyPosts={this.getNearbyPosts} currUser={user} />;
+
+      case "create-post":
         return (
           <CreatePost
             changeView={this.changeView}
@@ -189,7 +189,8 @@ class App extends React.Component {
             currUser={user}
           />
         );
-      case 'post-view':
+
+      case "post-view":
         return (
           <PostView
             post={selectedPost.postInfo}
@@ -198,7 +199,8 @@ class App extends React.Component {
             currUser={user}
           />
         );
-      case 'user-profile':
+        
+      case "user-profile":
         // Not being used currently -> was gonna put active posts for users
         return <UserProfileView user={user} />;
       default:
@@ -224,40 +226,23 @@ class App extends React.Component {
     const { messages } = this.state;
     return (
       <div
-        className='main'
-        style={{
-          backgroundColor: 'rgb(147, 174, 194)',
-          height: '100vh',
-          paddingRight: '15px'
-        }}>
+        className="main"
+        style={whiteBackGround}
+      >
         <Row>
-          <Col
-            sm='12'
-            style={{
-              backgroundColor: 'rgb(102, 136, 165)',
-              padding: '25px',
-              paddingBottom: '25px'
-            }}>
-            <NavHead changeView={this.changeView} />
+          <Col>
+            <NavHead 
+              changeView={this.changeView} 
+              user={user}
+              logout={this.logout} />
           </Col>
         </Row>
+        <br /><br />
         <Row style={content}>
-          <Col sm='2' className='side-bar' style={UserNavStyle}>
-            <UserNav
-              changeView={this.changeView}
-              messages={messages}
-              user={user}
-              logout={this.logout}
-            />
-          </Col>
           <Col
-            sm='10'
-            style={{
-              padding: '25px',
-              backgroundColor: 'rgb(47, 74, 94)',
-              paddingBottom: 'auto',
-              borderRadius: '4px'
-            }}>
+            sm="12"
+            style={whiteBackGround}
+          >
             {this.currentPage(view)}
           </Col>
         </Row>
