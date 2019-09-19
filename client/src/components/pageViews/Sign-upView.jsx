@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
-
+import { black } from './../Style.jsx';
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
 import Axios from "axios";
 
@@ -53,25 +53,25 @@ class SignUpView extends React.Component {
             // Keeps track of all input info and stores it in the state, then upon submit, sends the state object to the server
             <Form onSubmit={(e) => {preventDefault(e)}}>
                 <FormGroup>
-                    <Label style={{ color: 'white' }} >Create User Name</Label>
+                    <Label style={black} >Create User Name</Label>
                     <Input type='text' name='username' id='user-registration' value={state.username} onChange={e => this.setState({ username: e.target.value })}></Input>
                 </FormGroup>
                 <FormGroup>
-                    <Label style={{ color: 'white' }} >Create Password</Label>
+                    <Label style={black} >Create Password</Label>
                     <Input type='password' name='password' id='password-registration' value={state.password} onChange={e => this.setState({ password: e.target.value })}></Input>
                     <FormText color="muted">password must be between 6 and 16 characters only using numbers and alphabetical characters</FormText>
                 </FormGroup>
                 <FormGroup>
-                    <Label style={{ color: 'white' }} >Verify Password</Label>
+                    <Label style={black} >Verify Password</Label>
                     <Input type='password' name='password-verify' id='password-registration-verify' value={state.verifyPass} onChange={e => this.setState({ verifyPass: e.target.value })}></Input>
                     {this.state.showPasswordError ? <text style={{color: 'red'}}>Passwords do not match</text> : null }
                 </FormGroup>
                 <FormGroup>
-                    <Label style={{ color: 'white' }} >Enter Email</Label>
+                    <Label style={black} >Enter Email</Label>
                     <Input type='email' name='email' id='email-registration' value={state.email} onChange={e => this.setState({ email: e.target.value })}></Input>
                 </FormGroup>
                 <FormGroup>
-                    <Label style={{ color: 'white' }} >Enter Place of Business(Optional)</Label>
+                    <Label style={black} >Enter Place of Business(Optional)</Label>
                     <Input type='text' name='business' id='business-registration' value={state.business} onChange={e => this.setState({ business: e.target.value })}></Input>
                 </FormGroup>
                 <Button type="button" color="primary" block onClick={(e) => this.onSignUpSubmit(e)} block>Submit</Button>
