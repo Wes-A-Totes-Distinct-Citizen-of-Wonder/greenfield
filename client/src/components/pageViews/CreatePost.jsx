@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import axios from 'axios';
 import { imgPreview, white, pageHeader, label } from '../Style.jsx';
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
+import PopupAlert from './../PopupAlert.jsx';
 
 class CreatePost extends React.Component {
 	constructor(props) {
@@ -23,7 +24,9 @@ class CreatePost extends React.Component {
 			city: '',
 			state: '',
 			zip: '',
-			currUser: currUser 
+      currUser: currUser,
+      showErrorPopup: false,
+      errorText: ''
 		};
 		this.onPostSubmit = this.onPostSubmit.bind(this);
 	}
@@ -48,17 +51,17 @@ class CreatePost extends React.Component {
 				this.props.changeView('default');
 			})
 			.catch((response) => {
-				if (response.response.status === 400) {
-					alert(response.response.data);
-				}
-				
-				if (response.response.status === 404) {
-					alert(response.response.data);
-					this.props.changeView('login');
-				}
-				if (response.response.status === 500) {
-					alert('You must include at 3 images with your post');
-				}
+        if (response.response.status === 400) {
+          this.setState({
+            showErrorPopup: !this.state.showErrorPopup,
+            errorText: response.response.data
+          });
+        } else {
+          this.setState({
+            showErrorPopup: !this.state.showErrorPopup,
+            errorText: 'Something went wrong with your post! Try checking your form again.'
+          });
+        }
 			});
 		// axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
 	}
@@ -68,11 +71,13 @@ class CreatePost extends React.Component {
         return (
             <Form>
                 <FormGroup>
+                  {this.state.showErrorPopup ? <PopupAlert text={this.state.errorText} /> : null }
                   <div style={pageHeader}><h2>Create Post</h2></div>
                     <img style={imgPreview} src={this.state.preview1} />
                     <img style={imgPreview} src={this.state.preview2} />
                     <img style={imgPreview} src={this.state.preview3} />
-                    <Input type="file" name="photo" style={white} value={state.img1} onChange={e => {
+                    
+                    <Input type="file" name="photo" style={{ color: 'white'}} value={state.img1} onChange={e => {
                       this.setState({ img1: e.target.files[0] });
                       this.setState({ preview1: URL.createObjectURL(e.target.files[0])})
                     }}/>
@@ -85,7 +90,7 @@ class CreatePost extends React.Component {
                       this.setState({ preview3: URL.createObjectURL(e.target.files[0]) })
                     }} />
                     <FormText color="muted">
-                        Please include 3 images of the materials you wish to share.
+                        Please include at least one image of the materials you wish to share.
                     </FormText>
                 </FormGroup>
 

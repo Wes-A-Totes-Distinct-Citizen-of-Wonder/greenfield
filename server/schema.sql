@@ -44,7 +44,6 @@ CREATE TABLE IF NOT EXISTS messages (
   content varchar(255) NOT NULL,
   recepient_id INT NOT NULL,
   sender_id INT NOT NULL,
-  date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (recepient_id) REFERENCES users(user_id),
   FOREIGN KEY (sender_id) REFERENCES users(user_id)
 );
