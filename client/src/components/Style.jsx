@@ -27,7 +27,6 @@ const label = {
 };
 
 const pageHeader = {
-  background: 'rgb(147, 174, 194)',
   color: '#FFFFFF',
   'border-radius': '5px',
   'text-align': 'center',
