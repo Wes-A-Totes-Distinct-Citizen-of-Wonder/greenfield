@@ -51,13 +51,15 @@ class MyPosts extends React.Component {
       <Row sm='4'>
         {posts.map((post) => {
           return (
-            <Card style = {{width:"20%", height:"20%"}}>
-              <CardImg src={post.img1} />
+            <Card style={{width:"175px", height:"250px", margin:"2px", padding: "2px"}}>
+              <center>
+              <CardImg src={post.img1} style={{width: "150px", height:"150px"}}/>
               <CardBody>
                 <CardTitle>{post.title}</CardTitle>
                 <CardTitle><Button onClick={() => {this.delete(post.post_id)}}>Delete</Button></CardTitle>
               </CardBody>
-            </Card>
+              </center>
+            </Card> 
           )
         })}
       </Row>
