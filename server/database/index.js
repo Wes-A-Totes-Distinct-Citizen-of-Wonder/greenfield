@@ -152,8 +152,20 @@ const getPostInfo = (user_id) => new Promise((resolve, reject) => {
   });
 });
 
-const getMyPosts = () => new Promise((resolve, reject) => {
-  const fetchedPosts = 'select * from posts INNER JOIN users WHERE posts.user_id = users.user_id';
+const getMyPosts = (user_id) => new Promise((resolve, reject) => {
+  const fetchedPosts = `SELECT * from posts WHERE user_id= '${user_id}'`;
+
+  databaseConnection.query(fetchedPosts, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
+const deletePost = (id) => new Promise((resolve, reject) => {
+  const fetchedPosts = `delete from posts WHERE post_id= '${id}'`;
+
   databaseConnection.query(fetchedPosts, (err, results) => {
     if (err) {
       return reject(err);
@@ -164,6 +176,7 @@ const getMyPosts = () => new Promise((resolve, reject) => {
 
 module.exports = {
   findUser,
+  deletePost,
   getUser,
   databaseConnection,
   saveUser,
