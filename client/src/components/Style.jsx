@@ -7,6 +7,13 @@ const content = {
   padding: '25px',
 };
 
+const pageViews = {
+  padding: '25px',
+  backgroundColor: '#FFFFFF',
+  paddingBottom: 'auto',
+  borderRadius: '4px',
+};
+
 const imgPreview = {
   height: '100px',
   width: '150px',
@@ -27,7 +34,7 @@ const label = {
 };
 
 const pageHeader = {
-  color: '#FFFFFF',
+  color: 'black',
   'border-radius': '5px',
   'text-align': 'center',
 };
@@ -42,9 +49,14 @@ const navbar = {
   background: '#2F4A5E',
 };
 
+const logOrSign = {
+  width: '50%',
+};
+
 module.exports = {
   whiteBackGround,
   content,
+  pageViews,
   imgPreview,
   white,
   black,
@@ -52,4 +64,5 @@ module.exports = {
   pageHeader,
   title,
   navbar,
+  logOrSign,
 };

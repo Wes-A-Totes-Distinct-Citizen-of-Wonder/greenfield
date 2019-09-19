@@ -14,7 +14,7 @@ import MessagesList from "./components/messages/MessagesList.jsx"
 import MyPosts from './components/MyPosts.jsx';
 import { Col, Row, NavLink } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { whiteBackGround, content } from './components/Style.jsx';
+import { whiteBackGround, content, pageViews } from './components/Style.jsx';
 
 import {navbar} from './components/Style.jsx';
 
@@ -232,15 +232,9 @@ class App extends React.Component {
         </Row>
         <br /><br />
         <Row style={content}>
-          
           <Col
             sm="12"
-            style={{
-              padding: "25px",
-              backgroundColor: "rgb(47, 74, 94)",
-              paddingBottom: "auto",
-              borderRadius: "4px"
-            }}
+            style={whiteBackGround}
           >
             {this.currentPage(view)}
           </Col>
