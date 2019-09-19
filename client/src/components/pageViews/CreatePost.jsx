@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
 
+import { imgPreview } from '../Style.jsx';
+
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
 
 class CreatePost extends React.Component {
@@ -71,24 +73,9 @@ class CreatePost extends React.Component {
                 <FormGroup>
                     <Label for="post-img" style={{ color: 'white' }}>Image File</Label>
                     <br/>
-                    <img style={{
-                      height: '100px',
-                      width: '150px',
-                      overflow: 'hidden',
-                      float: 'left'
-                    }} src={this.state.preview1} />
-                    <img style={{
-                      height: '100px',
-                      width: '150px',
-                      overflow: 'hidden',
-                      float: 'left'
-                    }} src={this.state.preview2} />
-                    <img style={{
-                      height: '100px',
-                      width: '150px',
-                      overflow: 'hidden',
-                      float: 'left'
-                    }} src={this.state.preview3} />
+                    <img style={imgPreview} src={this.state.preview1} />
+                    <img style={{imgPreview}} src={this.state.preview2} />
+                    <img style={{imgPreview}} src={this.state.preview3} />
                     <Input type="file" name="photo" style={{ color: 'white'}} value={state.img1} onChange={e => {
                       this.setState({ img1: e.target.files[0] });
                       this.setState({ preview1: URL.createObjectURL(e.target.files[0])})
