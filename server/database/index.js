@@ -66,8 +66,8 @@ const saveUsersPostCount = (user_id) => new Promise((resolve, reject) => {
 
 // saves messages to the DB
 const saveMessage = (message) => new Promise((resolve, reject) => {
-  const messageInsert = 'INSERT INTO messages(id, subject, content, sender_id, recepient_id) VALUES (DEFAULT, ?)';
-  const insertValues = [message.subject, message.content, message.sender, message.recepient];
+  const messageInsert = 'INSERT INTO messages(mess_id, subject, content, recepient_id, sender_id) VALUES (DEFAULT, ?)';
+  const insertValues = [message.subject, message.content, message.recepient, message.sender];
 
   databaseConnection.query(messageInsert, [insertValues], (err, results) => {
     if (err) {
@@ -80,7 +80,7 @@ const saveMessage = (message) => new Promise((resolve, reject) => {
 
 // saves posts to the DB
 const savePost = (post) => new Promise((resolve, reject) => {
-  const postInsert = 'INSERT INTO posts(post_Id, text, img1, img2, img3, title, location, tagList, lumber, metal, concrete, glass, piping, user_id, zip) VALUES (DEFAULT, ?)';
+  const postInsert = 'INSERT INTO posts(post_id, text, img1, img2, img3, title, location, tagList, lumber, metal, concrete, glass, piping, user_id, zip) VALUES (DEFAULT, ?)';
   const insertValues = [post.text, post.img1, post.img2, post.img3, post.title, post.location, post.tagList, post.lumber, post.metal, post.concrete, post.glass, post.piping, post.user_id, post.zip];
 
   databaseConnection.query(postInsert, [insertValues], (err, results) => {
@@ -152,8 +152,31 @@ const getPostInfo = (user_id) => new Promise((resolve, reject) => {
   });
 });
 
+const getMyPosts = (user_id) => new Promise((resolve, reject) => {
+  const fetchedPosts = `SELECT * from posts WHERE user_id= '${user_id}'`;
+
+  databaseConnection.query(fetchedPosts, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
+const deletePost = (id) => new Promise((resolve, reject) => {
+  const fetchedPosts = `delete from posts WHERE post_id= '${id}'`;
+
+  databaseConnection.query(fetchedPosts, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
 module.exports = {
   findUser,
+  deletePost,
   getUser,
   databaseConnection,
   saveUser,
@@ -165,5 +188,6 @@ module.exports = {
   displayPosts,
   searchTags,
   searchZip,
+  getMyPosts,
   getPostInfo,
 };

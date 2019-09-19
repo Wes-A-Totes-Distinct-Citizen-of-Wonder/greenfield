@@ -14,7 +14,6 @@ class PostView extends React.Component {
     };
     this.toggle = this.toggle.bind(this);
   }
-
   toggle() {
     this.setState(prevState => ({
       modal: !prevState.modal
@@ -24,6 +23,7 @@ class PostView extends React.Component {
   render() {
     const { post } = this.props;
     const { user } = this.props;
+    const { currUser } = this.props;
     return (
       <Row>
         <Col sm="6">
@@ -45,7 +45,7 @@ class PostView extends React.Component {
                 toggle={this.toggle}
                 className={this.props.className}
               >
-							<Message />
+							<Message currUser={currUser} post={post} />
                 {/* <ModalHeader toggle={this.toggle}>Send Message</ModalHeader>
                 <ModalBody>Insert Message Here</ModalBody>
                 <ModalFooter>

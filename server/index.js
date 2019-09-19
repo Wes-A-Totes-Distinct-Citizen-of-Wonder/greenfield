@@ -19,7 +19,7 @@ const { convertToCoordinates, convertToAddress } = require('../client/src/helper
 
 const {
   saveMessage, findUser, getUser, saveUser, savePost, getPostInfo,
-  increasePostCount, saveUsersPostCount, searchTags, displayPosts, searchZip,
+  increasePostCount, saveUsersPostCount, searchTags, displayPosts, searchZip, getMyPosts, deletePost,
 } = require('./database/index.js');
 
 // options used in sessionStore below
@@ -179,7 +179,7 @@ app.post('/submitPost', (req, res) => {
     Promise.all(apiImgs)
       .then((...apiResults) => {
         apiResults[0].forEach((result, index) => {
-          let path = `img${index + 1}`;
+          const path = `img${index + 1}`;
           post[path] = result.secure_url;
         });
       })
@@ -217,12 +217,11 @@ app.post('/submitPost', (req, res) => {
 });
 
 app.post('/submitMessage', (req, res) => {
-  // const sender = getUser(message.sender);
   const message = {
     subject: req.body.subject,
     content: req.body.content,
-    sender: req.body.user,
-    recepient: req.body.user,
+    recepient: req.body.recepient,
+    sender: req.body.sender,
   };
   return saveMessage(message)
     .then(() => {
@@ -311,6 +310,22 @@ app.post('/postInfo', (req, res) => {
     .catch((error) => {
       console.log(error);
       res.status(500).send(error);
+    });
+});
+
+app.get('/myposts', (req, res) => {
+  getMyPosts(req.session.user_id)
+    .then((posts) => {
+      console.log(posts);
+      res.send(posts);
+    });
+});
+
+app.post('/deletePost', (req, res) => {
+  deletePost(req.body.id)
+    .then((res) => {
+      console.log(res, 'res');
+      res.send(res);
     });
 });
 

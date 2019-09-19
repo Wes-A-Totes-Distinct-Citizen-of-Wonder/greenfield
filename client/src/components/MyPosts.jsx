@@ -1,30 +1,68 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import { DropdownToggle, DropdownMenu, DropdownItem, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col, Row, CardColumns } from 'reactstrap';
 
-import {  DropdownToggle, DropdownMenu, DropdownItem, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col, Row, CardColumns } from 'reactstrap';
-// basically the home view, takes the array of objects, "posts", from state on index.jsx and maps them into the card format
-const PostCard = (props) => {
-    const { posts } = props;
-    const { changePostView } = props;
-    const cards = posts.map(post => (
-        // allows each post to be clicked on and change to the view
-        <Card onClick={() => { changePostView(post) }}>
-            <CardImg src={post.img1} />
-            <CardBody>
-                <CardTitle>{post.title}</CardTitle>
-                <CardText>{post.text}</CardText>
-                <CardSubtitle>{post.tags}</CardSubtitle>
-                <CardSubtitle><button>Delete</button></CardSubtitle>
-            </CardBody>
-        </Card>
-    ));
+class MyPosts extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user_id: '',
+      posts: [],
+    };
+    this.setUser = this.setUser.bind(this);
+    this.getMyPosts = this.getMyPosts.bind(this);
+    this.delete = this.delete.bind(this);
+  }
+
+  componentDidMount() {
+    this.setUser();
+    this.getMyPosts();
+  }
+
+  getMyPosts() {
+    const { user_id} = this.state;
+    console.log(user_id);
+    axios.get('/myposts')
+    .then(res => {
+      this.setState({posts: res.data});
+    })
+  }
+
+  setUser(){
+    const { currUser } = this.props;
+    this.setState({user_id: currUser.user_id});
+  }
+
+  delete(id){
+    axios.post('/deletePost', {id: id})
+      .then(res => {
+        console.log(res, 'deleted');
+      })
+      this.componentDidMount();
+  }
+
+  render(){
+    const { posts } = this.state;
+    console.log(posts, 'posts');
+
     return (
-        <div>
-        <CardColumns>
-            {cards}
-        </CardColumns>
-        </div>
+      <Row sm='4'>
+        {posts.map((post) => {
+          return (
+            <Card style = {{width:"20%", height:"20%"}}>
+              <CardImg src={post.img1} />
+              <CardBody>
+                <CardTitle>{post.title}</CardTitle>
+                <CardTitle><Button onClick={() => {this.delete(post.post_id)}}>Delete</Button></CardTitle>
+              </CardBody>
+            </Card>
+          )
+        })}
+      </Row>
     );
+  }
 }
 
-export default PostCard;
+export default MyPosts;
