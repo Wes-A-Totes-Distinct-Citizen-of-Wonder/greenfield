@@ -69,4 +69,4 @@ client/src/helpers/config.js
 server/config.js
 
 # debugger
-.vscode/launch.json
+.vscode
