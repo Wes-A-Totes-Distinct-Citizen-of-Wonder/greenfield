@@ -15,6 +15,8 @@ import MyPosts from './components/MyPosts.jsx';
 import { Col, Row, NavLink } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import {navbar} from './components/Style.jsx';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -224,14 +226,7 @@ class App extends React.Component {
         }}
       >
         <Row>
-          <Col
-            sm="12"
-            style={{
-              backgroundColor: "rgb(102, 136, 165)",
-              padding: "25px",
-              paddingBottom: "25px"
-            }}
-          >
+          <Col>
             <NavHead changeView={this.changeView} />
           </Col>
         </Row>
