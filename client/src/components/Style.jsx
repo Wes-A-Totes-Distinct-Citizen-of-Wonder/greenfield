@@ -1,4 +1,4 @@
-const UserNavStyle = {
+const whiteBackGround = {
   background: '#FFFFFF',
 };
 
@@ -33,7 +33,7 @@ const pageHeader = {
 };
 
 module.exports = {
-  UserNavStyle,
+  whiteBackGround,
   content,
   imgPreview,
   white,

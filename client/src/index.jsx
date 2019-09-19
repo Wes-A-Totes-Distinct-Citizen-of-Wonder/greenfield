@@ -14,7 +14,7 @@ import MessagesList from "./components/messages/MessagesList.jsx"
 import MyPosts from './components/MyPosts.jsx';
 import { Col, Row, NavLink } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { UserNavStyle, content } from './components/Style.jsx';
+import { whiteBackGround, content } from './components/Style.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -218,11 +218,7 @@ class App extends React.Component {
     return (
       <div
         className="main"
-        style={{
-          backgroundColor: "rgb(147, 174, 194)",
-          height: "100vh",
-          paddingRight: "15px"
-        }}
+        style={whiteBackGround}
       >
         <Row>
           <Col
@@ -240,7 +236,7 @@ class App extends React.Component {
           <Col
             sm="2"
             className="side-bar"
-            style={ UserNavStyle }
+            style={ whiteBackGround }
           >
             <UserNav
               changeView={this.changeView}
