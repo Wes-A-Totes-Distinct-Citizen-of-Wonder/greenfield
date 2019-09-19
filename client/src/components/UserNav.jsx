@@ -11,12 +11,12 @@ const UserNav = (props) => {
         <div>
             <section float="left" width="10%" margin="0 1.5%">
             <Nav vertical>
-                <h2><NavLink className="Username" href="#" style={{color: 'white', size: '10em'}}>{user.username || ""}</NavLink></h2>
-                <NavLink className="Messages" href="#" style={{color: 'white'}} onClick={() => changeView('messagesList')}>Messages</NavLink>
-                <NavLink className="MyPosts" href="#" style={{ color: 'white' }} onClick={() => changeView('myPosts')}>My Posts</NavLink>
-                <NavLink className="Login" href="#" style={{color: 'white'}} onClick={() => changeView('login')}>Login</NavLink> 
-                <NavLink className="Sign-up" href="#" style={{color: 'white'}} onClick={() => changeView('sign-up')}>Sign Up</NavLink>
-                <NavLink className='LogOut' href='/' style={{color: 'white'}} onClick={() => logout()} >LogOut</NavLink>
+                {user.username === 'guest' ? null : <h2><NavLink className="Username" href="#" style={{color: 'white', size: '10em'}}>{user.username || ""}</NavLink></h2> }
+                {user.username === 'guest' ? null :<NavLink className="Messages" href="#" style={{color: 'white'}} onClick={() => changeView('messagesList')}>Messages</NavLink> }
+                {user.username === 'guest' ? null : <NavLink className="MyPosts" href="#" style={{ color: 'white' }} onClick={() => changeView('myPosts')}>My Posts</NavLink> } 
+                {user.username === 'guest' ? <NavLink className="Login" href="#" style={{color: 'white'}} onClick={() => changeView('login')}>Login</NavLink> : null } 
+                {user.username === 'guest' ? <NavLink className="Sign-up" href="#" style={{color: 'white'}} onClick={() => changeView('sign-up')}>Sign Up</NavLink> : null }
+                {user.username === 'guest' ? null: <NavLink className='LogOut' href='/' style={{color: 'white'}} onClick={() => logout()} >LogOut</NavLink> }
             </Nav>
             </section>
         </div>
