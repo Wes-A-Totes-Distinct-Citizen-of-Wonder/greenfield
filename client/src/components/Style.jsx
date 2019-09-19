@@ -2,6 +2,11 @@ const UserNavStyle = {
   background: '#FFFFFF',
 };
 
+const content = {
+  backgroundColor: '#FFFFFF',
+  padding: '25px',
+};
+
 const imgPreview = {
   height: '100px',
   width: '150px',
@@ -30,6 +35,7 @@ const pageHeader = {
 
 module.exports = {
   UserNavStyle,
+  content,
   imgPreview,
   white,
   black,

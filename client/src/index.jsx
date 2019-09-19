@@ -14,7 +14,7 @@ import MessagesList from "./components/messages/MessagesList.jsx"
 import MyPosts from './components/MyPosts.jsx';
 import { Col, Row, NavLink } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { UserNavStyle } from './components/Style.jsx';
+import { UserNavStyle, content } from './components/Style.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -236,7 +236,7 @@ class App extends React.Component {
             <NavHead changeView={this.changeView} />
           </Col>
         </Row>
-        <Row style={{ backgroundColor: "rgb(147, 174, 194)", padding: "25px" }}>
+        <Row style={content}>
           <Col
             sm="2"
             className="side-bar"
