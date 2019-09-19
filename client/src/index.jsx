@@ -167,15 +167,20 @@ class App extends React.Component {
     const { posts } = this.state;
     const { selectedPost } = this.state;
     const { user } = this.state;
+
     switch (page) {
 			case "messagesList":
-				return <MessagesList changeView={this.changeView} />;
+        return <MessagesList changeView={this.changeView} />;
+        
       case "sign-up":
         return <SignUpView changeUser={this.changeUser} />;
+
       case "login":
         return <LoginView changeUser={this.changeUser} />;
+
       case "myPosts":
         return <MyPosts changeUser={this.changeUser} getNearbyPosts={this.getNearbyPosts} currUser={user} />;
+
       case "create-post":
         return (
           <CreatePost
@@ -184,6 +189,7 @@ class App extends React.Component {
             currUser={user}
           />
         );
+
       case "post-view":
         return (
           <PostView
@@ -193,6 +199,7 @@ class App extends React.Component {
             currUser={user}
           />
         );
+        
       case "user-profile":
         // Not being used currently -> was gonna put active posts for users
         return <UserProfileView user={user} />;

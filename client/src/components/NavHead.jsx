@@ -40,43 +40,43 @@ export default class NavHead extends React.Component {
             <Nav className="ml-auto" navbar>
 
               <NavItem>
-              <NavLink onClick={() => { changeView('home') }}><i class="fas fa-home"> Home</i></NavLink>
-              </NavItem>
-
-            <NavItem>
-              {user.username === 'guest' ? null : <NavLink onClick={() => { changeView('create-post') }}><i class="fas fa-plus-square"></i> New Post</NavLink>}
-            </NavItem>
-
-              <NavItem>
-              {user.username === 'guest' ? null : <NavLink onClick={() => { changeView('messagesList') }}><i class="fas fa-envelope"> Messages</i></NavLink>}
+              <NavLink onClick={() => { changeView('home') }}><i class="fas fa-home"></i> Home</NavLink>
               </NavItem>
 
               <NavItem>
-              {user.username === 'guest' ? <NavLink href="#" onClick={() => changeView('sign-up')}>Sign Up</NavLink> : null}
+                {user.username === 'guest' ? null : <NavLink onClick={() => { changeView('create-post') }}><i class="fas fa-plus-square"></i> New Post</NavLink>}
               </NavItem>
 
-            <NavItem>
-              {user.username === 'guest' ? <NavLink href="#" onClick={() => changeView('login')}>Login</NavLink> : null }
-            </NavItem>
+              <NavItem>
+              {user.username === 'guest' ? null : <NavLink onClick={() => { changeView('messagesList') }}><i class="fas fa-envelope"></i> Messages</NavLink>}
+              </NavItem>
+
+              <NavItem>
+              {user.username === 'guest' ? <NavLink href="#" onClick={() => changeView('sign-up')}><i class="fas fa-signature"></i> Sign Up</NavLink> : null}
+              </NavItem>
+
+              <NavItem>
+              {user.username === 'guest' ? <NavLink href="#" onClick={() => changeView('login')}><i class="fas fa-sign-in-alt"></i> Login</NavLink> : null }
+              </NavItem>
 
            
-            {user.username === 'guest' ? null :
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  <i class="fas fa-user"> {user.username}</i>
-                </DropdownToggle>
+              {user.username === 'guest' ? null :
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                  <i class="fas fa-user"></i> {user.username}
+                  </DropdownToggle>
               
-                <DropdownMenu right>
+                  <DropdownMenu right>
+                    <DropdownItem>
+                    <NavLink style={black} onClick={() => { changeView('myPosts') }}><i class="fas fa-file"></i> My Posts</NavLink>
+                    </DropdownItem>
+
                   <DropdownItem>
-                    <NavLink style={black} onClick={() => { changeView('myPosts') }}>My Posts</NavLink>
+                    <NavLink style={black} href='/' onClick={() => logout()}><i class="fas fa-sign-out-alt"></i> Log Out</NavLink>
                   </DropdownItem>
 
-                <DropdownItem>
-                    <NavLink style={black} href='/' onClick={() => logout()}>Log Out</NavLink>
-                </DropdownItem>
-
                 </DropdownMenu>
-            </UncontrolledDropdown>
+              </UncontrolledDropdown>
             }
             
             </Nav>
@@ -85,9 +85,3 @@ export default class NavHead extends React.Component {
       );
   }
 }
-
-// { user.username === 'guest' ? null : <h2><NavLink className="Username" href="#" style={black}>{user.username || ""}</NavLink></h2> }
-// { user.username === 'guest' ? null : <NavLink className="CreatePost" href="#" style={black} onClick={() => changeView('create-post')}>Create Post</NavLink> }
-// { user.username === 'guest' ? <NavLink className="Login" href="#" style={black} onClick={() => changeView('login')}>Login</NavLink> : null }
-// { user.username === 'guest' ? <NavLink className="Sign-up" href="#" style={black} onClick={() => changeView('sign-up')}>Sign Up</NavLink> : null }
-// { user.username === 'guest' ? null : <NavLink className='LogOut' href='/' style={black} onClick={() => logout()} >LogOut</NavLink> }

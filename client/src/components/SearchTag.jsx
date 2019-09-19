@@ -32,13 +32,12 @@ class SearchTag extends React.Component {
 
     render() {
         return (
-            <div>
               <Row form>
 
               <Col md={3}>
                   <InputGroup>
                     <Input id='zip' placeholder='Zip' onChange={this.handleChange} />
-                    <InputGroupAddon addonType="append"><Button onClick={() => this.props.searchByZip(this.state.zip)}>Search</Button></InputGroupAddon>
+                  <InputGroupAddon addonType="append"><Button onClick={() => this.props.searchByZip(this.state.zip)}><i class="fas fa-search"></i> Search</Button></InputGroupAddon>
                   </InputGroup>
               </Col>
 
@@ -56,7 +55,6 @@ class SearchTag extends React.Component {
               </Col>
 
               </Row>
-            </div>
         )
     }
 }
