@@ -234,12 +234,7 @@ class App extends React.Component {
         <Row style={content}>
           <Col
             sm="12"
-            style={{
-              padding: "25px",
-              backgroundColor: "rgb(47, 74, 94)",
-              paddingBottom: "auto",
-              borderRadius: "4px"
-            }}
+            style={whiteBackGround}
           >
             {this.currentPage(view)}
           </Col>
