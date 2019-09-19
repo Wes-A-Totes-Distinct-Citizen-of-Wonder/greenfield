@@ -53,7 +53,7 @@ class MyPosts extends React.Component {
           return (
             <Card style={{width:"175px", height:"250px", margin:"2px", padding: "2px"}}>
               <center>
-              <CardImg src={post.img1} style={{width: "150px", height:"150px"}}/>
+              <CardImg src={post.img1}/>
               <CardBody>
                 <CardTitle>{post.title}</CardTitle>
                 <CardTitle><Button onClick={() => {this.delete(post.post_id)}}>Delete</Button></CardTitle>
