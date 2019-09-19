@@ -14,6 +14,7 @@ class SignUpView extends React.Component {
             verifyPass: '',
             email: '',
             business: '',
+            showPasswordError: false
         };
         this.onSignUpSubmit = this.onSignUpSubmit.bind(this);
     }
@@ -40,7 +41,9 @@ class SignUpView extends React.Component {
                 this.props.changeUser(newUser);
             })
         } else {
-            alert("Your passwords don't match!")
+          this.setState({
+            showPasswordError: !this.state.showPasswordError
+          });
         }
     }
 
@@ -61,6 +64,7 @@ class SignUpView extends React.Component {
                 <FormGroup>
                     <Label style={{ color: 'white' }} >Verify Password</Label>
                     <Input type='password' name='password-verify' id='password-registration-verify' value={state.verifyPass} onChange={e => this.setState({ verifyPass: e.target.value })}></Input>
+                    {this.state.showPasswordError ? <text style={{color: 'red'}}>Passwords do not match</text> : null }
                 </FormGroup>
                 <FormGroup>
                     <Label style={{ color: 'white' }} >Enter Email</Label>

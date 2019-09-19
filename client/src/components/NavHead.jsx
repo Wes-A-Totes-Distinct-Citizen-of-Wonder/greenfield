@@ -14,11 +14,11 @@ import {
 const NavHead = (props) => {
     const { changeView } = props;
     return (
-      <Navbar>
-        <Button href="#" onClick={() => { changeView('home') }}>Home</Button>
-        <img src={require('./../../images/reConstructIcon.png')} width='20%' />
+      <Navbar backgroundcolor="#00CC00">
+        <img src={require('./../../images/reConstructIcon.png')} href="#" onClick={() => { changeView('home') }} width='20%' />
         <Nav navbar>
           <NavItem>
+            <Button href="#" onClick={() => { changeView('home') }}>Home</Button>
             <Button onClick={() => { changeView('create-post') }}>Post</Button>
           </NavItem>
         </Nav>

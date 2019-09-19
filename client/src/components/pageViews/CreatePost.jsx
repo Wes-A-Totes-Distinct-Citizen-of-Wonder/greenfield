@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import axios from 'axios';
 
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
+import PopupAlert from './../PopupAlert.jsx';
 
 class CreatePost extends React.Component {
 
@@ -24,7 +25,9 @@ class CreatePost extends React.Component {
 			city: '',
 			state: '',
 			zip: '',
-			currUser: currUser 
+      currUser: currUser,
+      showErrorPopup: false,
+      errorText: ''
 		};
 		this.onPostSubmit = this.onPostSubmit.bind(this);
 	}
@@ -49,17 +52,17 @@ class CreatePost extends React.Component {
 				this.props.changeView('default');
 			})
 			.catch((response) => {
-				if (response.response.status === 400) {
-					alert(response.response.data);
-				}
-				
-				if (response.response.status === 404) {
-					alert(response.response.data);
-					this.props.changeView('login');
-				}
-				if (response.response.status === 500) {
-					alert('You must include at least one image with your post');
-				}
+        if (response.response.status === 400) {
+          this.setState({
+            showErrorPopup: !this.state.showErrorPopup,
+            errorText: response.response.data
+          });
+        } else {
+          this.setState({
+            showErrorPopup: !this.state.showErrorPopup,
+            errorText: 'Something went wrong with your post! Try checking your form again.'
+          });
+        }
 			});
 		// axios.post to the Posts table in the db, should also update numPosts in User table whenever Carin gets that working
 	}
@@ -69,6 +72,7 @@ class CreatePost extends React.Component {
         return (
             <Form>
                 <FormGroup>
+                    {this.state.showErrorPopup ? <PopupAlert text={this.state.errorText} /> : null }
                     <Label for="post-img" style={{ color: 'white' }}>Image File</Label>
                     <br/>
                     <img style={{
