@@ -20,7 +20,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: "default",
+      view: 'default',
       selectedPost: {
         postInfo: {},
         userInfo: {}
@@ -31,14 +31,14 @@ class App extends React.Component {
         username:
           (function() {
             if (
-              sessionStorage.getItem("user") &&
-              JSON.parse(sessionStorage.getItem("user")).isLoggedIn
+              sessionStorage.getItem('user') &&
+              JSON.parse(sessionStorage.getItem('user')).isLoggedIn
             ) {
-              const { username } = JSON.parse(sessionStorage.getItem("user"));
+              const { username } = JSON.parse(sessionStorage.getItem('user'));
               return username;
             }
-          })() || "guest",
-        email: "",
+          })() || 'guest',
+        email: '',
         user_id: 0
       },
       posts: [
@@ -66,24 +66,24 @@ class App extends React.Component {
           });
         }
       })
-      .then(() => axios.get("/userSession"))
+      .then(() => axios.get('/userSession'))
       .then(response => {
         const userInfo = response.data;
-        sessionStorage.setItem("user", JSON.stringify(userInfo));
+        sessionStorage.setItem('user', JSON.stringify(userInfo));
         //sets username and email into state as long as a user in loggend in
         if (userInfo.isLoggedIn) {
           this.setState({
             user: {
               username: userInfo.username,
               email: userInfo.email,
-              user_id: userInfo.user_id,
+              user_id: userInfo.user_id
             }
           });
         } else
           this.setState({
             user: {
-              username: "guest",
-              email: ""
+              username: 'guest',
+              email: ''
             }
           });
       })
@@ -95,7 +95,7 @@ class App extends React.Component {
 
   //allows you to search by a material and allows posts to be sorted by their tag
   searchByTag(tag) {
-    return axios.post("/tagSearch", { material: tag }).then(response => {
+    return axios.post('/tagSearch', { material: tag }).then(response => {
       this.setState({
         posts: response.data
       });
@@ -104,7 +104,7 @@ class App extends React.Component {
 
   searchByZip(zip) {
     console.log(zip, 'ZIP (INDEX.JSX)');
-    return axios.post("/searchZip", { material: zip }).then(response => {
+    return axios.post('/searchZip', { material: zip }).then(response => {
       this.setState({
         posts: response.data
       });
@@ -113,7 +113,7 @@ class App extends React.Component {
 
   // gets all posts from DB
   getNearbyPosts() {
-    return axios.get("/posts").then(response => response.data);
+    return axios.get('/posts').then(response => response.data);
   }
 
   // assists in swaping from page to page
@@ -139,14 +139,14 @@ class App extends React.Component {
   // shows user info on each post
   changePostView(newPost) {
     return axios
-      .post("/postInfo", { user_id: newPost.user_id })
+      .post('/postInfo', { user_id: newPost.user_id })
       .then(response => {
         this.setState({
           selectedPost: {
             postInfo: newPost,
             userInfo: response.data[0]
           },
-          view: "post-view"
+          view: 'post-view'
         });
       });
   }
@@ -156,7 +156,7 @@ class App extends React.Component {
     event.preventDefault();
     this.setState({
       user: newUser,
-      view: "default"
+      view: 'default'
     });
   }
 
@@ -165,16 +165,23 @@ class App extends React.Component {
     const { posts } = this.state;
     const { selectedPost } = this.state;
     const { user } = this.state;
+    const { messages } = this.state;
     switch (page) {
-			case "messagesList":
-				return <MessagesList changeView={this.changeView} />;
-      case "sign-up":
+      case 'messagesList':
+        return <MessagesList changeView={this.changeView} messages={messages} />;
+      case 'sign-up':
         return <SignUpView changeUser={this.changeUser} />;
-      case "login":
+      case 'login':
         return <LoginView changeUser={this.changeUser} />;
-      case "myPosts":
-        return <MyPosts changeUser={this.changeUser} getNearbyPosts={this.getNearbyPosts} currUser={user} />;
-      case "create-post":
+      case 'myPosts':
+        return (
+          <MyPosts
+            changeUser={this.changeUser}
+            getNearbyPosts={this.getNearbyPosts}
+            currUser={user}
+          />
+        );
+      case 'create-post':
         return (
           <CreatePost
             changeView={this.changeView}
@@ -182,7 +189,7 @@ class App extends React.Component {
             currUser={user}
           />
         );
-      case "post-view":
+      case 'post-view':
         return (
           <PostView
             post={selectedPost.postInfo}
@@ -191,7 +198,7 @@ class App extends React.Component {
             currUser={user}
           />
         );
-      case "user-profile":
+      case 'user-profile':
         // Not being used currently -> was gonna put active posts for users
         return <UserProfileView user={user} />;
       default:
@@ -208,56 +215,49 @@ class App extends React.Component {
 
   //allows user to sign out
   logout(event) {
-    axios.post("/logout").catch(err => console.error(err));
+    axios.post('/logout').catch(err => console.error(err));
   }
 
   render() {
     const { view } = this.state;
-		const { user } = this.state;
-		const { messages } = this.state;
+    const { user } = this.state;
+    const { messages } = this.state;
     return (
       <div
-        className="main"
+        className='main'
         style={{
-          backgroundColor: "rgb(147, 174, 194)",
-          height: "100vh",
-          paddingRight: "15px"
-        }}
-      >
+          backgroundColor: 'rgb(147, 174, 194)',
+          height: '100vh',
+          paddingRight: '15px'
+        }}>
         <Row>
           <Col
-            sm="12"
+            sm='12'
             style={{
-              backgroundColor: "rgb(102, 136, 165)",
-              padding: "25px",
-              paddingBottom: "25px"
-            }}
-          >
+              backgroundColor: 'rgb(102, 136, 165)',
+              padding: '25px',
+              paddingBottom: '25px'
+            }}>
             <NavHead changeView={this.changeView} />
           </Col>
         </Row>
         <Row style={content}>
-          <Col
-            sm="2"
-            className="side-bar"
-            style={ UserNavStyle }
-          >
+          <Col sm='2' className='side-bar' style={UserNavStyle}>
             <UserNav
               changeView={this.changeView}
-							messages={messages}
+              messages={messages}
               user={user}
               logout={this.logout}
             />
           </Col>
           <Col
-            sm="10"
+            sm='10'
             style={{
-              padding: "25px",
-              backgroundColor: "rgb(47, 74, 94)",
-              paddingBottom: "auto",
-              borderRadius: "4px"
-            }}
-          >
+              padding: '25px',
+              backgroundColor: 'rgb(47, 74, 94)',
+              paddingBottom: 'auto',
+              borderRadius: '4px'
+            }}>
             {this.currentPage(view)}
           </Col>
         </Row>
