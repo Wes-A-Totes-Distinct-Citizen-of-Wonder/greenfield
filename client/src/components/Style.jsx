@@ -49,6 +49,10 @@ const navbar = {
   background: '#2F4A5E',
 };
 
+const logOrSign = {
+  width: '50%',
+};
+
 module.exports = {
   whiteBackGround,
   content,
@@ -60,4 +64,5 @@ module.exports = {
   pageHeader,
   title,
   navbar,
+  logOrSign,
 };
