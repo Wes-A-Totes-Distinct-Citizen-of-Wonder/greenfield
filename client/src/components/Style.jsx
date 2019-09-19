@@ -32,6 +32,16 @@ const pageHeader = {
   'text-align': 'center',
 };
 
+const title = {
+  width: '200px',
+  height: '35px',
+  padding: '0px',
+};
+
+const navbar = {
+  background: '#2F4A5E',
+};
+
 module.exports = {
   whiteBackGround,
   content,
@@ -40,4 +50,6 @@ module.exports = {
   black,
   label,
   pageHeader,
+  title,
+  navbar,
 };
