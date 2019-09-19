@@ -1,3 +1,7 @@
+const UserNavStyle = {
+  background: '#FFFFFF',
+};
+
 const imgPreview = {
   height: '100px',
   width: '150px',
@@ -6,6 +10,9 @@ const imgPreview = {
   margin: '2px',
 };
 
+const black = {
+  color: 'black',
+}
 const white = {
   color: '#FFFFFF',
 };
@@ -22,8 +29,10 @@ const pageHeader = {
 };
 
 module.exports = {
+  UserNavStyle,
   imgPreview,
   white,
+  black,
   label,
   pageHeader,
 };
