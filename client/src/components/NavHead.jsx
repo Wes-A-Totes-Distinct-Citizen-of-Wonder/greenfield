@@ -25,7 +25,7 @@ export default class NavHead extends React.Component {
   }
 
   render() {
-    const { changeView } = this.props;
+    const { changeView, user, logout } = this.props;
 
     return (
       <Navbar style={navbar} dark expand="lg" fixed='top'>
@@ -42,11 +42,11 @@ export default class NavHead extends React.Component {
               </NavItem>
 
               <NavItem>
-              <NavLink onClick={() => { changeView('messagesList') }}><i class="fas fa-envelope"> Messages</i></NavLink>
+              {user.username === 'guest' ? null : <NavLink onClick={() => { changeView('messagesList') }}><i class="fas fa-envelope"> Messages</i></NavLink>}
               </NavItem>
 
               <NavItem>
-              <NavLink onClick={() => { changeView('myPosts') }}><i class="fas fa-user"> Profile</i></NavLink>
+              {user.username === 'guest' ? null : <NavLink onClick={() => { changeView('myPosts') }}><i class="fas fa-user"> Profile</i></NavLink>}
               </NavItem>
             
             </Nav>

@@ -224,7 +224,10 @@ class App extends React.Component {
       >
         <Row>
           <Col>
-            <NavHead changeView={this.changeView} />
+            <NavHead 
+              changeView={this.changeView} 
+              user={user}
+              logout={this.logout} />
           </Col>
         </Row>
         <br /><br />
