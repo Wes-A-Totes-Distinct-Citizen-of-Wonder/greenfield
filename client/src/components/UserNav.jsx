@@ -1,5 +1,4 @@
 import React from 'react';
-import MessagesList from './messages/MessagesList.jsx'
 import { Nav, NavItem, NavLink, NavbarBrand } from 'reactstrap';
 import { black } from './Style.jsx';
 
