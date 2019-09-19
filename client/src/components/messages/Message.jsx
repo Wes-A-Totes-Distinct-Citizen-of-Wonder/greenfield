@@ -5,24 +5,27 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 class Message extends React.Component {
   constructor(props) {
     super(props);
-    const { currUser } = this.props;
+    // const { currUser } = this.props;
+    // const { user } = this.props;
     this.state = {
-      subject: '',
-      content: '',
-      sender_id: currUser,
-      recepient_id: ''
+      subject: "",
+      content: "",
+      recepient: this.props.post.user_id,
+      sender: this.props.currUser.user_id,
     };
     // this.handleChange = this.handleChange.bind(this);
     this.onMessageSubmit = this.onMessageSubmit.bind(this);
   }
 
-  // handleChange(event) {
-  //   this.setState({ value: event.target.value });
-  // }
+
   
   onMessageSubmit(event) {
+    // const { user } = this.props;
+    // this.setState({
+    //   recepient: user.user_id
+    // })rs
     const message = this.state;
-    
+    console.log(message);
     axios
       .post('/submitMessage', message)
       .then(response => {
