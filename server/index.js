@@ -19,7 +19,7 @@ const { convertToCoordinates, convertToAddress } = require('../client/src/helper
 
 const {
   saveMessage, findUser, getUser, saveUser, savePost, getPostInfo,
-  increasePostCount, saveUsersPostCount, searchTags, displayPosts, searchZip, getMyPosts,
+  increasePostCount, saveUsersPostCount, searchTags, displayPosts, searchZip, getMyPosts, deletePost,
 } = require('./database/index.js');
 
 // options used in sessionStore below
@@ -307,7 +307,19 @@ app.post('/postInfo', (req, res) => {
 });
 
 app.get('/myposts', (req, res) => {
+  getMyPosts(req.session.user_id)
+    .then((posts) => {
+      console.log(posts);
+      res.send(posts);
+    });
+});
 
+app.post('/deletePost', (req, res) => {
+  deletePost(req.body.id)
+    .then((res) => {
+      console.log(res, 'res');
+      res.send(res);
+    });
 });
 
 app.listen(PORT, () => {
