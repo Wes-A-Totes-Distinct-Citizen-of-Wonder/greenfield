@@ -179,7 +179,7 @@ app.post('/submitPost', (req, res) => {
     Promise.all(apiImgs)
       .then((...apiResults) => {
         apiResults[0].forEach((result, index) => {
-          let path = `img${index + 1}`;
+          const path = `img${index + 1}`;
           post[path] = result.secure_url;
         });
       })
@@ -217,12 +217,11 @@ app.post('/submitPost', (req, res) => {
 });
 
 app.post('/submitMessage', (req, res) => {
-  // const sender = getUser(message.sender);
   const message = {
     subject: req.body.subject,
     content: req.body.content,
-    sender: req.body.user,
-    recepient: req.body.user,
+    recepient: req.body.recepient,
+    sender: req.body.sender,
   };
   return saveMessage(message)
     .then(() => {
