@@ -42,11 +42,11 @@ export default class NavHead extends React.Component {
               </NavItem>
 
               <NavItem>
-              <NavLink onClick={() => { changeView('messages') }}><i class="fas fa-envelope"> Messages</i></NavLink>
+              <NavLink onClick={() => { changeView('messagesList') }}><i class="fas fa-envelope"> Messages</i></NavLink>
               </NavItem>
 
               <NavItem>
-              <NavLink onClick={() => { changeView('create-post') }}><i class="fas fa-user"> Profile</i></NavLink>
+              <NavLink onClick={() => { changeView('myPosts') }}><i class="fas fa-user"> Profile</i></NavLink>
               </NavItem>
             
             </Nav>
