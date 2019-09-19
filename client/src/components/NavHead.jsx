@@ -28,7 +28,7 @@ export default class NavHead extends React.Component {
     const { changeView } = this.props;
 
     return (
-      <Navbar style={navbar} dark expand="lg" fixed="top">
+      <Navbar style={navbar} dark expand="lg" fixed='top'>
         <NavbarBrand href="/">
           <img style={title} src={require('./../../images/reconstruct.png')} onClick={() => { changeView('home') }} />
         </NavbarBrand>

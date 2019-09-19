@@ -231,6 +231,7 @@ class App extends React.Component {
             <NavHead changeView={this.changeView} />
           </Col>
         </Row>
+        <br /><br />
         <Row style={content}>
           <Col
             sm="2"
