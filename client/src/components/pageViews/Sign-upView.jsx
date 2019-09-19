@@ -53,40 +53,40 @@ class SignUpView extends React.Component {
             // Keeps track of all input info and stores it in the state, then upon submit, sends the state object to the server
             <center>
             <br />
-            <Form onSubmit={(e) => {preventDefault(e)}}>
-                <FormGroup style={logOrSign} row>
+            <Form style={logOrSign} onSubmit={(e) => {preventDefault(e)}}>
+                <FormGroup row>
                     <Label style={black} >Create User Name</Label>
                     <Col>
                       <Input type='text' name='username' id='user-registration' value={state.username} onChange={e => this.setState({ username: e.target.value })}></Input>
                     </Col>
                 </FormGroup>
-                <FormGroup style={logOrSign} row>
+                <FormGroup row>
                     <Label style={black} >Create Password</Label>
                     <Col>
                       <Input type='password' name='password' id='password-registration' value={state.password} onChange={e => this.setState({ password: e.target.value })}></Input>
                     </Col>
                       <FormText color="muted">must be between 6 and 16 characters using numbers and letters</FormText>
                 </FormGroup>
-                <FormGroup style={logOrSign} row>
+                <FormGroup row>
                     <Label style={black} >Verify Password</Label>
                     <Col>
                       <Input type='password' name='password-verify' id='password-registration-verify' value={state.verifyPass} onChange={e => this.setState({ verifyPass: e.target.value })}></Input>
                       {this.state.showPasswordError ? <text style={{color: 'red'}}>Passwords do not match</text> : null }
                     </Col>
                 </FormGroup>
-                <FormGroup style={logOrSign} row>
+                <FormGroup row>
                     <Label style={black} >Enter Email</Label>
                     <Col>
                       <Input type='email' name='email' id='email-registration' value={state.email} onChange={e => this.setState({ email: e.target.value })}></Input>
                     </Col>
                 </FormGroup>
-                <FormGroup style={logOrSign} row>
+                <FormGroup row>
                     <Label style={black} >Enter Place of Business(Optional)</Label>
                     <Col>
                       <Input type='text' name='business' id='business-registration' value={state.business} onChange={e => this.setState({ business: e.target.value })}></Input>
                     </Col>
                 </FormGroup>
-                <Button style={logOrSign} type="button" color="primary" block onClick={(e) => this.onSignUpSubmit(e)} block>Submit</Button>
+                <Button type="button" color="primary" block onClick={(e) => this.onSignUpSubmit(e)} block>Submit</Button>
             </Form>
             </center>
         );
