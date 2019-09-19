@@ -232,20 +232,9 @@ class App extends React.Component {
         </Row>
         <br /><br />
         <Row style={content}>
+          
           <Col
-            sm="2"
-            className="side-bar"
-            style={ whiteBackGround }
-          >
-            <UserNav
-              changeView={this.changeView}
-							messages={messages}
-              user={user}
-              logout={this.logout}
-            />
-          </Col>
-          <Col
-            sm="10"
+            sm="12"
             style={{
               padding: "25px",
               backgroundColor: "rgb(47, 74, 94)",
