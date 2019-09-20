@@ -4,7 +4,7 @@ import axios from 'axios';
 import { imgPreview, white, pageHeader, label } from '../Style.jsx';
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
 import PopupAlert from './../PopupAlert.jsx';
-import { black } from './../Style.jsx';
+import { black, pageViews } from './../Style.jsx';
 
 class CreatePost extends React.Component {
 	constructor(props) {
@@ -68,9 +68,10 @@ class CreatePost extends React.Component {
 	}
 
     render() {
+        const { changeView } = this.props;
         const { state } = this.state;
         return (
-            <Form>
+            <Form style={pageViews}>
                 <FormGroup>
                   {this.state.showErrorPopup ? <PopupAlert text={this.state.errorText} /> : null }
                   <div style={pageHeader}><h2>Create Post</h2></div>
@@ -126,8 +127,6 @@ class CreatePost extends React.Component {
                 </FormGroup>
                 </center>
                 <br />
-
-                <center>
                 <FormGroup>
                     <Row>
                       <Col><Input type="text" name="text" id="address" placeholder="Address" value={state.address} onChange={e => this.setState({ address: e.target.value })}/></Col>
@@ -138,13 +137,11 @@ class CreatePost extends React.Component {
                     <Col><Input type="text" name="text" id="state" placeholder="State" value={state.state} onChange={e => this.setState({ state: e.target.value })}/></Col>
                     <Col><Input type="text" name="text" id="zip-code" placeholder="Zip" value={state.zip} onChange={e => this.setState({ zip: e.target.value })}/></Col>
                 </Row>
-            </center>
-             
                 <br />
-
-                <FormGroup>
-                    <Button type="button" color="primary" block onClick={(e) => this.onPostSubmit(e)}>Submit</Button>
-                </FormGroup>
+                <Row>
+                    <Col><Button type="button" color="primary" block onClick={(e) => this.onPostSubmit(e)}>Submit</Button></Col>
+                    <Col><Button type="button" color="primary" block onClick={() => { changeView('home') }}>Cancel</Button></Col>
+                </Row>
             </Form>
         );
     }

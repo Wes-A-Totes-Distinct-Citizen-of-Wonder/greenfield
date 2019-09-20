@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SearchTag from '../SearchTag.jsx';
 import Card from './Card.jsx';
-// import { url } from 'inspector';
 
 const PostCard = (props) => {
     const { posts, changePostView } = props;
