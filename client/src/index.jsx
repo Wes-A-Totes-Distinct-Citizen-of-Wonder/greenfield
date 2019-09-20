@@ -210,6 +210,7 @@ class App extends React.Component {
             changePostView={this.changePostView}
             searchByTag={this.searchByTag}
             searchByZip={this.searchByZip}
+            user={user}
           />
         );
     }

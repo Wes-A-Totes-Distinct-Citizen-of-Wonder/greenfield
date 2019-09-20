@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { DropdownToggle, DropdownMenu, DropdownItem, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Col, Row, CardColumns } from 'reactstrap';
+import Card from './pageViews/Card.jsx';
+import {Button} from 'reactstrap';
 
 class MyPosts extends React.Component {
   constructor(props) {
@@ -44,27 +45,33 @@ class MyPosts extends React.Component {
   }
 
   render(){
-    const { posts } = this.state;
-    console.log(posts, 'posts');
+    const { posts, user_id } = this.state;
 
     return (
-      <Row sm='4'>
+      <div>
         {posts.map((post) => {
           return (
-            <Card style={{width:"175px", height:"250px", margin:"2px", padding: "2px"}}>
-              <center>
-              <CardImg src={post.img1}/>
-              <CardBody>
-                <CardTitle>{post.title}</CardTitle>
-                <CardTitle><Button onClick={() => {this.delete(post.post_id)}}>Delete</Button></CardTitle>
-              </CardBody>
+            <div style={{display: 'inline-block'}}>
+            <Card post={post} user={user_id} /><br />
+            <center>
+              <Button onClick={() => { this.delete(post.post_id) }}>Delete</Button>
               </center>
-            </Card> 
+            </div>
+
           )
         })}
-      </Row>
+      </div>
     );
   }
 }
 
 export default MyPosts;
+{/* <Card style={{ width: "175px", height: "250px", margin: "2px", padding: "2px" }}>
+  <center>
+    <CardImg src={post.img1} />
+    <CardBody>
+      <CardTitle>{post.title}</CardTitle>
+      <CardTitle><</CardTitle>
+    </CardBody>
+  </center>
+</Card>  */}

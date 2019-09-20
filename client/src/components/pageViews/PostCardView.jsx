@@ -4,14 +4,14 @@ import SearchTag from '../SearchTag.jsx';
 import Card from './Card.jsx';
 
 const PostCard = (props) => {
-    const { posts, changePostView } = props;
+    const { posts, changePostView, user } = props;
 
     return (
         <div>
         <SearchTag searchByTag={props.searchByTag} searchByZip={props.searchByZip} />
         <hr />
             {posts.map(post => (
-              <Card post={post} changePostView={changePostView} />
+              <Card post={post} changePostView={changePostView} user={user} />
             ))}
         </div>
     );
