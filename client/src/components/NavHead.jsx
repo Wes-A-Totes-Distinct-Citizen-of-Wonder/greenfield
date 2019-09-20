@@ -59,7 +59,6 @@ export default class NavHead extends React.Component {
               {user.username === 'guest' ? <NavLink href="#" onClick={() => changeView('login')}><i class="fas fa-sign-in-alt"></i> Login</NavLink> : null }
               </NavItem>
 
-           
               {user.username === 'guest' ? null :
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
@@ -70,6 +69,12 @@ export default class NavHead extends React.Component {
                     <DropdownItem>
                     <NavLink style={black} onClick={() => { changeView('myPosts') }}><i class="fas fa-file"></i> My Posts</NavLink>
                     </DropdownItem>
+
+                    <hr />
+
+                  <DropdownItem>
+                    <NavLink style={black} onClick={() => { changeView('settings') }}><i class="fas fa-cog"></i> Settings</NavLink>
+                  </DropdownItem>
 
                   <DropdownItem>
                     <NavLink style={black} href='/' onClick={() => logout()}><i class="fas fa-sign-out-alt"></i> Log Out</NavLink>
