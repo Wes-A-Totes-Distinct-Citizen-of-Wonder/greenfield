@@ -332,6 +332,23 @@ app.post('/deletePost', (req, res) => {
     });
 });
 
+// app.get('/messages', (req, res) => {
+//   const {
+//     subject,
+//     content,
+//     recepient_id,
+//     sender_id,
+//   } = req.session;
+
+//   const message = {
+//     subject,
+//     content,
+//     recepient_id,
+//     sender_id,
+//   };
+//   res.status(200).send(userInfo);
+// });
+
 app.listen(PORT, () => {
   console.log('Contractors be listening on: 8080');
 });
