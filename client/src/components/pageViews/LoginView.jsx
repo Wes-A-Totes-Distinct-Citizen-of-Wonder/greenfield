@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
 import { changeUser } from '../../index.jsx';
-import { black, logOrSign } from './../Style.jsx';
+import { black, white, logOrSign } from './../Style.jsx';
 
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row, Jumbotron } from 'reactstrap';
 
@@ -34,13 +34,13 @@ class LoginView extends React.Component {
           <br />
             <Form style={logOrSign} onSubmit={this.onLoginSubmit}>
                     <FormGroup row>
-                        <Label style={black}>Username</Label>
+                        <Label style={white}>Username</Label>
                         <Col>
                           <Input type='text' name='username' id='user-login' value={this.state.username} onChange={e => this.setState({ username: e.target.value })}></Input>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Label style={black}>Password</Label>
+                        <Label style={white}>Password</Label>
                         <Col>
                           <Input type='password' name='password' id='password' value={this.state.password} onChange={e => this.setState({ password: e.target.value })}></Input>
                         </Col>

@@ -55,6 +55,7 @@ const logOrSign = {
   height: '100%',
   border: 'solid gray',
   'border-radius': '5px',
+  background: '#2F4A5E',
 };
 
 module.exports = {
