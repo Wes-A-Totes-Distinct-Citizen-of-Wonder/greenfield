@@ -8,8 +8,6 @@ const PostCard = (props) => {
 
     return (
         <div>
-        <SearchTag searchByTag={props.searchByTag} searchByZip={props.searchByZip} />
-        <hr />
             {posts.map(post => (
               <Card post={post} changePostView={changePostView} user={user} />
             ))}
