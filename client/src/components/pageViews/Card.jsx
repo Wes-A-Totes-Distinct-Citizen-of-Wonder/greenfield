@@ -26,16 +26,35 @@ class Card extends React.Component {
     })
   }
 
-  onHover() {
+  onHover(post) {
     this.setState({
       popoverOpen: true,
     })
+   
+    const content = `
+    <b>Description</b>:<br /> ${post.text}<br /><br />
+    <b>Zip</b>: ${post.zip}
+    `
+    const div = `<div style="
+    background: rgb(255, 255, 255, .7); 
+    border: 1px solid #000000; 
+    text-align: center;">${content}</div>`;
+
+    document.getElementById(`id${this.props.post.post_id}`).innerHTML = div;
+       
   }
 
-  onHoverLeave() {
+  onHoverLeave(tag) {
     this.setState({
       popoverOpen: false,
     })
+
+    let div = `<div style="
+    background: #2F4A5E; color: #FFFFFF; border-radius: 50px; 
+    text-align: center; border: 1px solid #000000;">${tag}</div>`;
+
+    document.getElementById(`id${this.props.post.post_id}`).innerHTML = div;
+
   }
 
   pleaseLogin(){
@@ -53,8 +72,8 @@ class Card extends React.Component {
           <div
             id={id}
             onClick={() => { this.pleaseLogin() }}
-            onMouseEnter={this.onHover}
-            onMouseLeave={this.onHoverLeave}
+            onMouseEnter={() => {this.onHover(post)}}
+            onMouseLeave={() => { this.onHoverLeave(post.tagList.toUpperCase()) }}
             style={{
               boxShadow: '10px 10px 10px #CCCCCC',
               background: `url(${post.img1})`,
@@ -78,8 +97,8 @@ class Card extends React.Component {
       <div 
       id={id}
       onClick={() => { changePostView(post) }}
-      onMouseEnter={this.onHover}
-      onMouseLeave={this.onHoverLeave}
+      onMouseEnter={() => {this.onHover(post)}}
+      onMouseLeave={() => {this.onHoverLeave(post.tagList.toUpperCase())}}
       style={{
         boxShadow: '10px 10px 10px #CCCCCC',
         background: `url(${post.img1})`,
@@ -100,7 +119,7 @@ class Card extends React.Component {
           }}>{post.tagList.toUpperCase()}</div>
       </div>}
 
-      <Popover
+      {/* <Popover
         placement="right"
         isOpen={this.state.popoverOpen}
         target={id}
@@ -117,7 +136,7 @@ class Card extends React.Component {
           Zip:<br />
           {post.zip}<br /><br />
           </PopoverBody>
-      </Popover>
+      </Popover> */}
       </div>
     )
   }
