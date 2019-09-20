@@ -32,16 +32,20 @@ class SearchTag extends React.Component {
 
     render() {
         return (
-              <Row form>
-
-              <Col md={3}>
+          <div style={{padding: '20px'}}><br /><br /><br />
+          <center>
+          <Row>
+            <Col sm='12'>
+          
                   <InputGroup>
                     <Input id='zip' placeholder='Zip' onChange={this.handleChange} />
                   <InputGroupAddon addonType="append"><Button onClick={() => this.props.searchByZip(this.state.zip)}><i class="fas fa-search"></i> Search</Button></InputGroupAddon>
                   </InputGroup>
-              </Col>
-
-              <Col sm={2}>
+          </Col>
+          </Row>
+          <br /><br />
+          <Row>
+          <Col sm='12'>
                 <Dropdown isOpen={this.state.open} toggle={this.toggle}>
                   <DropdownToggle caret>Search by Material</DropdownToggle>
                   <DropdownMenu>
@@ -52,9 +56,11 @@ class SearchTag extends React.Component {
                     <DropdownItem onClick={() => this.props.searchByTag('glass')}>Glass</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
-              </Col>
-
-              </Row>
+                </Col>
+                </Row>
+            </center>
+                </div>
+                
         )
     }
 }

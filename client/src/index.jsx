@@ -200,16 +200,11 @@ class App extends React.Component {
           />
         );
         
-      case "user-profile":
-        // Not being used currently -> was gonna put active posts for users
-        return <UserProfileView user={user} />;
       default:
         return (
           <PostCard
             posts={posts}
             changePostView={this.changePostView}
-            searchByTag={this.searchByTag}
-            searchByZip={this.searchByZip}
             user={user}
           />
         );
@@ -226,24 +221,25 @@ class App extends React.Component {
     const { user } = this.state;
     const { messages } = this.state;
     return (
-      <div
-        className="main"
-        style={whiteBackGround}
-      >
+      <div className="main" style={whiteBackGround}>
         <Row>
-          <Col>
+          <Col sm='12'>
             <NavHead 
               changeView={this.changeView} 
               user={user}
               logout={this.logout} />
           </Col>
-        </Row>
-        <br /><br />
-        <Row style={content}>
-          <Col
-            sm="12"
-            style={whiteBackGround}
-          >
+      </Row>
+
+      <Row>
+          <Col sm='2' className='side-bar'>
+            <UserNav
+              searchByTag={this.searchByTag}
+              searchByZip={this.searchByZip} />
+          </Col>
+
+          <Col sm="10" style={whiteBackGround}>
+            <br /><br /><br />
             {this.currentPage(view)}
           </Col>
         </Row>
