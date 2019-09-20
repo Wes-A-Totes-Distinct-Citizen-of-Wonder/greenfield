@@ -24,24 +24,27 @@ class PostView extends React.Component {
     const { post } = this.props;
     const { user } = this.props;
     const { currUser } = this.props;
+    console.log(user.business, 'business');
+    console.log(typeof user.business);
     return (
       <Container>
         <br />
         <Row>
-          <Col>
+          <Col sm='4'>
             <Card>
               <ImgCarousel src={post} />
               <CardBody>
-                <CardText>Posted by: {user.username}</CardText>
-                <CardText>Business: {user.business}</CardText>
-                <CardText>Contact information: {user.email}</CardText>
-                <CardTitle>Title: {post.title}</CardTitle>
-                <CardText>Description: {post.text}</CardText>
-                <CardText>Location: {post.zip}</CardText>
-                <CardSubtitle>Material(s): {post.tagList}</CardSubtitle>{" "}
-                <Button outline color="primary" onClick={this.toggle}>
+                <CardText><b>Posted by:</b> {user.username}</CardText>
+                {user.business === '' ? null : <CardText><b>Business:</b> {user.business}</CardText>}
+                <CardText><b>Contact:</b> {user.email}</CardText>
+                <CardTitle><b>Title:</b> {post.title}</CardTitle>
+                <CardText><b>Description:</b> {post.text}</CardText>
+                <CardText><b>Location:</b> {post.zip}</CardText>
+                <CardSubtitle><b>Material(s):</b> {post.tagList}</CardSubtitle>{" "}
+                <center><Button outline color="primary" onClick={this.toggle}>
                   Send Message
                 </Button>
+                </center>
                 <Modal
                   isOpen={this.state.modal}
                   toggle={this.toggle}
@@ -52,7 +55,7 @@ class PostView extends React.Component {
               </CardBody>
             </Card>
           </Col>
-          <Col>
+          <Col sm='4'>
             <MapContainer geoLocation={post.location} />
           </Col>
         </Row>
