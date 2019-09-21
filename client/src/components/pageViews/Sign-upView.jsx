@@ -35,7 +35,8 @@ class SignUpView extends React.Component {
                     username: user.username,
                     email: user.email,
                     business: user.business,
-                    user_id: response.data.user_id
+                    user_id: response.data.user_id,
+                    isHiddenEmail: true,
                 }
                 // sets the signed in user info
                 this.props.changeUser(newUser);
