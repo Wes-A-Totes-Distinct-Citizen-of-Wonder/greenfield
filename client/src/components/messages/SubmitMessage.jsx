@@ -5,7 +5,6 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 class SubmitMessage extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       subject: "",
       content: "",
@@ -16,12 +15,7 @@ class SubmitMessage extends React.Component {
     this.onMessageSubmit = this.onMessageSubmit.bind(this);
   }
 
-
   onMessageSubmit(event) {
-    // const { user } = this.props;
-    // this.setState({
-    //   recepient: user.user_id
-    // })rs
     const message = this.state;
     console.log(message);
     axios
