@@ -33,14 +33,18 @@ class Inbox extends React.Component {
     console.log(messages, 'messages inside of inbox');
     return (
       <div>
+            <h3>Messages</h3>
         {messages.map(message => {
           return (
-            <ListGroup>
-              <ListGroupItem active>
-                <ListGroupItemHeading>{message.subject}</ListGroupItemHeading>
-                <ListGroupItemText>{message.content}</ListGroupItemText>
-              </ListGroupItem>
-            </ListGroup>
+            <div>
+              <ListGroup>
+                <ListGroupItem action>
+                  <ListGroupItemHeading>From: {message.sender_id}</ListGroupItemHeading>
+                  <ListGroupItemText>Subject: {message.subject}</ListGroupItemText>
+                </ListGroupItem>
+              </ListGroup>
+            </div>
+
           );
         })}
       </div>
