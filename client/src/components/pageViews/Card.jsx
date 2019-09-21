@@ -32,7 +32,7 @@ class Card extends React.Component {
     })
    
     const content = `
-    <b>Description</b>:<br /> ${post.text}<br /><br />
+    <b>${post.title}</b>:<br /> ${post.text}<br /><br />
     <b>Zip</b>: ${post.zip}
     `
     const div = `<div style="
