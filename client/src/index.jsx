@@ -241,6 +241,8 @@ class App extends React.Component {
   render() {
     const { view } = this.state;
     const { user } = this.state;
+    let size = '10';
+    console.log(view);
     return (
       <div className='main' style={whiteBackGround}>
         <Row>
@@ -254,14 +256,15 @@ class App extends React.Component {
         </Row>
 
         <Row>
+        {view !== 'default' && view !== 'post-view' ? size = '12' : 
           <Col sm='2' className='side-bar'>
             <UserNav
               searchByTag={this.searchByTag}
               searchByZip={this.searchByZip}
             />
-          </Col>
-
-          <Col sm='10' style={whiteBackGround}>
+          </Col>}
+        
+          <Col sm={size} style={whiteBackGround}>
             <br />
             <br />
             <br />

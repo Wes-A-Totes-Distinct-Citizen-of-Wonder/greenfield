@@ -32,7 +32,7 @@ export default class NavHead extends React.Component {
     return (
       <Navbar style={navbar} dark expand="lg" fixed='top'>
         <NavbarBrand href="/">
-          <img style={title} src={require('./../../images/reconstruct.png')} onClick={() => { changeView('home') }} />
+          <img style={title} src={require('./../../images/reconstruct.png')} onClick={() => { changeView('post-view') }} />
         </NavbarBrand>
 
         <NavbarToggler onClick={this.toggle} />
@@ -40,7 +40,7 @@ export default class NavHead extends React.Component {
             <Nav className="ml-auto" navbar>
 
               <NavItem>
-              <NavLink onClick={() => { changeView('home') }}><i class="fas fa-home"></i> Home</NavLink>
+              <NavLink onClick={() => { changeView('default') }}><i class="fas fa-home"></i> Home</NavLink>
               </NavItem>
 
               <NavItem>
