@@ -39,8 +39,8 @@ const getUser = (user) => new Promise((resolve, reject) => {
 
 // saves the user into the DB
 const saveUser = (user) => new Promise((resolve, reject) => {
-  const userInsert = 'INSERT INTO users(user_id, username, password, email, business) VALUES (DEFAULT, ?)';
-  const insertValues = [user.username, user.password, user.email, user.business];
+  const userInsert = 'INSERT INTO users(user_id, username, password, email, business, isHiddenEmail) VALUES (DEFAULT, ?)';
+  const insertValues = [user.username, user.password, user.email, user.business, user.isHiddenEmail];
 
   databaseConnection.query(userInsert, [insertValues], (err, results, fields) => {
     if (err) {

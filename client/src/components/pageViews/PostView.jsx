@@ -30,7 +30,12 @@ class PostView extends React.Component {
       <Container>
         <br />
         <Row>
-          <Col sm='4'>
+          <Col>
+            <Button href='/'><i class="fas fa-backward"></i> Back</Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm='5'>
             <Card>
               <ImgCarousel src={post} />
               <CardBody>
