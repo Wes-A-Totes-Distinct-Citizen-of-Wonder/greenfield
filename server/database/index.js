@@ -142,7 +142,7 @@ const searchZip = (tag) => new Promise((resolve, reject) => {
 
 // gets user's inbox messages from db
 const getMessages = (user) => new Promise((resolve, reject) => {
-  const inbox = `SELECT messages.*, users.user_id FROM messages INNER JOIN users WHERE recepient_id= ${user}`;
+  const inbox = `SELECT * FROM messages WHERE recepient_id= ${user}`;
   databaseConnection.query(inbox, (err, results) => {
     if (err) {
       return reject(err);
