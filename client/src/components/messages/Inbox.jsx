@@ -30,6 +30,7 @@ class Inbox extends React.Component {
 
   render() {
     const { messages} = this.state;
+    console.log(messages, 'messages inside of inbox');
     return (
       <div>
         {messages.map(message => {
