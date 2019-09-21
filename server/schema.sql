@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS users (
   username varchar(50) NOT NULL,
   password varchar(200) NOT NULL,
   email varchar(50) NOT NULL,
-  business varchar(255)
+  business varchar(255),
+  isHiddenEmail boolean,
 );
 
 CREATE TABLE IF NOT EXISTS posts (

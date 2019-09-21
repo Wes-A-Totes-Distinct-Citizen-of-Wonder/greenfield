@@ -98,6 +98,7 @@ app.post('/signUp', (req, res) => {
     password: hash,
     email: req.body.email,
     business: req.body.business,
+    isHiddenEmail: false,
   };
 
   return findUser(userInfo.username)
