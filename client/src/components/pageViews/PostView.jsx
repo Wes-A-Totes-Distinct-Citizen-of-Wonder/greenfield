@@ -24,8 +24,6 @@ class PostView extends React.Component {
     const { post } = this.props;
     const { user } = this.props;
     const { currUser } = this.props;
-    console.log(user.business, 'business');
-    console.log(typeof user.business);
     return (
       <Container>
         <Row>

@@ -24,7 +24,6 @@ class MyPosts extends React.Component {
 
   getMyPosts() {
     const { user_id} = this.state;
-    console.log(user_id);
     axios.get('/myposts')
     .then(res => {
       this.setState({posts: res.data});

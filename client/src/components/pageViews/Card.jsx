@@ -64,7 +64,6 @@ class Card extends React.Component {
   render() {
     const { post, changePostView, user } = this.props;
     const id = 'id' + post.post_id;
-    console.log(user);
     return (
       <div style={{ display: 'inline-block'}}>
       {this.state.showErrorPopup ? <PopupAlert text={this.state.errorText} /> : null}
