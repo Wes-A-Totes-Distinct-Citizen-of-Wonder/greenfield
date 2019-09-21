@@ -4,20 +4,17 @@ import axios from "axios";
 
 import SignUpView from "./components/pageViews/Sign-upView.jsx";
 import LoginView from "./components/pageViews/LoginView.jsx";
-import UserProfileView from "./components/pageViews/UserProfileView.jsx";
 import PostCard from "./components/pageViews/PostCardView.jsx";
 import PostView from "./components/pageViews/PostView.jsx";
 import CreatePost from "./components/pageViews/CreatePost.jsx";
-import UserNav from "./components/UserNav.jsx";
+import UserNav from "./components/nav/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
 import Inbox from "./components/messages/Inbox.jsx"
-import MyPosts from './components/MyPosts.jsx';
+import MyPosts from './components/pageViews/MyPosts.jsx';
 import Settings from './components/Settings.jsx';
-import { Col, Row, NavLink } from "reactstrap";
+import { Col, Row } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { whiteBackGround, content, pageViews } from './components/Style.jsx';
-
-import {navbar} from './components/Style.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -246,7 +243,6 @@ class App extends React.Component {
             />
           </Col>
         </Row>
-
         <Row>
         {view !== 'default' && view !== 'post-view' ? size = '12' : 
           <Col sm='2' className='side-bar'>
@@ -255,7 +251,6 @@ class App extends React.Component {
               searchByZip={this.searchByZip}
             />
           </Col>}
-        
           <Col sm={size} style={whiteBackGround}>
             <br />
             <br />
