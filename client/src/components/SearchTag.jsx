@@ -58,21 +58,6 @@ class SearchTag extends React.Component {
                 </Dropdown>
           </Col>
         </Row>
-        <br /><br />
-        
-        <Row>
-          <Col>
-            <Button href='/'><i class="fas fa-backward"></i> Back</Button><br />
-            *under construct.
-          </Col>
-        </Row>
-          <br /><br />
-        <Row>
-          <Col>
-            <h4>Recently Viewed</h4>
-            *under construct.
-          </Col>
-        </Row>
         </center>
         </div>  
         )
