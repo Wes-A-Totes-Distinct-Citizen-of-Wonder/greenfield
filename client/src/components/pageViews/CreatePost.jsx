@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from 'axios';
 import { imgPreview, white, pageHeader, label } from '../Style.jsx';
-import { Button, Form, FormGroup, Label, Input, FormText, Col, Row } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText, Col, Row, Container } from 'reactstrap';
 import PopupAlert from './../PopupAlert.jsx';
 import { black, pageViews } from './../Style.jsx';
 
@@ -71,6 +71,7 @@ class CreatePost extends React.Component {
         const { changeView } = this.props;
         const { state } = this.state;
         return (
+          <Container>
             <Form style={pageViews}>
                 <FormGroup>
                   {this.state.showErrorPopup ? <PopupAlert text={this.state.errorText} /> : null }
@@ -143,6 +144,7 @@ class CreatePost extends React.Component {
                     <Col><Button type="button" color="primary" block onClick={() => { changeView('home') }}>Cancel</Button></Col>
                 </Row>
             </Form>
+          </Container>
         );
     }
 }
