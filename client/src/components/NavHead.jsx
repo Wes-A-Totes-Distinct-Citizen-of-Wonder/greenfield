@@ -48,7 +48,7 @@ export default class NavHead extends React.Component {
               </NavItem>
 
               <NavItem>
-              {user.username === 'guest' ? null : <NavLink onClick={() => { changeView('messagesList') }}><i class="fas fa-envelope"></i> Messages</NavLink>}
+              {user.username === 'guest' ? null : <NavLink onClick={() => { changeView('inbox') }}><i class="fas fa-envelope"></i> Messages</NavLink>}
               </NavItem>
 
               <NavItem>

@@ -10,7 +10,7 @@ import PostView from "./components/pageViews/PostView.jsx";
 import CreatePost from "./components/pageViews/CreatePost.jsx";
 import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
-import MessagesList from "./components/messages/MessagesList.jsx"
+import Inbox from "./components/messages/Inbox.jsx"
 import MyPosts from './components/MyPosts.jsx';
 import { Col, Row, NavLink } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -45,6 +45,9 @@ class App extends React.Component {
       },
       posts: [
         //will hold all posts
+      ],
+      messages: [
+        // holds user's inbox messages
       ]
     };
     this.changePostView = this.changePostView.bind(this);
@@ -55,6 +58,7 @@ class App extends React.Component {
     this.searchByTag = this.searchByTag.bind(this);
     this.searchByZip = this.searchByZip.bind(this);
     this.logout = this.logout.bind(this);
+    this.getMessages = this.getMessages.bind(this);
   }
 
   componentDidMount() {
@@ -90,6 +94,13 @@ class App extends React.Component {
           });
       })
       .catch(err => alert(err));
+
+      this.getMessages()
+      .then(messages => {
+        this.setState({
+          messages: messages
+        })
+      })
   }
   // grabs all posts close to geolocation and puts them in the posts array inside this.state
   // need some instruction on how to actually sort by geolocation though....
@@ -105,7 +116,7 @@ class App extends React.Component {
   }
 
   searchByZip(zip) {
-    console.log(zip, 'ZIP (INDEX.JSX)');
+    // console.log(zip, 'ZIP (INDEX.JSX)');
     return axios.post('/searchZip', { material: zip }).then(response => {
       this.setState({
         posts: response.data
@@ -117,6 +128,10 @@ class App extends React.Component {
   getNearbyPosts() {
     return axios.get('/posts').then(response => response.data);
   }
+
+  // populates inbox with user's messages
+  getMessages() {
+    return axios.get('/inbox', { user: this.state.user.id }).then(response => response.data)}
 
   // assists in swaping from page to page
   changeView(newView) {
@@ -167,21 +182,28 @@ class App extends React.Component {
     const { posts } = this.state;
     const { selectedPost } = this.state;
     const { user } = this.state;
+    const { messages } = this.state;
 
     switch (page) {
-			case "messagesList":
-        return <MessagesList changeView={this.changeView} />;
-        
-      case "sign-up":
+      case 'inbox':
+        return <Inbox changeView={this.changeView} messages={messages} />;
+
+      case 'sign-up':
         return <SignUpView changeUser={this.changeUser} />;
 
-      case "login":
+      case 'login':
         return <LoginView changeUser={this.changeUser} />;
 
-      case "myPosts":
-        return <MyPosts changeUser={this.changeUser} getNearbyPosts={this.getNearbyPosts} currUser={user} />;
+      case 'myPosts':
+        return (
+          <MyPosts
+            changeUser={this.changeUser}
+            getNearbyPosts={this.getNearbyPosts}
+            currUser={user}
+          />
+        );
 
-      case "create-post":
+      case 'create-post':
         return (
           <CreatePost
             changeView={this.changeView}
@@ -190,7 +212,7 @@ class App extends React.Component {
           />
         );
 
-      case "post-view":
+      case 'post-view':
         return (
           <PostView
             post={selectedPost.postInfo}
@@ -199,7 +221,7 @@ class App extends React.Component {
             currUser={user}
           />
         );
-        
+
       default:
         return (
           <PostCard
@@ -219,27 +241,30 @@ class App extends React.Component {
   render() {
     const { view } = this.state;
     const { user } = this.state;
-    const { messages } = this.state;
     return (
-      <div className="main" style={whiteBackGround}>
+      <div className='main' style={whiteBackGround}>
         <Row>
           <Col sm='12'>
-            <NavHead 
-              changeView={this.changeView} 
+            <NavHead
+              changeView={this.changeView}
               user={user}
-              logout={this.logout} />
+              logout={this.logout}
+            />
           </Col>
-      </Row>
+        </Row>
 
-      <Row>
+        <Row>
           <Col sm='2' className='side-bar'>
             <UserNav
               searchByTag={this.searchByTag}
-              searchByZip={this.searchByZip} />
+              searchByZip={this.searchByZip}
+            />
           </Col>
 
-          <Col sm="10" style={whiteBackGround}>
-            <br /><br /><br />
+          <Col sm='10' style={whiteBackGround}>
+            <br />
+            <br />
+            <br />
             {this.currentPage(view)}
           </Col>
         </Row>

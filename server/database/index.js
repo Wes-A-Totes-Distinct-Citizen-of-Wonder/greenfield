@@ -139,6 +139,18 @@ const searchZip = (tag) => new Promise((resolve, reject) => {
     return resolve(results);
   });
 });
+
+// gets user's inbox messages from db
+const getMessages = (user) => new Promise((resolve, reject) => {
+  const inbox = `SELECT messages.*, users.user_id FROM messages INNER JOIN users WHERE recepient_id= "${user}"`;
+  databaseConnection.query(inbox, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
 // grabs all the user info for each individual post
 const getPostInfo = (user_id) => new Promise((resolve, reject) => {
   const user_idInsert = 'SELECT users.username, users.email, users.business FROM users WHERE user_id = ?';
@@ -153,7 +165,7 @@ const getPostInfo = (user_id) => new Promise((resolve, reject) => {
 });
 
 const getMyPosts = (user_id) => new Promise((resolve, reject) => {
-  const fetchedPosts = `SELECT * from posts WHERE user_id= '${user_id}'`;
+  const fetchedPosts = `SELECT * from posts WHERE user_id = '${user_id}'`;
 
   databaseConnection.query(fetchedPosts, (err, results) => {
     if (err) {
@@ -188,6 +200,7 @@ module.exports = {
   displayPosts,
   searchTags,
   searchZip,
+  getMessages,
   getMyPosts,
   getPostInfo,
 };
