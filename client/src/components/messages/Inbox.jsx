@@ -4,7 +4,7 @@ import {
   ListGroup,
   ListGroupItem,
   ListGroupItemHeading,
-  ListGroupItemText, Modal
+  ListGroupItemText, Modal, Row, Col
 } from 'reactstrap';
 import axios from 'axios';
 import SelectMessage from './SelectMessage.jsx';
@@ -44,32 +44,39 @@ class Inbox extends React.Component {
     console.log(messages, 'messages inside of inbox');
     return (
       <div>
-        <div style={pageHeader}>
-          <h2>Messages</h2>
-        </div>
-        {messages.map(message => {
-          return (
-            <div>
-              <ListGroup style={{textAlign: 'left'}}>
-                <ListGroupItem onClick={this.toggle} action>
-                  <ListGroupItemHeading>
-                    From: {message.sender_id}
-                  </ListGroupItemHeading>
-                  <ListGroupItemText>
-                    Subject: {message.subject}
-                  </ListGroupItemText>
-                </ListGroupItem>
-              </ListGroup>
-              <Modal
-                  isOpen={this.state.modal}
-                  toggle={this.toggle}
-                  className={this.props.className}
-                >
-                  <SelectMessage messages={message}/>
-                </Modal>
-            </div>
+          <div style={pageHeader}><h2>Messages</h2></div>
+          <center>
+              <Col sm='4'>
+                {messages.map(message => {
+                  return (
+                    <div>
+                      <ListGroup style={{textAlign: 'left'}}>
+
+                        <ListGroupItem onClick={this.toggle} action>
+                          <ListGroupItemHeading>
+                            From: {message.sender_id}
+                          </ListGroupItemHeading>
+
+                          <ListGroupItemText>
+                            Subject: {message.subject}
+                          </ListGroupItemText>
+
+                        </ListGroupItem>
+                      </ListGroup>
+
+                      <Modal
+                        isOpen={this.state.modal}
+                        toggle={this.toggle}
+                        className={this.props.className}
+                      >
+
+                      <SelectMessage messages={message}/>
+                      </Modal>
+                    </div>
           );
         })}
+          </Col>
+      </center>
             </div>
     );
   }
