@@ -4,8 +4,9 @@ import {
   Navbar, NavbarBrand, Nav, NavItem,
   Button, Collapse, NavLink, NavbarToggler,
   UncontrolledDropdown, DropdownToggle, DropdownMenu,
-  DropdownItem
+  DropdownItem, Badge
 } from 'reactstrap';
+import axios from 'axios';
 
 import { title, navbar, black } from '../../src/components/Style.jsx';
 
@@ -14,10 +15,16 @@ export default class NavHead extends React.Component {
     super(props);
 
     this.state = {
-      isOpen: false
+      isOpen: false,
+      messageCount: 0
     };
 
     this.toggle = this.toggle.bind(this);
+    this.getMessages = this.getMessages.bind(this);
+  }
+
+  componentDidMount(){
+    this.getMessages();
   }
 
   toggle() {
@@ -26,8 +33,16 @@ export default class NavHead extends React.Component {
     });
   }
 
+  getMessages() {
+    axios.get('/inbox').then(res => {
+      this.setState({ messageCount: res.data.length });
+    })
+      .catch(err => alert(err));
+  }
+
   render() {
     const { changeView, user, logout } = this.props;
+    const { messageCount } = this.state;
 
     return (
       <Navbar style={navbar} dark expand="lg" fixed='top'>
@@ -48,7 +63,9 @@ export default class NavHead extends React.Component {
               </NavItem>
 
               <NavItem>
-              {user.username === 'guest' ? null : <NavLink onClick={() => { changeView('inbox') }}><i class="fas fa-envelope"></i> Messages</NavLink>}
+              {user.username === 'guest' ? null : 
+                <NavLink onClick={() => { changeView('inbox') }}>
+              {messageCount === 0 ? <i class="fas fa-envelope"></i> : <Badge color="info">{messageCount}</Badge>} Messages</NavLink>}
               </NavItem>
 
               <NavItem>
