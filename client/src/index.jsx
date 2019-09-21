@@ -12,6 +12,7 @@ import UserNav from "./components/UserNav.jsx";
 import NavHead from "./components/NavHead.jsx";
 import Inbox from "./components/messages/Inbox.jsx"
 import MyPosts from './components/MyPosts.jsx';
+import Settings from './components/Settings.jsx';
 import { Col, Row, NavLink } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { whiteBackGround, content, pageViews } from './components/Style.jsx';
@@ -187,6 +188,9 @@ class App extends React.Component {
     switch (page) {
       case 'inbox':
         return <Inbox changeView={this.changeView} messages={messages} />;
+
+      case 'settings':
+        return <Settings />;
 
       case 'sign-up':
         return <SignUpView changeUser={this.changeUser} />;
