@@ -7,6 +7,7 @@ import {
   ListGroupItemText
 } from 'reactstrap';
 import axios from 'axios';
+import SelectMessage from './SelectMessage.jsx';
 
 class Inbox extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Inbox extends React.Component {
     this.state = {
       messages: this.props.messages
     };
-
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -29,6 +30,11 @@ class Inbox extends React.Component {
     .catch(err => alert(err));
   }
 
+  handleClick(e) {
+    e.preventDefault();
+    console.log('clicked');
+  }
+
   render() {
     const { messages} = this.state;
     console.log(messages, 'messages inside of inbox');
@@ -39,13 +45,12 @@ class Inbox extends React.Component {
           return (
             <div>
               <ListGroup>
-                <ListGroupItem action>
+                <ListGroupItem onClick={this.handleClick} action>
                   <ListGroupItemHeading>From: {message.sender_id}</ListGroupItemHeading>
                   <ListGroupItemText>Subject: {message.subject}</ListGroupItemText>
                 </ListGroupItem>
               </ListGroup>
             </div>
-
           );
         })}
       </div>
@@ -54,3 +59,4 @@ class Inbox extends React.Component {
 }
 
 export default Inbox;
+{/* <Button onClick={() => { this.delete(post.post_id) }}>Delete</Button> */}

@@ -5,7 +5,7 @@ CREATE DATABASE IF NOT EXISTS trashPanda;
 USE trashPanda;
 
 CREATE TABLE IF NOT EXISTS users (
-  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   username varchar(50) NOT NULL,
   password varchar(200) NOT NULL,
   email varchar(50) NOT NULL,

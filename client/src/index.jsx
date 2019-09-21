@@ -59,7 +59,6 @@ class App extends React.Component {
     this.searchByTag = this.searchByTag.bind(this);
     this.searchByZip = this.searchByZip.bind(this);
     this.logout = this.logout.bind(this);
-    // this.getMessages = this.getMessages.bind(this);
   }
 
   componentDidMount() {
@@ -95,13 +94,6 @@ class App extends React.Component {
           });
       })
       .catch(err => alert(err));
-
-      // this.getMessages()
-      // .then(messages => {
-      //   this.setState({
-      //     messages: messages
-      //   })
-      // })
   }
   // grabs all posts close to geolocation and puts them in the posts array inside this.state
   // need some instruction on how to actually sort by geolocation though....
@@ -129,11 +121,7 @@ class App extends React.Component {
   getNearbyPosts() {
     return axios.get('/posts').then(response => response.data);
   }
-
-  // populates inbox with user's messages
-  // getMessages() {
-  //   return axios.get('/inbox', { user: this.state.user.id }).then(response => response.data)}
-
+  
   // assists in swaping from page to page
   changeView(newView) {
     this.setState({
