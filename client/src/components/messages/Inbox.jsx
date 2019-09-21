@@ -1,4 +1,5 @@
 import React from 'react';
+import { pageHeader } from './../Style.jsx';
 import {
   ListGroup,
   ListGroupItem,
@@ -33,7 +34,7 @@ class Inbox extends React.Component {
     console.log(messages, 'messages inside of inbox');
     return (
       <div>
-            <h3>Messages</h3>
+        <div style={pageHeader}><h2>Messages</h2></div>
         {messages.map(message => {
           return (
             <div>

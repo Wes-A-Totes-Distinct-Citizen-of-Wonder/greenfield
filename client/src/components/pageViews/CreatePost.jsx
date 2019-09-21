@@ -1,10 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import axios from 'axios';
-import { imgPreview, white, pageHeader, label } from '../Style.jsx';
+import { imgPreview, pageHeader, black } from '../Style.jsx';
 import { Button, Form, FormGroup, Label, Input, FormText, Col, Row, Container } from 'reactstrap';
 import PopupAlert from './../PopupAlert.jsx';
-import { black, pageViews } from './../Style.jsx';
 
 class CreatePost extends React.Component {
 	constructor(props) {
@@ -72,7 +70,7 @@ class CreatePost extends React.Component {
         const { state } = this.state;
         return (
           <Container>
-            <Form style={pageViews}>
+            <Form>
                 <FormGroup>
                   {this.state.showErrorPopup ? <PopupAlert text={this.state.errorText} /> : null }
                   <div style={pageHeader}><h2>Create Post</h2></div>

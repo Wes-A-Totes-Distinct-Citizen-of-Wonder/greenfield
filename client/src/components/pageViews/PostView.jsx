@@ -28,7 +28,6 @@ class PostView extends React.Component {
     console.log(typeof user.business);
     return (
       <Container>
-        <br />
         <Row>
           <Col>
             <Button href='/'><i class="fas fa-backward"></i> Back</Button>
@@ -64,6 +63,7 @@ class PostView extends React.Component {
             <MapContainer geoLocation={post.location} />
           </Col>
         </Row>
+        <br />
       </Container>
     );
   }
