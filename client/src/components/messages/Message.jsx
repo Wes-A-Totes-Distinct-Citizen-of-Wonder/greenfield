@@ -5,8 +5,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 class Message extends React.Component {
   constructor(props) {
     super(props);
-    // const { currUser } = this.props;
-    // const { user } = this.props;
+
     this.state = {
       subject: "",
       content: "",
@@ -18,7 +17,6 @@ class Message extends React.Component {
   }
 
 
-  
   onMessageSubmit(event) {
     // const { user } = this.props;
     // this.setState({
