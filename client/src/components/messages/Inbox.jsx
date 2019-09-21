@@ -4,7 +4,9 @@ import {
   ListGroup,
   ListGroupItem,
   ListGroupItemHeading,
-  ListGroupItemText
+  ListGroupItemText,
+  Row,
+  Col
 } from 'reactstrap';
 import axios from 'axios';
 import SelectMessage from './SelectMessage.jsx';
@@ -39,20 +41,21 @@ class Inbox extends React.Component {
     const { messages} = this.state;
     console.log(messages, 'messages inside of inbox');
     return (
-      <div>
+      <div><center>
         <div style={pageHeader}><h2>Messages</h2></div>
         {messages.map(message => {
           return (
-            <div>
-              <ListGroup>
-                <ListGroupItem onClick={this.handleClick} action>
-                  <ListGroupItemHeading>From: {message.sender_id}</ListGroupItemHeading>
-                  <ListGroupItemText>Subject: {message.subject}</ListGroupItemText>
-                </ListGroupItem>
-              </ListGroup>
-            </div>
+                <Col sm="4">
+                  <ListGroup style={{textAlign: 'left'}}>
+                    <ListGroupItem onClick={this.handleClick} action>
+                      <ListGroupItemHeading>From: {message.sender_id}</ListGroupItemHeading>
+                      <ListGroupItemText>Subject: {message.subject}</ListGroupItemText>
+                    </ListGroupItem>
+                  </ListGroup>
+                </Col>
           );
         })}
+      </center>
       </div>
     );
   }
