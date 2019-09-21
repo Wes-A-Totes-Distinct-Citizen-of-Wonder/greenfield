@@ -1,10 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -13,19 +14,20 @@ const MySQLStore = require('express-mysql-session')(session);
 const parseurl = require('parseurl');
 const fileUpload = require('express-fileupload');// middleware that creates req.files object that contains files uploaded through frontend input
 const cloudinary = require('cloudinary').v2;// api for dealing with image DB, cloudinary
-const cloudinaryConfig = require('./config.js');//config file is gitignored b/c it holds API key. Won't appear in forked versions.
-const { convertToCoordinates } = require('../client/src/helpers/geoLocation');
+const cloudinaryConfig = require('./config.js');// config file is gitignored b/c it holds API key. Won't appear in forked versions.
+const { convertToCoordinates, convertToAddress } = require('../client/src/helpers/geoLocation');
 
 const {
-  findUser, getUser, saveUser, savePost, increasePostCount, saveUsersPostCount, searchTags, displayPosts, getPostInfo,
+  saveMessage, findUser, getUser, saveUser, savePost, getPostInfo, getMessages,
+  increasePostCount, saveUsersPostCount, searchTags, displayPosts, searchZip, getMyPosts, deletePost,
 } = require('./database/index.js');
 
-//options used in sessionStore below
+// options used in sessionStore below
 const options = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'trashPanda',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 };
 const sessionStore = new MySQLStore(options);
 
@@ -49,7 +51,7 @@ app.use(fileUpload({
   useTempFiles: true,
 }));
 
-//for reqs from endpoint /posts on frontend. Fetches posts from db and passes them to client to display on page
+// for reqs from endpoint /posts on frontend. Fetches posts from db and passes them to client to display on page
 app.get('/posts', (req, res) => {
   displayPosts()
     .then((posts) => {
@@ -61,12 +63,12 @@ app.get('/posts', (req, res) => {
     });
 });
 
-//for reqs from endpoint /userSession on frontend. Gets all info from the sessions table in the db
-//(created by middleware; table can't be viewed in schema and isn't technically in schema in server/schema.sql,
-//but data can be pulled from the table) and send it to frontend to save all session info there.
+// for reqs from endpoint /userSession on frontend. Gets all info from the sessions table in the db
+// (created by middleware; table can't be viewed in schema and isn't technically in schema in server/schema.sql,
+// but data can be pulled from the table) and send it to frontend to save all session info there.
 app.get('/userSession', (req, res) => {
   const {
-    userId,
+    user_id,
     isLoggedIn,
     username,
     email,
@@ -74,7 +76,7 @@ app.get('/userSession', (req, res) => {
   } = req.session;
 
   const userInfo = {
-    userId,
+    user_id,
     isLoggedIn,
     username,
     email,
@@ -83,27 +85,28 @@ app.get('/userSession', (req, res) => {
   res.status(200).send(userInfo);
 });
 
-//for reqs from endpoint /signUp on frontend. Takes in user's info, makes sure that username doesn't
-//already exist in the db. If not, it makes the user in the db table users, and creates a row in postCount table for that user
+// for reqs from endpoint /signUp on frontend. Takes in user's info, makes sure that username doesn't
+// already exist in the db. If not, it makes the user in the db table users, and creates a row in postCount table for that user
 app.post('/signUp', (req, res) => {
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(req.body.password, salt);
 
-  let userId;
+  let user_id;
 
   const userInfo = {
     username: req.body.username,
     password: hash,
     email: req.body.email,
     business: req.body.business,
+    isHiddenEmail: false,
   };
 
   return findUser(userInfo.username)
     .then(() => saveUser(userInfo))
     .then((savedUser) => {
-      userId = savedUser.insertId;
+      user_id = savedUser.insertId;
     })
-    .then(() => saveUsersPostCount(userId)
+    .then(() => saveUsersPostCount(user_id)
       .then(() => {
         res.status(201).send('user saved in db');
       })
@@ -116,21 +119,23 @@ app.post('/signUp', (req, res) => {
     });
 });
 
-//for reqs from endpoint /submitPost on frontend. Checks if user is logged in, and if not, tells them to sign up or log in.
-//If they are logged in, makes tags string out of tags that the user clicked, makes post obj with all needed data from
-//the req, uses cloudinary to host the image and return a url of the image's location to us, converts location to geolocation
-//coordinates, save the post in the posts table in DB, increases user's postCount in table postCount in DB
+// for reqs from endpoint /submitPost on frontend. Checks if user is logged in, and if not, tells them to sign up or log in.
+// If they are logged in, makes tags string out of tags that the user clicked, makes post obj with all needed data from
+// the req, uses cloudinary to host the image and return a url of the image's location to us, converts location to geolocation
+// coordinates, save the post in the posts table in DB, increases user's postCount in table postCount in DB
 app.post('/submitPost', (req, res) => {
   if (!req.session.isLoggedIn) {
     console.log(req.session.username);
     res.status(400).send('log in or signup!');
   } else {
-    const image = req.files.photo;
+    const image1 = req.files.photos[0] || req.files;
+    const image2 = req.files.photos[1];
+    const image3 = req.files.photos[2];
     let tags = '';
 
     if (req.body.lumber === 'true') {
       tags += 'lumber ';
-    } 
+    }
     if (req.body.metal === 'true') {
       tags += 'metal ';
     }
@@ -147,6 +152,8 @@ app.post('/submitPost', (req, res) => {
     const post = {
       text: req.body.text,
       img1: null,
+      img2: null,
+      img3: null,
       title: req.body.title,
       location: null,
       tagList: tags,
@@ -155,12 +162,29 @@ app.post('/submitPost', (req, res) => {
       concrete: req.body.concrete === 'true',
       glass: req.body.glass === 'true',
       piping: req.body.piping === 'true',
-      userId: req.session.userId,
+      user_id: req.session.user_id,
+      zip: req.body.zip,
     };
 
-    cloudinary.uploader.upload(image.tempFilePath)
-      .then((result) => {
-        post.img1 = result.secure_url;
+    const apiImgs = [];
+    if (image1) {
+      apiImgs.push(cloudinary.uploader.upload(image1.tempFilePath || image1.photos.tempFilePath));
+    }
+    if (image2) {
+      apiImgs.push(cloudinary.uploader.upload(image2.tempFilePath));
+    }
+    if (image3) {
+      apiImgs.push(cloudinary.uploader.upload(image3.tempFilePath));
+    }
+
+    Promise.all(apiImgs)
+      .then((...apiResults) => {
+        apiResults[0].forEach((result, index) => {
+          const path = `img${index + 1}`;
+          post[path] = result.secure_url;
+        });
+      })
+      .then(() => {
         const {
           address, city, state, zip,
         } = req.body;
@@ -173,18 +197,19 @@ app.post('/submitPost', (req, res) => {
       .then((geoLocation) => {
         const { location } = geoLocation.data.results[0].geometry;
         post.location = `${location.lat}, ${location.lng}`;
+
         return savePost(post);
       })
       .then(() => {
-        increasePostCount(post.userId);
+        increasePostCount(post.user_id);
       })
       .then(() => {
         res.status(201).send('got your post!');
       })
       .catch((error) => {
         console.log(error);
-        if (!image) {
-          res.status(400).send('You must include a picture with your post.');
+        if (!image1) {
+          res.status(400).send('You must include at least 1 picture with your post.');
         } else {
           res.status(501).send('Something went wrong with your post!');
         }
@@ -192,6 +217,24 @@ app.post('/submitPost', (req, res) => {
   }
 });
 
+app.post('/submitMessage', (req, res) => {
+  const message = {
+    subject: req.body.subject,
+    content: req.body.content,
+    recepient: req.body.recepient,
+    sender: req.body.sender,
+  };
+  return saveMessage(message)
+    .then(() => {
+      res.status(201).send('message saved in db');
+    })
+    .catch((error) => {
+      console.log(error);
+      res
+        .status(404)
+        .send('something went wrong and message was not saved in db');
+    });
+});
 
 app.post('/login', (req, res) => {
   const user = {
@@ -201,12 +244,12 @@ app.post('/login', (req, res) => {
   return getUser(user.username)
     .then((response) => {
       const result = authorize(response, user);
-      req.session.userId = result.userId;
+      req.session.user_id = result.user_id;
       req.session.isLoggedIn = true;
       req.session.username = result.username;
       req.session.email = result.email;
       req.session.business = result.business;
-      req.session.userId = result.userId;
+      req.session.user_id = result.user_id;
       res.cookie('session_id', req.session.id);
       res.json(result);
     })
@@ -215,13 +258,13 @@ app.post('/login', (req, res) => {
     });
 });
 
-//used in app.post('/login') above. Takes the user's info from login, checks it against user info in DB.
+// used in app.post('/login') above. Takes the user's info from login, checks it against user info in DB.
 const authorize = (signIn, user) => {
   const foundUser = signIn[0];
   const passwordCheck = bcrypt.compareSync(user.password, foundUser.password);
   if (passwordCheck) {
     const returnUser = {
-      userId: foundUser.userId,
+      user_id: foundUser.user_id,
       username: foundUser.username,
       email: foundUser.email,
       business: foundUser.business,
@@ -233,11 +276,14 @@ const authorize = (signIn, user) => {
 
 app.post('/logout', (req, res) => {
   req.session.isLoggedIn = false;
+  req.session.id = null;
+  req.session.email = null;
+  req.session.user_id = null;
   res.status(201).send('great job');
 });
 
-//when a user clicks on button to search by a specific tag on the page, this grabs the clicked tag 
-//from front end, and searches the db for posts with that tag.
+// when a user clicks on button to search by a specific tag on the page, this grabs the clicked tag
+// from front end, and searches the db for posts with that tag.
 app.post('/tagSearch', (req, res) => {
   searchTags(req.body)
     .then((posts) => {
@@ -248,10 +294,20 @@ app.post('/tagSearch', (req, res) => {
     });
 });
 
-//when logged-in user clicks on a post, this fetches the data they want to see: the post's user's
-//username, email, business name, the location of the materials, and the map for the location.
+app.post('/searchZip', (req, res) => {
+  searchZip(req.body)
+    .then((posts) => {
+      res.status(201).send(posts);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+// when logged-in user clicks on a post, this fetches the data they want to see: the post's user's
+// username, email, business name, the location of the materials, and the map for the location.
 app.post('/postInfo', (req, res) => {
-  getPostInfo(req.body.userId)
+  getPostInfo(req.body.user_id)
     .then((onePostInfo) => {
       res.status(201).send(onePostInfo);
     })
@@ -261,6 +317,33 @@ app.post('/postInfo', (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
+app.get('/myposts', (req, res) => {
+  getMyPosts(req.session.user_id)
+    .then((posts) => {
+      console.log(posts);
+      res.send(posts);
+    });
+});
+
+app.post('/deletePost', (req, res) => {
+  deletePost(req.body.id)
+    .then((res) => {
+      console.log(res, 'res');
+      res.send(res);
+    });
+});
+
+app.get('/inbox', (req, res) => {
+  getMessages(req.session.user_id)
+    .then((messages) => {
+      console.log(messages, 'messages');
+      res.send(messages);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.listen(8080, () => {
   console.log('Contractors be listening on: 8080');
 });
