@@ -51,13 +51,12 @@ class MyPosts extends React.Component {
       <div>
         {posts.map((post) => {
           return (
-            <div style={{display: 'inline-block'}}>
+            <div style={{display: 'inline-grid'}}>
             <Card post={post} user={user_id} /><br />
             <center>
               <Button onClick={() => { this.delete(post.post_id) }}>Delete</Button>
               </center>
             </div>
-
           )
         })}
       </div>
@@ -66,12 +65,3 @@ class MyPosts extends React.Component {
 }
 
 export default MyPosts;
-{/* <Card style={{ width: "175px", height: "250px", margin: "2px", padding: "2px" }}>
-  <center>
-    <CardImg src={post.img1} />
-    <CardBody>
-      <CardTitle>{post.title}</CardTitle>
-      <CardTitle><</CardTitle>
-    </CardBody>
-  </center>
-</Card>  */}
