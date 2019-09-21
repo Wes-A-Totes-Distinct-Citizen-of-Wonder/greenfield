@@ -50,7 +50,7 @@ class Inbox extends React.Component {
         {messages.map(message => {
           return (
             <div>
-              <ListGroup>
+              <ListGroup style={{textAlign: 'left'}}>
                 <ListGroupItem onClick={this.toggle} action>
                   <ListGroupItemHeading>
                     From: {message.sender_id}
@@ -70,12 +70,9 @@ class Inbox extends React.Component {
             </div>
           );
         })}
-      </div>
+            </div>
     );
   }
 }
 
 export default Inbox;
-{
-  /* <Button onClick={() => { this.delete(post.post_id) }}>Delete</Button> */
-}

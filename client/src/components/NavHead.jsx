@@ -73,10 +73,6 @@ export default class NavHead extends React.Component {
                     <hr />
 
                   <DropdownItem>
-                    <NavLink style={black} onClick={() => { changeView('settings') }}><i class="fas fa-cog"></i> Settings</NavLink>
-                  </DropdownItem>
-
-                  <DropdownItem>
                     <NavLink style={black} href='/' onClick={() => logout()}><i class="fas fa-sign-out-alt"></i> Log Out</NavLink>
                   </DropdownItem>
 
