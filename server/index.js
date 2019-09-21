@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -18,7 +18,7 @@ const cloudinaryConfig = require('./config.js');// config file is gitignored b/c
 const { convertToCoordinates, convertToAddress } = require('../client/src/helpers/geoLocation');
 
 const {
-  saveMessage, findUser, getUser, saveUser, savePost, getPostInfo,
+  saveMessage, findUser, getUser, saveUser, savePost, getPostInfo, getMessages,
   increasePostCount, saveUsersPostCount, searchTags, displayPosts, searchZip, getMyPosts, deletePost,
 } = require('./database/index.js');
 
@@ -332,23 +332,16 @@ app.post('/deletePost', (req, res) => {
     });
 });
 
-// app.get('/messages', (req, res) => {
-//   const {
-//     subject,
-//     content,
-//     recepient_id,
-//     sender_id,
-//   } = req.session;
+app.get('/inbox', (req, res) => {
+  getMessages(req.session.user_id)
+    .then((messages) => {
+      res.send(messages);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
 
-//   const message = {
-//     subject,
-//     content,
-//     recepient_id,
-//     sender_id,
-//   };
-//   res.status(200).send(userInfo);
-// });
-
-app.listen(PORT, () => {
+app.listen(8080, () => {
   console.log('Contractors be listening on: 8080');
 });
