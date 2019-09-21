@@ -335,6 +335,7 @@ app.post('/deletePost', (req, res) => {
 app.get('/inbox', (req, res) => {
   getMessages(req.session.user_id)
     .then((messages) => {
+      console.log(messages, 'messages');
       res.send(messages);
     })
     .catch((error) => {
