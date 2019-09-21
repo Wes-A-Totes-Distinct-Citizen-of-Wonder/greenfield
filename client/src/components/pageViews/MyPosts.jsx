@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
-import Card from './pageViews/Card.jsx';
+import Card from './Card.jsx';
 import {Button} from 'reactstrap';
-import { pageHeader } from './Style.jsx';
+import { pageHeader } from '../Style.jsx';
 
 class MyPosts extends React.Component {
   constructor(props) {

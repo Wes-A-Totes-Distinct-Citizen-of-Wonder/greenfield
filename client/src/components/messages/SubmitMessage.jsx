@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-class Message extends React.Component {
+class SubmitMessage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -73,4 +73,4 @@ class Message extends React.Component {
   }
 }
 
-export default Message;
+export default SubmitMessage;

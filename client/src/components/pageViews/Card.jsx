@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SearchTag from '../SearchTag.jsx';
+import SearchTag from '../nav/SearchTag.jsx';
 import PopupAlert from './../PopupAlert.jsx';
 import { Popover, PopoverHeader, PopoverBody} from 'reactstrap'
 
