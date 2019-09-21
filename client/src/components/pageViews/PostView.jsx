@@ -29,8 +29,8 @@ class PostView extends React.Component {
     return (
       <Container>
         <Row>
-          <Col sm='10'>
-        <Button href='/' className="float-right" ><i class="fas fa-backward"></i> Back</Button>
+          <Col>
+            <Button href='/'><i class="fas fa-backward"></i> Back</Button>
           </Col>
         </Row>
         <Row>

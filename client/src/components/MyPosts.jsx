@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Card from './pageViews/Card.jsx';
 import {Button} from 'reactstrap';
+import { pageHeader } from './Style.jsx';
 
 class MyPosts extends React.Component {
   constructor(props) {
@@ -48,7 +49,8 @@ class MyPosts extends React.Component {
     const { posts, user_id } = this.state;
 
     return (
-      <div>
+      <div><center>
+        <div style={pageHeader}><h2>My Posts</h2></div>
         {posts.map((post) => {
           return (
             <div style={{display: 'inline-grid'}}>
@@ -59,6 +61,7 @@ class MyPosts extends React.Component {
             </div>
           )
         })}
+      </center>
       </div>
     );
   }
