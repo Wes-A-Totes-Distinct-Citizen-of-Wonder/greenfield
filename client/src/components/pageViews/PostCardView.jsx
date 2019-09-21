@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SearchTag from '../SearchTag.jsx';
+import SearchTag from '../nav/SearchTag.jsx';
 import Card from './Card.jsx';
 
 const PostCard = (props) => {
@@ -19,4 +19,4 @@ const PostCard = (props) => {
   );
 }
     
-    export default PostCard;
+export default PostCard;

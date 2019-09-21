@@ -2,10 +2,9 @@ import React from "react";
 import axios from "axios";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-class Message extends React.Component {
+class SubmitMessage extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       subject: "",
       content: "",
@@ -16,12 +15,7 @@ class Message extends React.Component {
     this.onMessageSubmit = this.onMessageSubmit.bind(this);
   }
 
-
   onMessageSubmit(event) {
-    // const { user } = this.props;
-    // this.setState({
-    //   recepient: user.user_id
-    // })rs
     const message = this.state;
     console.log(message);
     axios
@@ -73,4 +67,4 @@ class Message extends React.Component {
   }
 }
 
-export default Message;
+export default SubmitMessage;

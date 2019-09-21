@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import MapContainer from "./../MapContainer.jsx";
 import ImgCarousel from "./ImgCarousel.jsx";
 import SubmitMessage from "../messages/SubmitMessage.jsx"
-import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Col, Container, Row, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Col, Container, Row, Modal } from 'reactstrap';
 
 // the view for when selected a specific post
 class PostView extends React.Component {
