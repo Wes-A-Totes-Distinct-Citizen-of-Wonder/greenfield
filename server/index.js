@@ -20,6 +20,7 @@ const { convertToCoordinates, convertToAddress } = require('../client/src/helper
 const {
   saveMessage, findUser, getUser, saveUser, savePost, getPostInfo, getMessages,
   increasePostCount, saveUsersPostCount, searchTags, displayPosts, searchZip, getMyPosts, deletePost,
+  getSender,
 } = require('./database/index.js');
 
 // options used in sessionStore below
@@ -338,6 +339,17 @@ app.get('/inbox', (req, res) => {
     .then((messages) => {
       console.log(messages, 'messages');
       res.send(messages);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.get('/sender', (req, res) => {
+  getSender()
+    .then((usernames) => {
+      console.log(usernames, 'USERNAMES');
+      res.send(usernames);
     })
     .catch((error) => {
       res.status(500).send(error);

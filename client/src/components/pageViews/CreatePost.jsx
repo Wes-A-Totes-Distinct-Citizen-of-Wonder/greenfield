@@ -45,7 +45,7 @@ class CreatePost extends React.Component {
 		// sends post information from client to post table in DB
 		axios.post('/submitPost', bodyFormData)
 			.then((response) => {
-				console.log(response);
+				// console.log(response);
 				// after success sends user back to home page
 				this.props.changeView('default');
 			})

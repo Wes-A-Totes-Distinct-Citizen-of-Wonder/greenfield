@@ -17,11 +17,11 @@ class SubmitMessage extends React.Component {
 
   onMessageSubmit(event) {
     const message = this.state;
-    console.log(message);
+    // console.log(message);
     axios
       .post('/submitMessage', message)
       .then(response => {
-        console.log(response);
+        // console.log(response);
         // after success sends user back to home page
         this.props.changeView("post-view");
       })

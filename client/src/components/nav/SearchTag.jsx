@@ -23,7 +23,7 @@ class SearchTag extends React.Component {
     }
     
     handleClick(){
-      console.log('hey');
+      // console.log('hey');
     }
 
   handleChange(event) {
