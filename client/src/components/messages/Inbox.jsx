@@ -4,7 +4,7 @@ import {
   ListGroup,
   ListGroupItem,
   ListGroupItemHeading,
-  ListGroupItemText, Modal, Row, Col
+  ListGroupItemText, Modal, Row, Col, Button,
 } from 'reactstrap';
 import axios from 'axios';
 import SelectMessage from './SelectMessage.jsx';
@@ -19,6 +19,7 @@ class Inbox extends React.Component {
       senders: []
     };
     this.toggle = this.toggle.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   componentDidMount() {
@@ -50,9 +51,21 @@ class Inbox extends React.Component {
     .catch(err => alert(err));
   }
 
+  delete(id) {
+    console.log(`MESSAGE ID ${id}`);
+    axios.post('/deleteMessage', { id: id })
+      .then(response => {
+        console.log(response, 'deleted');
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    this.componentDidMount();
+  }
+
   render() {
     const { messages, senders } = this.state;
-    // console.log(messages, 'messages inside of inbox');
+    console.log(messages, 'messages inside of inbox');
     // console.log(senders, 'SENDERS');
     return (
       <div>
@@ -62,6 +75,8 @@ class Inbox extends React.Component {
                 {messages.map(message => {
                   return (
                     <div>
+
+                      <div style={{display: 'inline-block', width: '200px'}}>
                       <ListGroup style={{textAlign: 'left'}}>
 
                         <ListGroupItem onClick={this.toggle} action>
@@ -75,6 +90,11 @@ class Inbox extends React.Component {
 
                         </ListGroupItem>
                       </ListGroup>
+                      </div>
+
+                      <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                        <Button onClick={() => {this.delete(message.mess_id)}}>Delete</Button>
+                      </div>
 
                       <Modal
                         isOpen={this.state.modal}
@@ -82,9 +102,11 @@ class Inbox extends React.Component {
                         className={this.props.className}
                       >
 
-                      <SelectMessage messages={message}/>
+                        <SelectMessage messages={message} />
                       </Modal>
+
                     </div>
+
           );
         })}
           </Col>

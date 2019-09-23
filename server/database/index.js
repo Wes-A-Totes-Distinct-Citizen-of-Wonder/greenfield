@@ -200,6 +200,17 @@ const deletePost = (id) => new Promise((resolve, reject) => {
   });
 });
 
+const deleteMessage = (id) => new Promise((resolve, reject) => {
+  const fetchedPosts = `delete from messages WHERE mess_id= '${id}'`;
+
+  databaseConnection.query(fetchedPosts, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
 module.exports = {
   findUser,
   deletePost,
@@ -218,4 +229,5 @@ module.exports = {
   getMyPosts,
   getPostInfo,
   getSender,
+  deleteMessage,
 };

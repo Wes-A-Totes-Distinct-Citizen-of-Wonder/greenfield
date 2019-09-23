@@ -20,7 +20,7 @@ const { convertToCoordinates, convertToAddress } = require('../client/src/helper
 const {
   saveMessage, findUser, getUser, saveUser, savePost, getPostInfo, getMessages,
   increasePostCount, saveUsersPostCount, searchTags, displayPosts, searchZip, getMyPosts, deletePost,
-  getSender,
+  getSender, deleteMessage,
 } = require('./database/index.js');
 
 // options used in sessionStore below
@@ -328,9 +328,18 @@ app.get('/myposts', (req, res) => {
 
 app.post('/deletePost', (req, res) => {
   deletePost(req.body.id)
-    .then((res) => {
-      console.log(res, 'res');
-      res.send(res);
+    .then((response) => {
+      console.log(response, 'res');
+      res.send(response);
+    });
+});
+
+app.post('/deleteMessage', (req, res) => {
+  console.log(req.body.id, 'MESSAGE ID TO BE DELTED');
+  deleteMessage(req.body.id)
+    .then((response) => {
+      console.log(response, 'DELETE MESSAGE');
+      res.send(response);
     });
 });
 
