@@ -153,6 +153,18 @@ const getMessages = (user) => new Promise((resolve, reject) => {
   });
 });
 
+const getSender = (user) => new Promise((resolve, reject) => {
+  const inbox = 'SELECT user_id, username FROM users';
+
+  databaseConnection.query(inbox, (err, results) => {
+    if (err) {
+      return reject(err);
+    }
+    return resolve(results);
+  });
+});
+
+
 // grabs all the user info for each individual post
 const getPostInfo = (user_id) => new Promise((resolve, reject) => {
   const user_idInsert = 'SELECT users.username, users.email, users.business FROM users WHERE user_id = ?';
@@ -205,4 +217,5 @@ module.exports = {
   getMessages,
   getMyPosts,
   getPostInfo,
+  getSender,
 };

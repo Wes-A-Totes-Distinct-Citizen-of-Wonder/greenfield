@@ -38,7 +38,7 @@ class MyPosts extends React.Component {
   delete(id){
     axios.post('/deletePost', {id: id})
       .then(res => {
-        console.log(res, 'deleted');
+        // console.log(res, 'deleted');
       })
       this.componentDidMount();
   }

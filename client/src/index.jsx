@@ -231,7 +231,7 @@ class App extends React.Component {
     const { view } = this.state;
     const { user } = this.state;
     let size = '10';
-    console.log(view);
+    // console.log(view);
     return (
       <div className='main' style={whiteBackGround}>
         <Row>
