@@ -83,7 +83,7 @@ class Inbox extends React.Component {
                   return (
                     <div>
 
-                      <div style={{display: 'inline-block', width: '200px'}}>
+                      <div style={{display: 'inline-block', width: '200px', margin: '0px 0px 2px 0px'}}>
                       <ListGroup style={{textAlign: 'left'}}>
 
                         <ListGroupItem onClick={this.toggle} action>
@@ -99,8 +99,8 @@ class Inbox extends React.Component {
                       </ListGroup>
                       </div>
 
-                      <div style={{ display: 'inline-block', verticalAlign: 'bottom' }}>
-                        <Button outline color="primary" onClick={() => {this.reply(message.sender_id)}}>Reply</Button><br /><br />
+                      <div style={{ display: 'inline-block', margin: '2px', verticalAlign: 'center' }}>&nbsp;
+                        <Button outline color="primary" onClick={() => {this.reply(message.sender_id)}}>Reply</Button>&nbsp;
                         <Button outline color="danger" onClick={() => {this.delete(message.mess_id)}}>Delete</Button>
                       </div>
 
