@@ -54,7 +54,7 @@ class MyPosts extends React.Component {
             <div style={{display: 'inline-grid'}}>
             <Card post={post} user={user_id} /><br />
             <center>
-              <Button onClick={() => { this.delete(post.post_id) }}>Delete</Button>
+                <Button outline color="danger "onClick={() => { this.delete(post.post_id) }}>Delete</Button>
               </center>
             </div>
           )

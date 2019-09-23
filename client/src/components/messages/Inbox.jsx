@@ -8,6 +8,7 @@ import {
 } from 'reactstrap';
 import axios from 'axios';
 import SelectMessage from './SelectMessage.jsx';
+import SubmitMessage from './SubmitMessage.jsx';
 
 class Inbox extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class Inbox extends React.Component {
     };
     this.toggle = this.toggle.bind(this);
     this.delete = this.delete.bind(this);
+    this.reply = this.reply.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +65,11 @@ class Inbox extends React.Component {
     this.componentDidMount();
   }
 
+  reply(sendTo){
+      console.log(this.props.currUser.user_id, 'YOU');
+      console.log(sendTo, 'WHERE MESSAGE IS GOING');
+  }
+
   render() {
     const { messages, senders } = this.state;
     console.log(messages, 'messages inside of inbox');
@@ -92,16 +99,17 @@ class Inbox extends React.Component {
                       </ListGroup>
                       </div>
 
-                      <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-                        <Button onClick={() => {this.delete(message.mess_id)}}>Delete</Button>
+                      <div style={{ display: 'inline-block', verticalAlign: 'bottom' }}>
+                        <Button outline color="primary" onClick={() => {this.reply(message.sender_id)}}>Reply</Button><br /><br />
+                        <Button outline color="danger" onClick={() => {this.delete(message.mess_id)}}>Delete</Button>
                       </div>
 
                       <Modal
+                        id='select'
                         isOpen={this.state.modal}
                         toggle={this.toggle}
                         className={this.props.className}
                       >
-
                         <SelectMessage messages={message} />
                       </Modal>
 

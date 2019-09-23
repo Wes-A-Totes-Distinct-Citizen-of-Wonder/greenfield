@@ -172,7 +172,7 @@ class App extends React.Component {
 
     switch (page) {
       case 'inbox':
-        return <Inbox changeView={this.changeView} messages={messages} />;
+        return <Inbox changeView={this.changeView} messages={messages} currUser={user} />;
 
       case 'settings':
         return <Settings />;

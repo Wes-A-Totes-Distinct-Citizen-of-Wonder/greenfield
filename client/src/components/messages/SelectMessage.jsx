@@ -8,6 +8,7 @@ import { Button, Card, CardBody, CardHeader, CardTitle } from 'reactstrap';
       
 //     };
 //   }
+
 const SelectMessage = (props) => {
   const { messages } = props;
 
@@ -17,7 +18,6 @@ const SelectMessage = (props) => {
           <CardHeader>{messages.subject}</CardHeader>
           <CardBody>
             <CardTitle>{messages.content}</CardTitle>
-            <Button>Reply</Button>
           </CardBody>
         </Card>
       </div>
